@@ -20,6 +20,9 @@ public class Reservation extends BaseEntity {
     @Column(name = "reservationId")
     private Long id;
 
+    //== 예약 요청사항 ==//
+    private String content;
+
     //== 예약 상태 ==//
     private Status status;
 
@@ -31,4 +34,10 @@ public class Reservation extends BaseEntity {
     //== 예약 <--> 예약 상세 ==//
     @OneToMany(mappedBy = "reservation")
     private List<ReservationDetail> reservationDetails = new ArrayList<>();
+
+    /** 연관관계 메서드 **/
+    public void setReservation(User user) {
+        ReservationDetail reservationDetail = new ReservationDetail();
+
+    }
 }

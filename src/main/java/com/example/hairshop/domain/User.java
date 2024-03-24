@@ -9,7 +9,7 @@ import java.util.List;
 import static lombok.AccessLevel.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor(access = PROTECTED)
 public class User extends BaseEntity {
 
@@ -37,4 +37,13 @@ public class User extends BaseEntity {
     //== 회원 <--> 리뷰 ==//
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
+
+    //== 연관관계 메서드 ==//
+
+    /**
+     * 리뷰 작성하기
+     */
+//    public Review writeReview(double rate, String content) {
+//        Review review = new Review(rate, content);
+//    }
 }

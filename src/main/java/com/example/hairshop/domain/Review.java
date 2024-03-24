@@ -32,4 +32,9 @@ public class Review extends BaseEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "designerId")
     private Designer designer;
+
+    public Review(double rate, String content) {
+        this.rate = rate;
+        this.content = content;
+    }
 }

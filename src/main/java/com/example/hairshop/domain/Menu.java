@@ -1,9 +1,11 @@
 package com.example.hairshop.domain;
 
+import com.example.hairshop.dto.MenuDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor(access = PROTECTED)
 public class Menu extends BaseEntity {
 
@@ -44,6 +46,25 @@ public class Menu extends BaseEntity {
     private Shop shop;
 
     //== 메뉴 <--> 예약 상세 ==//
-    @OneToMany(mappedBy = "menu")
-    private List<ReservationDetail> reservationDetails = new ArrayList<>();
+    @OneToOne(mappedBy = "menu", fetch = LAZY)
+    private ReservationDetail reservationDetail;
+
+    //== 연관관계 메서드 ==//
+
+    /**
+     * 메뉴 객체 생성
+     */
+    public static List<Menu> createMenu(List<MenuDto> menuDtos) {
+        List<Menu> menuList = new ArrayList<>();
+        for (MenuDto menuDto : menuDtos) {
+            Menu menu = new Menu();
+            menu.setName(menuDto.getName());
+            menu.setImgUrl(menuDto.getImgUrl());
+            menu.setPrice(menuDto.getPrice());
+            menu.setContent(menuDto.getContent());
+            menuDto.getCategory().addMenuCategory(menu);
+            menuList.add(menu);
+        }
+        return menuList;
+    }
 }

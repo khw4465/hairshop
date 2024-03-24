@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor(access = PROTECTED)
 public class Career extends BaseEntity {
 
@@ -21,7 +22,11 @@ public class Career extends BaseEntity {
     private String content;
 
     //== 디자이너 <--> 경력 ==//
-    @ManyToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "designerId")
     private Designer designer;
+
+    public Career(String content) {
+        this.content = content;
+    }
 }

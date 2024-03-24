@@ -4,12 +4,16 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor(access = PROTECTED)
 public class ShopImg extends BaseEntity {
 
@@ -24,4 +28,19 @@ public class ShopImg extends BaseEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "shopId")
     private Shop shop;
+
+    //== 연관관계 메서드 ==//
+
+    /**
+     * 샵 이미지 리스트 생성
+     */
+    public static List<ShopImg> createShopImgList(List<String> imgUrls) {
+        List<ShopImg> imgList = new ArrayList<>();
+        for (String imgUrl : imgUrls) {
+            ShopImg shopImg = new ShopImg();
+            shopImg.setImgUrl(imgUrl);
+            imgList.add(shopImg);
+        }
+        return imgList;
+    }
 }
