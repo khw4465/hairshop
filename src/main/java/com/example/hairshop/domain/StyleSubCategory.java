@@ -1,16 +1,20 @@
 package com.example.hairshop.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = PROTECTED)
 public class StyleSubCategory {
 
     @Id @GeneratedValue
@@ -26,16 +30,15 @@ public class StyleSubCategory {
     private StyleMainCategory mainCategory;
 
     //== 서브 카테고리 <--> 스타일 ==//
-    @ManyToMany(mappedBy = "subCategory")
+    @ManyToMany
     @JoinTable(name = "styleCategory",
             joinColumns = @JoinColumn(name = "styleSubCategoryId"),
             inverseJoinColumns = @JoinColumn(name = "styleId")
     )
     private List<Style> styles = new ArrayList<>();
 
-    //== 연관관계 메서드 ==//
-    public void addStyle(Style style) {
-        style.getSubCategorys().add(this);
-        this.styles.add(style);
+    public StyleSubCategory(String name) {
+        this.name = name;
     }
+
 }

@@ -1,7 +1,6 @@
 package com.example.hairshop.repository;
 
 import com.example.hairshop.domain.ShopCategory;
-import com.example.hairshop.domain.StyleCategory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

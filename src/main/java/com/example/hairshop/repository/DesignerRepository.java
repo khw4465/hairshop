@@ -3,6 +3,7 @@ package com.example.hairshop.repository;
 import com.example.hairshop.domain.Designer;
 import com.example.hairshop.domain.Schedule;
 import com.example.hairshop.domain.Shop;
+import com.example.hairshop.domain.Style;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -45,5 +46,11 @@ public class DesignerRepository {
                 .setParameter("designer", designer)
                 .setParameter("date", date)
                 .getSingleResult();
+    }
+
+    /** 디자이너의 스타일 조회 **/
+    public List<Style> findStyle(Designer designer) {
+        return em.createQuery("select s from Style s where s.designer = :designer", Style.class)
+                .getResultList();
     }
 }

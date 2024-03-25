@@ -1,6 +1,5 @@
 package com.example.hairshop.domain;
 
-import com.example.hairshop.dto.StyleDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,8 +14,6 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter @Setter
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype")
 @NoArgsConstructor(access = PROTECTED)
 public class Style extends BaseEntity {
 
@@ -27,9 +24,9 @@ public class Style extends BaseEntity {
     //== 스타일 이미지 ==//
     private String imgUrl;
 
-    //== 스타일 <--> 스타일 카테고리 ==//
+    //== 스타일 <--> 서브 카테고리 ==//
     @ManyToMany(mappedBy = "styles")
-    private List<StyleSubCategory> subCategorys;
+    private List<StyleSubCategory> subCategorys = new ArrayList<>();
 
     //== 스타일 <--> 디자이너 ==//
     @ManyToOne(fetch = LAZY)
@@ -38,5 +35,18 @@ public class Style extends BaseEntity {
 
     public Style(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    //== 연관관계 메서드 ==//
+
+    /**
+     * 디자이너와 서브카테고리에 스타일 연관관계 맺기
+     */
+    public void addStyle(StyleSubCategory category, Designer designer) {
+        category.getStyles().add(this);
+        this.getSubCategorys().add(category);
+
+        designer.getStyles().add(this);
+        this.setDesigner(designer);
     }
 }

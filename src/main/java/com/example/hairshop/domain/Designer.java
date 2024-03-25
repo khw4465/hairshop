@@ -1,6 +1,5 @@
 package com.example.hairshop.domain;
 
-import com.example.hairshop.dto.StyleDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -45,7 +44,7 @@ public class Designer extends BaseEntity {
     private Career career;
 
     //== 디자이너 <--> 스타일 ==//
-    @OneToMany(mappedBy = "designer", cascade = ALL)
+    @OneToMany(mappedBy = "designer", cascade = ALL, orphanRemoval = true)
     private List<Style> styles = new ArrayList<>();
 
     //== 디자이너 <--> 스케쥴 ==//
@@ -65,20 +64,19 @@ public class Designer extends BaseEntity {
     /**
      * 디자이너 생성
      */
-    public static Designer createDesigner(String name, String imgUrl, String content, String career, List<StyleDto> styleDtos) {
+    public static Designer createDesigner(String name, String imgUrl, String content, String career) {
         Designer designer = new Designer();
         designer.setName(name);
         designer.setImg(imgUrl);
         designer.setContent(content);
         designer.addCareer(career);
-//        designer.addStyleImgList(styleDtos);
         designer.getReservationTime();
 
         return designer;
     }
 
     /**
-     * 날짜별 스케쥴 객체 생성
+     * 날짜별 스케쥴 생성
      */
     public void getReservationTime() {
         LocalDate currentDate = LocalDate.now();
@@ -102,35 +100,11 @@ public class Designer extends BaseEntity {
     }
 
     /**
-     * 경력 객체 생성
+     * 경력 생성
      */
     public void addCareer(String content) {
         Career career = new Career(content);
         career.setDesigner(this);
         this.setCareer(career);
     }
-
-    /**
-     * 스타일 이미지 리스트 생성
-     */
-//    public List<Style> addStyleImgList(List<StyleDto> styleDtos) {
-//        List<Style> imgList = new ArrayList<>();
-//        for (StyleDto styleDto : styleDtos) {
-//            Style style = new Style();
-//            style.setImgUrl(styleDto.getImgUrl());
-//            style.setCategories(styleDto.getCategories());
-//
-//            List<StyleCategory> categories = styleDto.getCategories();
-//            for (StyleCategory category : categories) {
-//                category.addStyleCategory(style);
-//            }
-//
-//            imgList.add(style);
-//
-//            style.setDesigner(this);
-//        }
-//        this.setStyles(styles);
-//
-//        return imgList;
-//    }
 }

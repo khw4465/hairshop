@@ -1,6 +1,5 @@
 package com.example.hairshop.domain;
 
-import com.example.hairshop.dto.StyleDto;
 import com.example.hairshop.repository.*;
 
 import jakarta.persistence.EntityManager;
@@ -35,9 +34,6 @@ class ScheduleTest {
 
     @Autowired
     MenuCategoryRepository menuCategoryRepository;
-
-    @Autowired
-    StyleCategoryRepository styleCategoryRepository;
 
     @Autowired
     ShopCategoryRepository shopCategoryRepository;
