@@ -70,9 +70,9 @@ public class Designer extends BaseEntity {
         designer.setName(name);
         designer.setImg(imgUrl);
         designer.setContent(content);
-        designer.getReservationTime();
         designer.addCareer(career);
-        designer.addStyleImgList(styleDtos);
+//        designer.addStyleImgList(styleDtos);
+        designer.getReservationTime();
 
         return designer;
     }
@@ -113,24 +113,24 @@ public class Designer extends BaseEntity {
     /**
      * 스타일 이미지 리스트 생성
      */
-    public List<Style> addStyleImgList(List<StyleDto> styleDtos) {
-        List<Style> imgList = new ArrayList<>();
-        for (StyleDto styleDto : styleDtos) {
-            Style style = new Style();
-            style.setImgUrl(styleDto.getImgUrl());
-            style.setCategories(styleDto.getCategories());
-
-            List<StyleCategory> categories = styleDto.getCategories();
-            for (StyleCategory category : categories) {
-                category.addStyleCategory(style);
-            }
-
-            imgList.add(style);
-
-            style.setDesigner(this);
-        }
-        this.setStyles(styles);
-
-        return imgList;
-    }
+//    public List<Style> addStyleImgList(List<StyleDto> styleDtos) {
+//        List<Style> imgList = new ArrayList<>();
+//        for (StyleDto styleDto : styleDtos) {
+//            Style style = new Style();
+//            style.setImgUrl(styleDto.getImgUrl());
+//            style.setCategories(styleDto.getCategories());
+//
+//            List<StyleCategory> categories = styleDto.getCategories();
+//            for (StyleCategory category : categories) {
+//                category.addStyleCategory(style);
+//            }
+//
+//            imgList.add(style);
+//
+//            style.setDesigner(this);
+//        }
+//        this.setStyles(styles);
+//
+//        return imgList;
+//    }
 }

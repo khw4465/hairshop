@@ -29,7 +29,7 @@ public class Style extends BaseEntity {
 
     //== 스타일 <--> 스타일 카테고리 ==//
     @ManyToMany(mappedBy = "styles")
-    private List<StyleCategory> categories = new ArrayList<>();
+    private List<StyleSubCategory> subCategorys;
 
     //== 스타일 <--> 디자이너 ==//
     @ManyToOne(fetch = LAZY)

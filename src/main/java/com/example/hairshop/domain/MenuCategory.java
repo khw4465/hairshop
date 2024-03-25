@@ -22,18 +22,13 @@ public class MenuCategory extends BaseEntity {
     private Long id;
 
     //== 카테고리 이름 ==//
-    @Enumerated(EnumType.STRING)
-    private MenuCategoryType name;
+    private String name;
 
     //== 메뉴 카테고리 <--> 메뉴 ==//
     @OneToMany(mappedBy = "category")
     private List<Menu> menus = new ArrayList<>();
 
-    //== 메뉴 카테고리 <--> 샵 카테고리 ==//
-    @ManyToOne(fetch = LAZY)
-    private ShopCategory category;
-
-    public MenuCategory(MenuCategoryType category) {
+    public MenuCategory(String category) {
         this.name = category;
     }
 

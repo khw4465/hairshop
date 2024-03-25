@@ -2,8 +2,6 @@ package com.example.hairshop.repository;
 
 import com.example.hairshop.domain.MenuCategory;
 import com.example.hairshop.domain.ShopCategory;
-import com.example.hairshop.domain.ShopCategoryType;
-import com.example.hairshop.domain.StyleCategory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -33,7 +31,7 @@ public class MenuCategoryRepository {
     }
 
     /** 샵 카테고리별 메뉴 조회 **/
-    public List<MenuCategory> findByShopCategory(ShopCategoryType category) {
+    public List<MenuCategory> findByShopCategory(String category) {
         return em.createQuery("select sc.categories from ShopCategory sc where sc.name = :category", MenuCategory.class)
                 .setParameter("category", category)
                 .getResultList();

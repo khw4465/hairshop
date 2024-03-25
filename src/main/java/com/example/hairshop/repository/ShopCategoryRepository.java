@@ -1,8 +1,6 @@
 package com.example.hairshop.repository;
 
-import com.example.hairshop.domain.MenuCategoryType;
 import com.example.hairshop.domain.ShopCategory;
-import com.example.hairshop.domain.ShopCategoryType;
 import com.example.hairshop.domain.StyleCategory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +31,7 @@ public class ShopCategoryRepository {
     }
 
     /** 샵 카테고리 이름 조회 **/
-    public ShopCategory findByName(ShopCategoryType name) {
+    public ShopCategory findByName(String name) {
         return em.createQuery("select sc from ShopCategory sc where sc.name = :name", ShopCategory.class)
                 .setParameter("name", name)
                 .getSingleResult();
