@@ -120,5 +120,10 @@ public class StyleCategoryTest {
         List<Style> styles = new ArrayList<>();
         styles.add(style1);
         styles.add(style2);
+
+        List<Style> findStyle = subCategoryRepository.findStyle("리프컷");
+        for (Style style : findStyle) {
+            System.out.println("style = " + style.getImgUrl());
+        }
     }
 }

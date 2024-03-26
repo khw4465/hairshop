@@ -1,5 +1,6 @@
 package com.example.hairshop.repository;
 
+import com.example.hairshop.domain.Style;
 import com.example.hairshop.domain.StyleMainCategory;
 import com.example.hairshop.domain.StyleSubCategory;
 import jakarta.persistence.EntityManager;
@@ -34,5 +35,12 @@ public class StyleSubCategoryRepository {
         return em.createQuery("select ssc from StyleSubCategory ssc where ssc.name = :name", StyleSubCategory.class)
                 .setParameter("name", name)
                 .getSingleResult();
+    }
+
+    /** 서브 카테고리의 스타일 조회 **/
+    public List<Style> findStyle(String name) {
+        return em.createQuery("select ssc.styles from StyleSubCategory ssc where ssc.name = :name", Style.class)
+                .setParameter("name", name)
+                .getResultList();
     }
 }

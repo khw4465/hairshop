@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/header">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div th:replace="fragment/bodyHeader"></div>
+    <div th:replace="fragment/sidebar"></div>
+
+    <h1>카카오 로그인 테스트</h1>
+    <div>
+<!--        form 태그에 CheckForm 담기 -->
+        <form id="loginForm" method="POST" th:action="@{/login/kakao}" th:object="${checkForm}">
+            <div>
+<!--                Checkform의 designer 담기-->
+                <input type="checkbox" name="designer" id="isDesigner" th:field="*{designer}" onclick="boxCheck()">
+                <input type="hidden" name="isDesigner" id="hiddenDesigner">
+                <label for="isDesigner">디자이너로 로그인</label>
+            </div>
+            <div>
+                <a href="https://kauth.kakao.com/oauth/authorize" id="kakaoLoginLink" onclick="submitForm()"
+                th:href="@{https://kauth.kakao.com/oauth/authorize(response_type='code', client_id=${kakaoApiKey}, redirect_uri=${redirectUri})}">
+                    <img src="/img/kakao_login_medium_wide.png">
+                </a>
+            </div>
+        </form>
+    </div>
+    <div><input type="button" value="일반 로그인"></div>
+</body>
+<script>
+    function boxCheck() {
+        // hidden에 체크 유무 담기
+        document.getElementById('hiddenDesigner').value = document.getElementById('isDesigner').checked;
+    }
+    function submitForm() {
+        // 카카오링크 누르면 submit
+        $('#loginForm').submit();
+    }
+</script>
+</html>
