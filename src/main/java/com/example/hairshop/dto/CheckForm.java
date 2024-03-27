@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class CheckForm {
-    private boolean designer;
+
+    private int isDesigner;
 }

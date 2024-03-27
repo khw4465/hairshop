@@ -14,11 +14,7 @@
         <li class="navbar-menu"><a href="#">스타일TIP</a></li>
     </ul>
     <div th:if="${userId == null}"><a href="/login/loginForm">로그인</a></div>
-    <div th:if="${userId != null}">
-        <form name="logout" action="http://localhost:8080/logout">
-            <input type="submit" value="로그아웃">
-        </form>
-    </div>
+    <div th:if="${userId != null}"><a href="/login/loginForm">로그아웃</a></div>
 </nav>
 </body>
 </html>

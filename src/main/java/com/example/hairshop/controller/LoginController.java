@@ -32,7 +32,6 @@ public class LoginController {
     public String loginForm(Model model) {
         model.addAttribute("kakaoApiKey", kakaoApiKey);
         model.addAttribute("redirectUri", kakaoRedirectUri);
-        model.addAttribute("checkForm", new CheckForm());
         return "login";
     }
 }
