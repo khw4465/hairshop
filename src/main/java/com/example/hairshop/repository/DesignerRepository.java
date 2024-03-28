@@ -5,11 +5,13 @@ import com.example.hairshop.domain.Schedule;
 import com.example.hairshop.domain.Shop;
 import com.example.hairshop.domain.Style;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -31,6 +33,18 @@ public class DesignerRepository {
     public List<Designer> findAll() {
         return em.createQuery("select d from Designer d", Designer.class)
                 .getResultList();
+    }
+
+    /** 카카오아이디 디자이너 조회 **/
+    public Optional<Designer> findByKakao(String kakaoId) {
+        try {
+            Designer designer = em.createQuery("select d from Designer d where d.kakaoId = :kakaoId", Designer.class)
+                    .setParameter("kakaoId", kakaoId)
+                    .getSingleResult();
+            return Optional.of(designer);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     /** 디자이너 조회(특정 샵 전체) **/

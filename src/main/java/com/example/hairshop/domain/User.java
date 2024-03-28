@@ -17,6 +17,9 @@ public class User extends BaseEntity {
     @Column(name = "userId")
     private Long id;
 
+    //== 카카오아이디  ==//
+    private String kakaoId;
+
     //== 회원이름 ==//
     private String name;
 
@@ -39,6 +42,18 @@ public class User extends BaseEntity {
     private List<Review> reviews = new ArrayList<>();
 
     //== 연관관계 메서드 ==//
+
+    /**
+     * 회원 생성
+     */
+    public static User createUser(String kakaoId, String name, String email) {
+        User user = new User();
+        user.setKakaoId(kakaoId);
+        user.setName(name);
+        user.setEmail(email);
+
+        return user;
+    }
 
     /**
      * 리뷰 작성하기

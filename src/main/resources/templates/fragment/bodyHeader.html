@@ -13,8 +13,12 @@
         <li class="navbar-menu"><a href="#">별점높은샵</a></li>
         <li class="navbar-menu"><a href="#">스타일TIP</a></li>
     </ul>
-    <div th:if="${userId == null}"><a href="/login/loginForm">로그인</a></div>
-    <div th:if="${userId != null}"><a href="/login/loginForm">로그아웃</a></div>
+    <div>
+        <a th:href="${session.userId == null ? '/login/loginForm' : '/logout'}">
+            <span th:text="${session.userId == null ? '로그인' : '로그아웃'}"></span>
+        </a>
+    </div>
+
 </nav>
 </body>
 </html>

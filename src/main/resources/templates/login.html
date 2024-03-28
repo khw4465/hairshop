@@ -1,88 +1,94 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragment/header">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="/css/login.css" rel="stylesheet">
 </head>
 <body>
     <div th:replace="fragment/bodyHeader"></div>
     <div th:replace="fragment/sidebar"></div>
 
-    <h1>카카오 로그인 테스트</h1>
-    <div>
-        <div>
-            <input type="checkbox" name="designer" id="isDesigner">
-            <label for="isDesigner">디자이너로 로그인</label>
+    <div id="container">
+        <h1>Log in</h1>
+        <div class="form-group">
+            <div>
+                <input type="checkbox" name="designer" id="isDesigner">
+                <label for="isDesigner">디자이너로 로그인</label>
+            </div>
         </div>
-        <div>
-            <a href="https://kauth.kakao.com/oauth/authorize" id="kakaoLoginButton"
-               th:href="@{https://kauth.kakao.com/oauth/authorize(response_type='code', client_id=${kakaoApiKey}, redirect_uri=${redirectUri})}">
-                <img src="/img/kakao_login_medium_wide.png">
-            </a>
+        <div class="form-group">
+            <div>
+                <a href="https://kauth.kakao.com/oauth/authorize" id="kakaoLoginButton"
+                   th:href="@{https://kauth.kakao.com/oauth/authorize(response_type='code', client_id=${kakaoApiKey}, redirect_uri=${redirectUri})}">
+                    <img src="/img/kakao_login_medium_wide.png">
+                </a>
+            </div>
         </div>
     </div>
-    <div><input type="button" value="일반 로그인"></div>
-</body>
-<script th:inline="javascript">
-    /**
-     * 체크버튼 누르면 유무값을 넘겨서 세션에 저장
-     */
-    document.getElementById('isDesigner').addEventListener('change', function() {
-        let isChecked = this.checked;
+    <script th:inline="javascript">
+        /**
+         * 체크버튼 누르면 유무값을 넘겨서 세션에 저장
+         */
+        document.getElementById('isDesigner').addEventListener('change', function() {
+            let isChecked = this.checked;
 
-        // AJAX 요청 보내기
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/login/check', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    let responseData = JSON.parse(xhr.responseText);
-                    sessionStorage.setItem('isDesigner', responseData.isDesigner);
-                } else {
-                    console.error('데이터 전송 실패:', xhr.statusText);
+            // AJAX 요청 보내기
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/login/check', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let responseData = JSON.parse(xhr.responseText);
+                        sessionStorage.setItem('isDesigner', responseData.isDesigner);
+                    } else {
+                        console.error('데이터 전송 실패:', xhr.statusText);
+                    }
                 }
-            }
-        };
-        let checkForm = JSON.stringify({ isDesigner: isChecked ? 1 : 0 });
-        xhr.send(checkForm);
-    });
+            };
+            let checkForm = JSON.stringify({ isDesigner: isChecked ? 1 : 0 });
+            xhr.send(checkForm);
+        });
 
-    let userId = /*[[${userId}]]*/ '';
+        let userId = /*[[${userId}]]*/ '';
 
-    /**
-     * 리디렉트 후 즉시 POST로 전달
-     */
-    function sendPostRequset(isDesigner) {
-        console.log('why isDesigner = ' + isDesigner)
+        /**
+         * 리디렉트 후 즉시 POST로 전달
+         */
+        function sendPostRequset(isDesigner) {
 
-        // XMLHttpRequest 객체 생성
-        let xhr = new XMLHttpRequest();
-        // POST 요청 설정
-        xhr.open('POST', '/login/kakao', true);
-        // 요청 헤더 설정
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        // 요청 완료 상태 변화 감지
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    console.log('POST 요청이 성공했습니다.');
-                } else {
-                    console.error('POST 요청이 실패했습니다.');
+            // XMLHttpRequest 객체 생성
+            let xhr = new XMLHttpRequest();
+            // POST 요청 설정
+            xhr.open('POST', '/login/kakao', true);
+            // 요청 헤더 설정
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            // 요청 완료 상태 변화 감지
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        let response = xhr.responseText;
+                        if (response === 'class com.example.hairshop.domain.Designer') {
+                            window.location.href = '/admin'
+                        } else {
+                            window.location.href = '/'
+                        }
+                    } else {
+                        console.error('POST 요청이 실패했습니다.');
+                    }
                 }
-            }
-        };
-        // 전송할 데이터
-        let checkForm = JSON.stringify({ isDesigner: isDesigner });
-        // 데이터 전송
-        xhr.send(checkForm);
-        window.location.href = 'http://localhost:8080/'
-    }
-
-    window.onload = function () {
-        let isDesigner = sessionStorage.getItem('isDesigner');
-        if (userId != null) {
-            sendPostRequset(isDesigner);
+            };
+            // 전송할 데이터
+            let checkForm = JSON.stringify({ isDesigner: isDesigner });
+            // 데이터 전송
+            xhr.send(checkForm);
         }
-    }
-</script>
+
+        window.onload = function () {
+            let isDesigner = sessionStorage.getItem('isDesigner');
+            if (userId != null) {
+                sendPostRequset(isDesigner);
+            }
+        }
+    </script>
+</body>
 </html>

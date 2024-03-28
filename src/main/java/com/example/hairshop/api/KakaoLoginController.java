@@ -1,13 +1,19 @@
 package com.example.hairshop.api;
 
+import com.example.hairshop.domain.Designer;
+import com.example.hairshop.domain.User;
 import com.example.hairshop.dto.CheckForm;
 import com.example.hairshop.dto.KakaoProfile;
 import com.example.hairshop.dto.OAuthToken;
+import com.example.hairshop.service.DesignerService;
+import com.example.hairshop.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -16,14 +22,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @Log4j2
+@RequiredArgsConstructor
 public class KakaoLoginController {
 
-    KakaoApi kakaoApi = new KakaoApi();
+    private final UserService userService;
+    private final DesignerService designerService;
 
     @Value("${kakao.api_key}")
     private String kakaoApiKey;
@@ -41,8 +53,13 @@ public class KakaoLoginController {
 
         // 토큰
         session.setAttribute("accessToken", oauthToken.getAccess_token());
-        // 회원정보
+        // 회원아이디
         session.setAttribute("userId", kakaoProfile.getId());
+        // 회원 이름
+        session.setAttribute("username", kakaoProfile.getProperties().getNickname());
+        // 회원 이메일
+        session.setAttribute("userEmail", kakaoProfile.getKakao_account().getEmail());
+
 
         System.out.println("oauthToken = " + oauthToken.getAccess_token());
         System.out.println("kakaoProfile = " + kakaoProfile.getId());
@@ -61,17 +78,23 @@ public class KakaoLoginController {
     }
 
     @PostMapping("/login/kakao")
-    public ResponseEntity<?> kakaoLogin(@RequestBody CheckForm checkForm) {
+    public ResponseEntity<?> kakaoLogin(@RequestBody CheckForm checkForm, HttpSession session) {
         try {
+            String kakaoId = session.getAttribute("userId").toString();
+            String username = (String) session.getAttribute("username");
+            String userEmail = (String) session.getAttribute("userEmail");
 
+            // 체크박스가 true면 디자이너 생성 false면 일반회원 생성 후 반환
             if (checkForm.getIsDesigner() == 1) {
-                System.out.println("디자이너입니다.");
+                Designer newDesigner = Designer.createDesigner(kakaoId, username);
+                Designer designer = designerService.join(newDesigner);
+                return new ResponseEntity<>(designer.getClass().toString(), HttpStatus.OK);
             } else {
-                System.out.println("일반 회원입니다.");
+                User newUser = User.createUser(kakaoId, username, userEmail);
+                User user = userService.join(newUser);
+                return new ResponseEntity<>(user.getClass().toString(), HttpStatus.OK);
             }
 
-
-            return new ResponseEntity<>("", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -89,17 +112,42 @@ public class KakaoLoginController {
         return response;
     }
 
-    @RequestMapping("/logout")
+    @GetMapping("/logout")
     public ModelAndView logout(HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
-        kakaoApi.kakaoLogout((String)session.getAttribute("accessToken"));
+        kakaoLogout((String)session.getAttribute("accessToken"));
         session.removeAttribute("accessToken");
         session.removeAttribute("userId");
         mav.setViewName("home");
         return mav;
     }
+    /**
+     * 3. 로그아웃
+     */
+    public void kakaoLogout(String accessToken) {
+        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode = " + responseCode);
 
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String result = "";
+            String line = "";
+
+            while((line = br.readLine()) != null) {
+                result+=line;
+            }
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 1. 인증코드 요청 전달

@@ -25,6 +25,9 @@ public class Designer extends BaseEntity {
     @Column(name = "designerId")
     private Long id;
 
+    //== 카카오아이디 ==//
+    private String kakaoId;
+
     //== 디자이너 이름 ==//
     private String name;
 
@@ -60,17 +63,25 @@ public class Designer extends BaseEntity {
     private List<ReservationDetail> reservationDetails = new ArrayList<>();
 
     //== 연관관계 메서드 ==//
-
     /**
      * 디자이너 생성
      */
-    public static Designer createDesigner(String name, String imgUrl, String content, String career) {
+    public static Designer createDesigner(String kakaoId, String name) {
         Designer designer = new Designer();
+        designer.setKakaoId(kakaoId);
+        designer.setName(name);
+        designer.getReservationTime();
+        return designer;
+    }
+
+    /**
+     * 디자이너 수정
+     */
+    public static Designer addDesignerInfo(Designer designer, String name, String imgUrl, String content, String career) {
         designer.setName(name);
         designer.setImg(imgUrl);
         designer.setContent(content);
         designer.addCareer(career);
-        designer.getReservationTime();
 
         return designer;
     }
