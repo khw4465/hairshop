@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="bodyHeader">
-    <link href="/css/bodyHeader.css" rel="stylesheet">
-</head>
-<body>
-<nav id="nav3">
-    <ul class="navbar">
-        <li class="navbar-menu"><a href="#">헤어샵</a></li>
-        <li class="navbar-menu"><a href="#">네일샵</a></li>
-        <li class="navbar-menu"><a href="#">1인샵</a></li>
-        <li class="navbar-menu"><a href="#">바버샵</a></li>
-        <li class="navbar-menu"><a href="#">별점높은샵</a></li>
-        <li class="navbar-menu"><a href="#">스타일TIP</a></li>
-    </ul>
-    <div>
-        <a th:href="${session.userId == null ? '/login/loginForm' : '/logout'}">
-            <span th:text="${session.userId == null ? '로그인' : '로그아웃'}"></span>
-        </a>
-    </div>
-
-</nav>
-</body>
-</html>
+<div th:fragment="bodyHeader">
+    <nav id="nav3">
+        <ul class="navbar">
+            <li class="navbar-menu"><a href="#">헤어샵</a></li>
+            <li class="navbar-menu"><a href="#">네일샵</a></li>
+            <li class="navbar-menu"><a href="#">1인샵</a></li>
+            <li class="navbar-menu"><a href="#">바버샵</a></li>
+            <li class="navbar-menu"><a href="#">별점높은샵</a></li>
+            <li class="navbar-menu"><a href="#">스타일TIP</a></li>
+        </ul>
+        <div>
+            <a th:href="${session.userId == null ? '/login/loginForm' : '/logout'}">
+                <span th:text="${session.userId == null ? '로그인' : '로그아웃'}"></span>
+            </a>
+        </div>
+    </nav>
+</div>

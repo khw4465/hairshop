@@ -35,8 +35,8 @@ public class DesignerRepository {
                 .getResultList();
     }
 
-    /** 카카오아이디 디자이너 조회 **/
-    public Optional<Designer> findByKakao(String kakaoId) {
+    /** 카카오아이디 디자이너 유무 조회 **/
+    public Optional<Designer> findOptionalByKakao(String kakaoId) {
         try {
             Designer designer = em.createQuery("select d from Designer d where d.kakaoId = :kakaoId", Designer.class)
                     .setParameter("kakaoId", kakaoId)
@@ -45,6 +45,13 @@ public class DesignerRepository {
         } catch (NoResultException e) {
             return Optional.empty();
         }
+    }
+
+    /** 카카오아이디 디자이너 정보 조회 **/
+    public Designer findByKakao(String kakaoId) {
+        return em.createQuery("select d from Designer d where d.kakaoId = :kakaoId", Designer.class)
+                .setParameter("kakaoId", kakaoId)
+                .getSingleResult();
     }
 
     /** 디자이너 조회(특정 샵 전체) **/

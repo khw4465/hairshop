@@ -1,10 +1,17 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragment/header"></head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hairshop</title>
+    <link href="/css/bodyHeader.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
+</head>
 <body>
-    <div th:replace="fragment/bodyHeader"></div>
-    <div th:replace="fragment/sidebar"></div>
+<div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
+<div th:replace="~{fragment/sidebar :: sidebar}"></div>
 
 home
+<script src="/js/sidebar.js"></script>
 </body>
 </html>

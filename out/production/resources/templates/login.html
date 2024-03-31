@@ -1,94 +1,35 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragment/header">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hairshop</title>
+    <link href="/css/bodyHeader.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
     <link href="/css/login.css" rel="stylesheet">
 </head>
 <body>
-    <div th:replace="fragment/bodyHeader"></div>
-    <div th:replace="fragment/sidebar"></div>
+<div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
+<div th:replace="~{fragment/sidebar :: sidebar}"></div>
 
-    <div id="container">
-        <h1>Log in</h1>
-        <div class="form-group">
-            <div>
-                <input type="checkbox" name="designer" id="isDesigner">
-                <label for="isDesigner">디자이너로 로그인</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div>
-                <a href="https://kauth.kakao.com/oauth/authorize" id="kakaoLoginButton"
-                   th:href="@{https://kauth.kakao.com/oauth/authorize(response_type='code', client_id=${kakaoApiKey}, redirect_uri=${redirectUri})}">
-                    <img src="/img/kakao_login_medium_wide.png">
-                </a>
-            </div>
+<div id="container">
+    <h1>Log in</h1>
+    <div class="form-group">
+        <div>
+            <input type="checkbox" name="designer" id="isDesigner">
+            <label for="isDesigner">디자이너로 로그인</label>
         </div>
     </div>
-    <script th:inline="javascript">
-        /**
-         * 체크버튼 누르면 유무값을 넘겨서 세션에 저장
-         */
-        document.getElementById('isDesigner').addEventListener('change', function() {
-            let isChecked = this.checked;
-
-            // AJAX 요청 보내기
-            let xhr = new XMLHttpRequest();
-            xhr.open('POST', '/login/check', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        let responseData = JSON.parse(xhr.responseText);
-                        sessionStorage.setItem('isDesigner', responseData.isDesigner);
-                    } else {
-                        console.error('데이터 전송 실패:', xhr.statusText);
-                    }
-                }
-            };
-            let checkForm = JSON.stringify({ isDesigner: isChecked ? 1 : 0 });
-            xhr.send(checkForm);
-        });
-
-        let userId = /*[[${userId}]]*/ '';
-
-        /**
-         * 리디렉트 후 즉시 POST로 전달
-         */
-        function sendPostRequset(isDesigner) {
-
-            // XMLHttpRequest 객체 생성
-            let xhr = new XMLHttpRequest();
-            // POST 요청 설정
-            xhr.open('POST', '/login/kakao', true);
-            // 요청 헤더 설정
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            // 요청 완료 상태 변화 감지
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        let response = xhr.responseText;
-                        if (response === 'class com.example.hairshop.domain.Designer') {
-                            window.location.href = '/admin'
-                        } else {
-                            window.location.href = '/'
-                        }
-                    } else {
-                        console.error('POST 요청이 실패했습니다.');
-                    }
-                }
-            };
-            // 전송할 데이터
-            let checkForm = JSON.stringify({ isDesigner: isDesigner });
-            // 데이터 전송
-            xhr.send(checkForm);
-        }
-
-        window.onload = function () {
-            let isDesigner = sessionStorage.getItem('isDesigner');
-            if (userId != null) {
-                sendPostRequset(isDesigner);
-            }
-        }
-    </script>
+    <div class="form-group">
+        <div>
+            <a href="https://kauth.kakao.com/oauth/authorize" id="kakaoLoginButton"
+               th:href="@{https://kauth.kakao.com/oauth/authorize(response_type='code', client_id=${kakaoApiKey}, redirect_uri=${redirectUri})}">
+                <img src="/img/kakao_login_medium_wide.png">
+            </a>
+        </div>
+    </div>
+</div>
+<script src="/js/sidebar.js"></script>
+<script src="/js/login.js"></script>
 </body>
 </html>

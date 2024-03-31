@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,6 +20,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,7 +32,7 @@ import java.util.Map;
 @RestController
 @Log4j2
 @RequiredArgsConstructor
-public class KakaoLoginController {
+public class KakaoLoginApiController {
 
     private final UserService userService;
     private final DesignerService designerService;
@@ -43,6 +43,7 @@ public class KakaoLoginController {
     @Value("${kakao.redirect_uri}")
     private String kakaoRedirectUri;
 
+    /** 로그인 요청 **/
     @GetMapping("/login/kakao")
     public ModelAndView kakaoLogin(@RequestParam("code") String code, HttpSession session) {
 
@@ -60,14 +61,6 @@ public class KakaoLoginController {
         // 회원 이메일
         session.setAttribute("userEmail", kakaoProfile.getKakao_account().getEmail());
 
-
-        System.out.println("oauthToken = " + oauthToken.getAccess_token());
-        System.out.println("kakaoProfile = " + kakaoProfile.getId());
-
-        System.out.println("카카오 아이디 = " + kakaoProfile.getId());
-        System.out.println("카카오 이름 = " + kakaoProfile.getProperties().getNickname());
-        System.out.println("카카오 이메일 = " + kakaoProfile.getKakao_account().getEmail());
-
         ModelAndView mav = new ModelAndView();
 
         Object userId = session.getAttribute("userId");
@@ -77,6 +70,7 @@ public class KakaoLoginController {
         return mav;
     }
 
+    /** 타입에 따른 객체 생성후 응답 **/
     @PostMapping("/login/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestBody CheckForm checkForm, HttpSession session) {
         try {
@@ -84,7 +78,7 @@ public class KakaoLoginController {
             String username = (String) session.getAttribute("username");
             String userEmail = (String) session.getAttribute("userEmail");
 
-            // 체크박스가 true면 디자이너 생성 false면 일반회원 생성 후 반환
+            // 체크박스가 true면 디자이너 생성 false면 일반회원 생성 후 클래스명 반환
             if (checkForm.getIsDesigner() == 1) {
                 Designer newDesigner = Designer.createDesigner(kakaoId, username);
                 Designer designer = designerService.join(newDesigner);
@@ -100,6 +94,7 @@ public class KakaoLoginController {
         }
     }
 
+    /** 체크박스 값 응답 메서드 **/
     @PostMapping("/login/check")
     public Map<String, Integer> designerCheck(@RequestBody CheckForm checkForm, HttpSession session) {
         session.setAttribute("isDesigner", checkForm.getIsDesigner());
@@ -112,41 +107,15 @@ public class KakaoLoginController {
         return response;
     }
 
+    /** 로그아웃 **/
     @GetMapping("/logout")
-    public ModelAndView logout(HttpSession session) {
-        ModelAndView mav = new ModelAndView();
+    public RedirectView logout(HttpSession session) {
 
         kakaoLogout((String)session.getAttribute("accessToken"));
         session.removeAttribute("accessToken");
         session.removeAttribute("userId");
-        mav.setViewName("home");
-        return mav;
-    }
-    /**
-     * 3. 로그아웃
-     */
-    public void kakaoLogout(String accessToken) {
-        String reqURL = "https://kapi.kakao.com/v1/user/logout";
-        try {
-            URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode = " + responseCode);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-            String result = "";
-            String line = "";
-
-            while((line = br.readLine()) != null) {
-                result+=line;
-            }
-            System.out.println(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return new RedirectView("/");
     }
 
     /**
@@ -229,5 +198,31 @@ public class KakaoLoginController {
             e.printStackTrace();
         }
         return kakaoProfile;
+    }
+
+    /**
+     * 3. 로그아웃
+     */
+    public void kakaoLogout(String accessToken) {
+        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            int responseCode = conn.getResponseCode();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String result = "";
+            String line = "";
+
+            while((line = br.readLine()) != null) {
+                result+=line;
+            }
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

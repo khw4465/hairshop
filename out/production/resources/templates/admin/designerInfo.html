@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hairshop</title>
+    <link href="/css/adminHeader.css" rel="stylesheet">
+    <link href="/css/adminSidebar.css" rel="stylesheet">
+    <link href="/css/designerInfo.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="~{fragment/adminHeader :: adminHeader}"></div>
+<div th:replace="~{fragment/adminSidebar :: adminSidebar}"></div>
+<div id="container">
+    <table id="userInfo">
+        <tbody>
+        <tr>
+            <th>프로필사진</th>
+            <td>
+                <img th:src="${designerInfo.img}" alt="프로필 사진" id="profileImg">
+                <input type="file" id="inputFile" accept="image/*" style="display: none">
+                <label class="inputFileBtn" for="inputFile">사진 업로드</label>
+            </td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td>
+                <input type="text" id="username" name="name" th:value="${designerInfo.name}" readonly>
+            </td>
+        </tr>
+        <tr>
+            <th>소개글</th>
+            <td>
+                        <textarea id="designerContent" name="content" class="textarea"
+                                  th:value="${designerInfo.content}" placeholder="간단한 소개글을 작성해주세요."></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>경력</th>
+            <td>
+                        <textarea id="designerCareer" name="career" class="textarea"
+                                  th:value="${designerInfo.career}" placeholder="경력을 입력해주세요."></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" id="editBtn">
+                <input type="button" value="수정하기" id="editProfile">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/js/designerInfo.js"></script>
+</body>
+</html>

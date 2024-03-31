@@ -30,6 +30,13 @@ public class StyleSubCategoryRepository {
                 .getResultList();
     }
 
+    /** 메인 카테고리 이름으로 서브 카테고리 조회 **/
+    public List<StyleSubCategory> findByMainCategoryName(String name) {
+        return em.createQuery("select ssc from StyleSubCategory ssc where ssc.mainCategory = :name", StyleSubCategory.class)
+                .setParameter("name", name)
+                .getResultList();
+    }
+
     /** 서브 카테고리 이름 조회 **/
     public StyleSubCategory findByName(String name) {
         return em.createQuery("select ssc from StyleSubCategory ssc where ssc.name = :name", StyleSubCategory.class)

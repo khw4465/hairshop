@@ -37,14 +37,14 @@ public class Designer extends BaseEntity {
     //== 설명 ==//
     private String content;
 
+    //== 디자이너 <--> 경력 ==//
+    @OneToOne(mappedBy = "designer", cascade = ALL, orphanRemoval = true)
+    private Career career;
+
     //== 디자이너 <--> 샵 ==//
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "shopId")
     private Shop shop;
-
-    //== 디자이너 <--> 경력 ==//
-    @OneToOne(mappedBy = "designer", cascade = ALL, orphanRemoval = true)
-    private Career career;
 
     //== 디자이너 <--> 스타일 ==//
     @OneToMany(mappedBy = "designer", cascade = ALL, orphanRemoval = true)
@@ -70,6 +70,7 @@ public class Designer extends BaseEntity {
         Designer designer = new Designer();
         designer.setKakaoId(kakaoId);
         designer.setName(name);
+        designer.setImg("/img/basicProfile.png");
         designer.getReservationTime();
         return designer;
     }
