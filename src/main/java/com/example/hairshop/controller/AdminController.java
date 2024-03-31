@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class AdminController {
         dto.setName(findDesigner.getName());
         dto.setImg(findDesigner.getImg());
         dto.setContent(findDesigner.getContent());
-//        dto.setCareer(findDesigner.getCareer());
+        dto.setCareer(findDesigner.getCareer());
 
         // 스타일 카테고리 정보
         List<StyleSubCategory> subCategoryAll = categoryService.findSubCategoryAll();
@@ -46,5 +47,10 @@ public class AdminController {
         m.addAttribute("subCategoryAll", subCategoryAll);
 
         return "admin/designerInfo";
+    }
+
+    @PutMapping("/admin/myPage/modify")
+    public String modifyMyPage() {
+        return "";
     }
 }

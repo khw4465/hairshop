@@ -19,10 +19,10 @@ public class InitCategory implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //카테고리 생성
-        ShopCategory hairShop = new ShopCategory("HairShop");
-        ShopCategory nailShop = new ShopCategory("NailShop");
-        ShopCategory oneManShop = new ShopCategory("OneManShop");
-        ShopCategory barberShop = new ShopCategory("BarberShop");
+        ShopCategory hairShop = new ShopCategory("헤어샵");
+        ShopCategory nailShop = new ShopCategory("네일샵");
+        ShopCategory oneManShop = new ShopCategory("1인샵");
+        ShopCategory barberShop = new ShopCategory("바버샵");
         categoryService.saveShopCategory(hairShop);
         categoryService.saveShopCategory(nailShop);
         categoryService.saveShopCategory(oneManShop);

@@ -37,9 +37,8 @@ public class Designer extends BaseEntity {
     //== 설명 ==//
     private String content;
 
-    //== 디자이너 <--> 경력 ==//
-    @OneToOne(mappedBy = "designer", cascade = ALL, orphanRemoval = true)
-    private Career career;
+    //== 경력 ==//
+    private String career;
 
     //== 디자이너 <--> 샵 ==//
     @ManyToOne(fetch = LAZY)
@@ -82,7 +81,7 @@ public class Designer extends BaseEntity {
         designer.setName(name);
         designer.setImg(imgUrl);
         designer.setContent(content);
-        designer.addCareer(career);
+        designer.setCareer(career);
 
         return designer;
     }
@@ -109,14 +108,5 @@ public class Designer extends BaseEntity {
                 currentDate = currentDate.plusMonths(1); // 한 달 추가
             }
         }
-    }
-
-    /**
-     * 경력 생성
-     */
-    public void addCareer(String content) {
-        Career career = new Career(content);
-        career.setDesigner(this);
-        this.setCareer(career);
     }
 }

@@ -23,7 +23,7 @@ public class DesignerApiController {
         dto.setName(findDesigner.getName());
         dto.setImg(findDesigner.getImg());
         dto.setContent(findDesigner.getContent());
-//        dto.setCareer(findDesigner.getCareer());
+        dto.setCareer(findDesigner.getCareer());
 
         return dto;
     }
