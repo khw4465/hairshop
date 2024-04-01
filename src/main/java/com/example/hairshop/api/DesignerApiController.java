@@ -28,4 +28,12 @@ public class DesignerApiController {
         return dto;
     }
 
+//    @PostMapping("api/myPage/modify")
+//    public Designer modifyMyPage(HttpSession session, @RequestBody DesignerDto dto) {
+//        String userId = session.getAttribute("userId").toString();
+//        Designer findDesigner = designerService.findOne(userId);
+//
+//        Designer designer = findDesigner.addDesignerInfo(dto.getImg(), dto.getContent(), dto.getCareer());
+//        return designer;
+//    }
 }

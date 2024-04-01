@@ -19,13 +19,26 @@ spring:
         format_sql: true
 
   thymeleaf:
+    cache: false
     prefix: classpath:/templates/
     suffix: .html
-    cache: false
-    mode: HTML
+    check-template-location: true
 
   profiles:
     include: private
+
+cloud:
+  aws:
+    s3:
+      bucket: hairshop-bucket
+      upload-temp: img/upload/temp/
+    credentials:
+      access-key: AKIAYS2NWB65H77RIN4P
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 
 logging.level:
   org.hibernate.SQL: debug

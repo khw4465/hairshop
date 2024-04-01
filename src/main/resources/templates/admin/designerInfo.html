@@ -15,39 +15,43 @@
 <div id="container">
     <table id="userInfo">
         <tbody>
-        <tr>
-            <th>프로필사진</th>
-            <td>
-                <img th:src="${designerInfo.img}" alt="프로필 사진" id="profileImg">
-                <input type="file" id="inputFile" accept="image/*" style="display: none">
-                <label class="inputFileBtn" for="inputFile">사진 업로드</label>
-            </td>
-        </tr>
-        <tr>
-            <th>이름</th>
-            <td>
-                <input type="text" id="username" name="name" th:value="${designerInfo.name}" readonly>
-            </td>
-        </tr>
-        <tr>
-            <th>소개글</th>
-            <td>
-                        <textarea id="designerContent" name="content" class="textarea"
-                                  th:value="${designerInfo.content}" placeholder="간단한 소개글을 작성해주세요."></textarea>
-            </td>
-        </tr>
-        <tr>
-            <th>경력</th>
-            <td>
-                        <textarea id="designerCareer" name="career" class="textarea"
-                                  th:value="${designerInfo.career}" placeholder="경력을 입력해주세요."></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" id="editBtn">
-                <input type="button" value="수정하기" id="editProfile">
-            </td>
-        </tr>
+            <tr>
+                <th>프로필사진</th>
+                <td>
+                    <form action="/img/upload" method="post" enctype="multipart/form-data">
+                        <label class="btn-file">
+                            <img th:src="${designerInfo.img}" id="profileImg">
+                            <input type="file" name="file" id="inputFile" accept="image/*" onchange="changedImg(this)">
+                            <span>+</span>
+                        </label>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td>
+                    <input type="text" id="username" name="name" th:value="${designerInfo.name}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <th>소개글</th>
+                <td>
+                    <textarea id="designerContent" name="content" class="textarea"
+                              th:text="${designerInfo.content}" placeholder="간단한 소개글을 작성해주세요."></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>경력</th>
+                <td>
+                    <textarea id="designerCareer" name="career" class="textarea"
+                              th:text="${designerInfo.career}" placeholder="경력을 입력해주세요."></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" id="editBtn">
+                    <input type="button" value="수정하기" id="editProfile">
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

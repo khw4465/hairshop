@@ -75,18 +75,6 @@ public class Designer extends BaseEntity {
     }
 
     /**
-     * 디자이너 수정
-     */
-    public static Designer addDesignerInfo(Designer designer, String name, String imgUrl, String content, String career) {
-        designer.setName(name);
-        designer.setImg(imgUrl);
-        designer.setContent(content);
-        designer.setCareer(career);
-
-        return designer;
-    }
-
-    /**
      * 날짜별 스케쥴 생성
      */
     public void getReservationTime() {

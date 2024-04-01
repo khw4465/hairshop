@@ -1,17 +1,27 @@
 package com.example.hairshop.controller;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.hairshop.domain.Designer;
 import com.example.hairshop.domain.StyleSubCategory;
+import com.example.hairshop.domain.User;
 import com.example.hairshop.dto.DesignerDto;
 import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.DesignerService;
+import com.example.hairshop.service.S3Service;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -20,6 +30,7 @@ public class AdminController {
 
     private final DesignerService designerService;
     private final CategoryService categoryService;
+    private final S3Service s3Service;
 
     /** 어드민 홈 **/
     @GetMapping("/admin")
@@ -40,17 +51,33 @@ public class AdminController {
         dto.setContent(findDesigner.getContent());
         dto.setCareer(findDesigner.getCareer());
 
-        // 스타일 카테고리 정보
-        List<StyleSubCategory> subCategoryAll = categoryService.findSubCategoryAll();
-
         m.addAttribute("designerInfo", dto);
-        m.addAttribute("subCategoryAll", subCategoryAll);
 
         return "admin/designerInfo";
     }
 
+    @PostMapping("img/upload")
+    public ResponseEntity<String> imgUpload(@RequestPart("file") MultipartFile file) throws IOException {
+        try {
+            String imgUrl = s3Service.upload(file);
+            return new ResponseEntity<>(imgUrl, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PutMapping("/admin/myPage/modify")
-    public String modifyMyPage() {
-        return "";
+    public ResponseEntity<?> modifyMyPage(HttpSession session, @RequestBody DesignerDto dto) {
+        try {
+            String userId = session.getAttribute("userId").toString();
+            Designer findDesigner = designerService.findOne(userId);
+
+            Designer designer = designerService.modifyDesignerInfo(findDesigner, dto.getImg(), dto.getContent(), dto.getCareer());
+
+            return ResponseEntity.status(HttpStatus.OK).build();
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
