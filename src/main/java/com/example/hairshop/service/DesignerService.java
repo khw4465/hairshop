@@ -25,7 +25,7 @@ public class DesignerService {
         return findDesigner.get();
     }
 
-    /** 디자이너 수정 **/
+    /** 디자이너 정보 수정 **/
     @Transactional
     public Designer modifyDesignerInfo(Designer designer, String imgUrl, String content, String career) {
         if (!imgUrl.equals("")) {

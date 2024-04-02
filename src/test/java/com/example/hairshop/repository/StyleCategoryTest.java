@@ -21,7 +21,7 @@ public class StyleCategoryTest {
     @Autowired StyleMainCategoryRepository mainCategoryRepository;
     @Autowired StyleSubCategoryRepository subCategoryRepository;
     @Autowired DesignerRepository designerRepository;
-
+    @Autowired StyleRepository styleRepository;
     @BeforeEach
     public void 메인_서브_추가() {
         StyleMainCategory mainCategory1 = new StyleMainCategory("커트");
@@ -100,30 +100,17 @@ public class StyleCategoryTest {
     @Test
     @Rollback(false)
     public void 카테고리_스타일추가() {
-//        Designer designer = Designer.createDesigner("디자이너A", "사진A", "안녕하세요~", "~~에서 근무");
+//        Designer designer = Designer.createDesigner("1234", "디자이너A");
 //        designerRepository.save(designer);
 //
 //        StyleSubCategory cut1 = subCategoryRepository.findByName("리프컷");
-//        StyleSubCategory dye1 = subCategoryRepository.findByName("브라운");
+//        StyleSubCategory cut2 = subCategoryRepository.findByName("투블럭컷");
+//        StyleSubCategory perm1 = subCategoryRepository.findByName("히피펌");
+//        StyleSubCategory perm2 = subCategoryRepository.findByName("베이비펌");
 //
-//        Style style1 = new Style("스타일1");
-//        style1.addStyle(cut1, designer);
-//        style1.addStyle(dye1, designer);
 //
-//        StyleSubCategory cut2 = subCategoryRepository.findByName("레이어드컷");
-//        StyleSubCategory dye2 = subCategoryRepository.findByName("블루블랙");
-//
-//        Style style2 = new Style("스타일2");
-//        style2.addStyle(cut2, designer);
-//        style2.addStyle(dye2, designer);
-//
-//        List<Style> styles = new ArrayList<>();
-//        styles.add(style1);
-//        styles.add(style2);
-//
-//        List<Style> findStyle = subCategoryRepository.findStyle("리프컷");
-//        for (Style style : findStyle) {
-//            System.out.println("style = " + style.getImgUrl());
-//        }
+//        Style style1 = Style.addStyle("asdf", designer, cut1, perm1);
+//        Style style2 = Style.addStyle("asdf", designer, cut1, perm2);
+//        styleRepository.save(style1);
     }
 }

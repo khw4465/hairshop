@@ -24,7 +24,7 @@ public class StyleMainCategory {
     private String name;
 
     //== 메인 카테고리 <--> 서브 카테고리 ==//
-    @OneToMany(mappedBy = "mainCategory")
+    @OneToMany(mappedBy = "mainCategory", orphanRemoval = true)
     private List<StyleSubCategory> categories = new ArrayList<>();
 
     public StyleMainCategory(String name) {

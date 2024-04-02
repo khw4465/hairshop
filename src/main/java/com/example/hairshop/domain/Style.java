@@ -14,7 +14,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor
 public class Style extends BaseEntity {
 
     @Id @GeneratedValue
@@ -25,7 +25,7 @@ public class Style extends BaseEntity {
     private String imgUrl;
 
     //== 스타일 <--> 서브 카테고리 ==//
-    @ManyToMany(mappedBy = "styles")
+    @ManyToMany(mappedBy = "styles", cascade = CascadeType.ALL)
     private List<StyleSubCategory> subCategorys = new ArrayList<>();
 
     //== 스타일 <--> 디자이너 ==//
@@ -37,16 +37,4 @@ public class Style extends BaseEntity {
         this.imgUrl = imgUrl;
     }
 
-    //== 연관관계 메서드 ==//
-
-    /**
-     * 디자이너와 서브카테고리에 스타일 연관관계 맺기
-     */
-    public void addStyle(StyleSubCategory category, Designer designer) {
-        category.getStyles().add(this);
-        this.getSubCategorys().add(category);
-
-        designer.getStyles().add(this);
-        this.setDesigner(designer);
-    }
 }

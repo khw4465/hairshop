@@ -54,7 +54,6 @@ public class InitCategory implements CommandLineRunner {
         categoryService.saveStyleSubCateogry(cutCategory6);
 
         StyleMainCategory cut = categoryService.findMainCategoryByName("커트");
-        String cutName = cut.getName();
         cut.addSubCategory(cutCategory1);
         cut.addSubCategory(cutCategory2);
         cut.addSubCategory(cutCategory3);

@@ -48,6 +48,10 @@ public class CategoryService {
     public StyleMainCategory findMainCategoryByName(String name) {
         return styleMainCategoryRepository.findByName(name);
     }
+    /** 서브 카테고리 이름으로 조회(단건)**/
+    public StyleSubCategory findSubCategory(String name) {
+        return styleSubCategoryRepository.findByName(name);
+    }
 
     /** 서브 카테고리 전체 조회 **/
     public List<StyleSubCategory> findSubCategoryAll() {
