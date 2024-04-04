@@ -1,28 +1,18 @@
 package com.example.hairshop.controller;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.example.hairshop.domain.Designer;
-import com.example.hairshop.domain.Style;
-import com.example.hairshop.domain.StyleSubCategory;
-import com.example.hairshop.domain.User;
-import com.example.hairshop.dto.DesignerDto;
-import com.example.hairshop.dto.StyleDto;
-import com.example.hairshop.dto.SubCategoryDto;
+import com.example.hairshop.domain.*;
+import com.example.hairshop.dto.*;
 import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.DesignerService;
-import com.example.hairshop.service.S3Service;
+import com.example.hairshop.service.ShopService;
 import com.example.hairshop.service.StyleService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.IOException;
@@ -33,6 +23,7 @@ import java.util.List;
 public class AdminController {
 
     private final DesignerService designerService;
+    private final ShopService shopService;
     private final CategoryService categoryService;
     private final StyleService styleService;
 
@@ -42,6 +33,7 @@ public class AdminController {
         return "admin/home";
     }
 
+//--------------------------------------------------------------------------------------------
     /** 회원 정보 조회 **/
     @GetMapping("/admin/myPage")
     public String myPage(Model m, HttpSession session) {
@@ -76,7 +68,7 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
+//--------------------------------------------------------------------------------------------
     /** 스타일 사진 등록 화면 **/
     @GetMapping("/admin/style")
     public String style(Model m, HttpSession session) {
@@ -104,12 +96,7 @@ public class AdminController {
             String userId = session.getAttribute("userId").toString();
             Designer findDesigner = designerService.findOne(userId);
 
-            for (StyleDto dto : stylesData) {
-                StyleSubCategory subCategory1 = categoryService.findSubCategory(dto.getCategory1());
-                StyleSubCategory subCategory2 = categoryService.findSubCategory(dto.getCategory2());
-
-                styleService.save(dto.getImgUrl(), findDesigner, subCategory1, subCategory2);
-            }
+            styleService.save(findDesigner, stylesData);
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
@@ -122,7 +109,41 @@ public class AdminController {
     public ResponseEntity<?> deleteStyle(@RequestParam("id") Long id) {
         try {
             styleService.deleteById(id);
-            
+
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+//--------------------------------------------------------------------------------------------
+
+    /** 샵 생성 화면 **/
+    @GetMapping("/admin/createShop")
+    public String shop(Model m) {
+        // 샵 카테고리
+        List<ShopCategory> shops = categoryService.findShopCategoryAll();
+        List<ShopCategoryDto> shopList = shops.stream()
+                .map(c -> new ShopCategoryDto(c.getName())).toList();
+        m.addAttribute("shopCategories", shopList);
+
+        // 메뉴 카테고리
+        List<MenuCategory> menus = categoryService.findMenuCategoryAll();
+        List<MenuCategoryDto> menuList = menus.stream()
+                .map(c -> new MenuCategoryDto(c.getId(), c.getName())).toList();
+        m.addAttribute("menuCategories", menuList);
+
+        return "/admin/createShop";
+    }
+
+    /** 샵 생성 **/
+    @PostMapping("/admin/create/shop")
+    public ResponseEntity<?> createShop(HttpSession session, @RequestBody ShopDto shopDto) {
+        try{
+            String userId = session.getAttribute("userId").toString();
+            Designer findDesigner = designerService.findOne(userId);
+
+            shopService.createShop(findDesigner, shopDto);
+
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

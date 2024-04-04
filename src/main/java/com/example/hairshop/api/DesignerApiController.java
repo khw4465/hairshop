@@ -2,9 +2,11 @@ package com.example.hairshop.api;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.hairshop.domain.Designer;
+import com.example.hairshop.domain.ShopCategory;
 import com.example.hairshop.domain.Style;
 import com.example.hairshop.domain.StyleSubCategory;
 import com.example.hairshop.dto.DesignerDto;
+import com.example.hairshop.dto.ShopCategoryDto;
 import com.example.hairshop.dto.SubCategoryDto;
 import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.DesignerService;
@@ -54,4 +56,12 @@ public class DesignerApiController {
 
         return list;
     }
+
+    @GetMapping("api/admin/shopCategory")
+    public List<ShopCategoryDto> shopCategory() {
+        List<ShopCategory> shopCategories = categoryService.findShopCategoryAll();
+        List<ShopCategoryDto> list = shopCategories.stream().map(s -> new ShopCategoryDto(s.getName())).toList();
+        return list;
+    }
+
 }

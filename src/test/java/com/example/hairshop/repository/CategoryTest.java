@@ -116,4 +116,10 @@ public class CategoryTest {
 //            System.out.println("menuCategory = " + menuCategory.getName());
 //        }
     }
+
+    @Test
+    public void 테스트() {
+        ShopCategory category = shopCategoryRepository.findByName("헤어샵");
+        System.out.println("category = " + category.getName());
+    }
 }

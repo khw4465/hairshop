@@ -24,6 +24,9 @@ public class DesignerService {
         }
         return findDesigner.get();
     }
+    public Designer findOne(String kakaoId) {
+        return designerRepository.findByKakao(kakaoId);
+    }
 
     /** 디자이너 정보 수정 **/
     @Transactional
@@ -37,7 +40,5 @@ public class DesignerService {
         return designer;
     }
 
-    public Designer findOne(String kakaoId) {
-        return designerRepository.findByKakao(kakaoId);
-    }
+
 }

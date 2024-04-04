@@ -1,9 +1,7 @@
 package com.example.hairshop.service;
 
-import com.example.hairshop.domain.ShopCategory;
-import com.example.hairshop.domain.Style;
-import com.example.hairshop.domain.StyleMainCategory;
-import com.example.hairshop.domain.StyleSubCategory;
+import com.example.hairshop.domain.*;
+import com.example.hairshop.repository.MenuCategoryRepository;
 import com.example.hairshop.repository.ShopCategoryRepository;
 import com.example.hairshop.repository.StyleMainCategoryRepository;
 import com.example.hairshop.repository.StyleSubCategoryRepository;
@@ -21,6 +19,7 @@ public class CategoryService {
     private final StyleMainCategoryRepository styleMainCategoryRepository;
     private final StyleSubCategoryRepository styleSubCategoryRepository;
     private final ShopCategoryRepository shopCategoryRepository;
+    private final MenuCategoryRepository menuCategoryRepository;
 
     /** 메인 카테고리 생성 **/
     @Transactional
@@ -36,6 +35,12 @@ public class CategoryService {
     @Transactional
     public void saveShopCategory(ShopCategory category) {
         shopCategoryRepository.save(category);
+    }
+
+    /** 메뉴 카테고리 생성 **/
+    @Transactional
+    public void saveMenuCategory(MenuCategory category) {
+        menuCategoryRepository.save(category);
     }
 
     // 스타일 카테고리
@@ -82,5 +87,11 @@ public class CategoryService {
     /** 샵 카테고리 이름 조회 **/
     public ShopCategory findShopCategoryByName(String name) {
         return shopCategoryRepository.findByName(name);
+    }
+
+    // 메뉴 카테고리
+    /** 메뉴 카테고리 조회(전체) **/
+    public List<MenuCategory> findMenuCategoryAll() {
+        return menuCategoryRepository.findAll();
     }
 }

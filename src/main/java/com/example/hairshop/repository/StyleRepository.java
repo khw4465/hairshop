@@ -24,11 +24,8 @@ public class StyleRepository {
     }
 
     /** 스타일 삭제 **/
-    public void delete(Long id) {
-        Style style = em.find(Style.class, id);
-        if (style != null) {
-            em.remove(style);
-        }
+    public void delete(Style style) {
+        em.remove(style);
     }
 
     /** 스타일 조회(단건) **/

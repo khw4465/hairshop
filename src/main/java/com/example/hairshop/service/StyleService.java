@@ -3,6 +3,7 @@ package com.example.hairshop.service;
 import com.example.hairshop.domain.Designer;
 import com.example.hairshop.domain.Style;
 import com.example.hairshop.domain.StyleSubCategory;
+import com.example.hairshop.dto.StyleDto;
 import com.example.hairshop.repository.StyleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,30 +18,39 @@ import java.util.Optional;
 public class StyleService {
 
     private final StyleRepository styleRepository;
+    private final CategoryService categoryService;
 
+    /** 스타일 등록 **/
     @Transactional
-    public Style save(String imgUrl, Designer designer, StyleSubCategory category1, StyleSubCategory category2) {
-        Optional<Style> findStyle = styleRepository.findByImg(imgUrl);
-        if (findStyle.isEmpty()) {
-            Style style = new Style();
-            style.setImgUrl(imgUrl);
-            style.getSubCategorys().add(category1);
-            style.getSubCategorys().add(category2);
-            category1.getStyles().add(style);
-            category2.getStyles().add(style);
+    public void save(Designer designer, List<StyleDto> stylesData) {
+        for (StyleDto dto : stylesData) {
+            StyleSubCategory subCategory1 = categoryService.findSubCategory(dto.getCategory1());
+            StyleSubCategory subCategory2 = categoryService.findSubCategory(dto.getCategory2());
 
-            style.setDesigner(designer);
-            designer.getStyles().add(style);
+            Optional<Style> findStyle = styleRepository.findByImg(dto.getImgUrl());
+            if (findStyle.isEmpty()) {
+                Style style = new Style();
+                style.setImgUrl(dto.getImgUrl());
+                style.getSubCategorys().add(subCategory1);
+                style.getSubCategorys().add(subCategory2);
+                subCategory1.getStyles().add(style);
+                subCategory2.getStyles().add(style);
 
-            styleRepository.save(style);
-            return style;
+                style.setDesigner(designer);
+                designer.getStyles().add(style);
+
+                styleRepository.save(style);
+            }
         }
-        return findStyle.get();
     }
 
+    /** 스타일 삭제 **/
     @Transactional
     public void deleteById(Long id) {
-        styleRepository.delete(id);
+        Style style = styleRepository.findOne(id);
+        if (style != null) {
+            styleRepository.delete(style);
+        }
     }
 
     public Style findOne(Long id) {

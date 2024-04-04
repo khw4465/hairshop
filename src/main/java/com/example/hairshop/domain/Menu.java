@@ -10,12 +10,13 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor
 public class Menu extends BaseEntity {
 
     @Id
@@ -32,11 +33,8 @@ public class Menu extends BaseEntity {
     //== 시술 금액 ==//
     private int price;
 
-    //== 시술메뉴 설명 ==//
-    private String content;
-
     //== 메뉴 <--> 메뉴 카테고리 ==//
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = ALL)
     @JoinColumn(name = "menuCategoryId")
     private MenuCategory category;
 
@@ -61,8 +59,7 @@ public class Menu extends BaseEntity {
             menu.setName(menuDto.getName());
             menu.setImgUrl(menuDto.getImgUrl());
             menu.setPrice(menuDto.getPrice());
-            menu.setContent(menuDto.getContent());
-            menuDto.getCategory().addMenuCategory(menu);
+//            menuDto.getCategory()(menu);
             menuList.add(menu);
         }
         return menuList;

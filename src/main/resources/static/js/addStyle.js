@@ -48,7 +48,7 @@ function saveStyle() {
             window.location.href = "/admin"
         },
         error: function (xhr, status, error) {
-            console.log("요청 실패: " + error);
+            alert("정보를 입력해주세요.");
         }
     });
 }
@@ -161,7 +161,7 @@ function removeStyleRow(button) {
             type: "DELETE",
             data: {id: id},
             success: function(response) {
-                console.log("스타일 삭제 성공");
+                alert("삭제되었습니다.")
                 row.parentNode.removeChild(row);
             },
             error: function(xhr) {

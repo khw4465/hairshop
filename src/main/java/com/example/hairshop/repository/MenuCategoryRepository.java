@@ -29,11 +29,9 @@ public class MenuCategoryRepository {
         return em.createQuery("select mc from MenuCategory mc", MenuCategory.class)
                 .getResultList();
     }
-
-    /** 샵 카테고리별 메뉴 조회 **/
-    public List<MenuCategory> findByShopCategory(String category) {
-        return em.createQuery("select sc.categories from ShopCategory sc where sc.name = :category", MenuCategory.class)
-                .setParameter("category", category)
-                .getResultList();
+    public MenuCategory findByName(String name) {
+         return em.createQuery("select mc from MenuCategory mc where mc.name = :name", MenuCategory.class)
+                .setParameter("name", name)
+                .getSingleResult();
     }
 }

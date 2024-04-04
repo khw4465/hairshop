@@ -1,5 +1,6 @@
 package com.example.hairshop.controller;
 
+import com.example.hairshop.domain.MenuCategory;
 import com.example.hairshop.domain.ShopCategory;
 import com.example.hairshop.domain.StyleMainCategory;
 import com.example.hairshop.domain.StyleSubCategory;
@@ -27,6 +28,21 @@ public class InitCategory implements CommandLineRunner {
         categoryService.saveShopCategory(nailShop);
         categoryService.saveShopCategory(oneManShop);
         categoryService.saveShopCategory(barberShop);
+
+        MenuCategory menu1 = new MenuCategory("커트");
+        MenuCategory menu2 = new MenuCategory("펌");
+        MenuCategory menu3 = new MenuCategory("염색");
+        MenuCategory menu4 = new MenuCategory("클리닉");
+        MenuCategory menu5 = new MenuCategory("스타일링");
+        MenuCategory menu6 = new MenuCategory("네일");
+        MenuCategory menu7 = new MenuCategory("페디");
+        categoryService.saveMenuCategory(menu1);
+        categoryService.saveMenuCategory(menu2);
+        categoryService.saveMenuCategory(menu3);
+        categoryService.saveMenuCategory(menu4);
+        categoryService.saveMenuCategory(menu5);
+        categoryService.saveMenuCategory(menu6);
+        categoryService.saveMenuCategory(menu7);
 
         StyleMainCategory mainCategory1 = new StyleMainCategory("커트");
         StyleMainCategory mainCategory2 = new StyleMainCategory("펌");
