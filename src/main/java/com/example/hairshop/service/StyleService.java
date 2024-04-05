@@ -46,9 +46,16 @@ public class StyleService {
 
     /** 스타일 삭제 **/
     @Transactional
-    public void deleteById(Long id) {
+    public void deleteById(Designer designer, Long id) {
         Style style = styleRepository.findOne(id);
         if (style != null) {
+            List<StyleSubCategory> subCategorys = style.getSubCategorys();
+            for (StyleSubCategory subCategory : subCategorys) {
+                subCategory.getStyles().remove(style);
+            }
+
+            designer.getStyles().remove(style);
+
             styleRepository.delete(style);
         }
     }

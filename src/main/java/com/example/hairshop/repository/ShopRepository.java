@@ -1,5 +1,6 @@
 package com.example.hairshop.repository;
 
+import com.example.hairshop.domain.Designer;
 import com.example.hairshop.domain.Shop;
 import com.example.hairshop.domain.ShopCategory;
 import jakarta.persistence.EntityManager;
@@ -19,6 +20,11 @@ public class ShopRepository {
         em.persist(shop);
     }
 
+    /** 샵 삭제 **/
+    public void delete(Shop shop) {
+        em.remove(shop);
+    }
+
     /** 샵 조회(단건) **/
     public Shop findOne(Long id) {
         return em.find(Shop.class, id);
@@ -28,6 +34,13 @@ public class ShopRepository {
     public List<Shop> findAll() {
         return em.createQuery("select s from Shop s", Shop.class)
                 .getResultList();
+    }
+
+    /** 샵 조회(디자이너) **/
+    public Shop findByDesigner(Designer designer) {
+        return em.createQuery("select s from Shop s join fetch s.designers d where d = :designer", Shop.class)
+                .setParameter("designer", designer)
+                .getSingleResult();
     }
 
     /** 샵 조회(이름) **/
@@ -49,5 +62,9 @@ public class ShopRepository {
         return em.createQuery("select s from Shop s where s.category = :category", Shop.class)
                 .setParameter("category", category)
                 .getResultList();
+    }
+
+    public void merge(Shop findShop) {
+        em.merge(findShop);
     }
 }

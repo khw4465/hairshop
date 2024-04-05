@@ -1,5 +1,6 @@
 package com.example.hairshop.repository;
 
+import com.example.hairshop.domain.Designer;
 import com.example.hairshop.domain.Shop;
 import com.example.hairshop.domain.ShopCategory;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,7 @@ class ShopRepositoryTest {
 
     @Autowired ShopRepository shopRepository;
     @Autowired ShopCategoryRepository shopCategoryRepository;
+    @Autowired DesignerRepository designerRepository;
 
     @BeforeEach
     public void before() {
@@ -32,6 +34,8 @@ class ShopRepositoryTest {
 
     @Test
     public void 샵_생성() {
-//        Shop.createShop()
+        Designer findDesigner = designerRepository.findOne(1L);
+        Shop shop = shopRepository.findByDesigner(findDesigner);
+        System.out.println("shop = " + shop.getName());
     }
 }

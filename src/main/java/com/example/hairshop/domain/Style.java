@@ -25,7 +25,7 @@ public class Style extends BaseEntity {
     private String imgUrl;
 
     //== 스타일 <--> 서브 카테고리 ==//
-    @ManyToMany(mappedBy = "styles", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "styles")
     private List<StyleSubCategory> subCategorys = new ArrayList<>();
 
     //== 스타일 <--> 디자이너 ==//

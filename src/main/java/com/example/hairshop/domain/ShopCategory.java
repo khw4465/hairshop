@@ -23,7 +23,7 @@ public class ShopCategory extends BaseEntity {
     private String name;
 
     //== 샵 카테고리 <--> 샵 ==//
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = ALL, orphanRemoval = true)
     private List<Shop> shops = new ArrayList<>();
 
     public ShopCategory(String name) {

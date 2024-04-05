@@ -34,7 +34,7 @@ public class Menu extends BaseEntity {
     private int price;
 
     //== 메뉴 <--> 메뉴 카테고리 ==//
-    @ManyToOne(fetch = LAZY, cascade = ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "menuCategoryId")
     private MenuCategory category;
 
@@ -46,6 +46,14 @@ public class Menu extends BaseEntity {
     //== 메뉴 <--> 예약 상세 ==//
     @OneToOne(mappedBy = "menu", fetch = LAZY)
     private ReservationDetail reservationDetail;
+
+    public Menu(String name, String imgUrl, int price, MenuCategory category, Shop shop) {
+        this.name = name;
+        this.imgUrl = imgUrl;
+        this.price = price;
+        this.category = category;
+        this.shop = shop;
+    }
 
     //== 연관관계 메서드 ==//
 

@@ -106,9 +106,12 @@ public class AdminController {
 
     /** 스타일 삭제 **/
     @DeleteMapping("/admin/delete/style")
-    public ResponseEntity<?> deleteStyle(@RequestParam("id") Long id) {
+    public ResponseEntity<?> deleteStyle(HttpSession session, @RequestParam("id") Long id) {
         try {
-            styleService.deleteById(id);
+            String userId = session.getAttribute("userId").toString();
+            Designer findDesigner = designerService.findOne(userId);
+
+            styleService.deleteById(findDesigner, id);
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
@@ -119,7 +122,7 @@ public class AdminController {
 
     /** 샵 생성 화면 **/
     @GetMapping("/admin/createShop")
-    public String shop(Model m) {
+    public String shop1(Model m) {
         // 샵 카테고리
         List<ShopCategory> shops = categoryService.findShopCategoryAll();
         List<ShopCategoryDto> shopList = shops.stream()
@@ -143,6 +146,78 @@ public class AdminController {
             Designer findDesigner = designerService.findOne(userId);
 
             shopService.createShop(findDesigner, shopDto);
+
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    /** 샵 수정 화면 **/
+    @GetMapping("/admin/modifyShop")
+    public String shop2(HttpSession session, Model m) {
+        String userId = session.getAttribute("userId").toString();
+        Designer findDesigner = designerService.findOne(userId);
+
+        //샵 -> DTO로 변경
+        Shop findShop = shopService.findByDesigner(findDesigner);
+        ShopDto dto = new ShopDto();
+        dto.setName(findShop.getName());
+        dto.setShopCategory(findShop.getCategory().getName());
+        dto.setAddress(findShop.getAddress());
+        dto.setOpenTime(findShop.getOpenTime());
+        dto.setCloseTime(findShop.getCloseTime());
+        dto.setContent(findShop.getContent());
+        List<String> imgList = findShop.getShopImgs().stream()
+                .map(ShopImg::getImgUrl).toList();
+        dto.setShopImgs(imgList);
+        List<MenuDto> menuList = findShop.getMenus().stream()
+                .map(i -> new MenuDto(i.getName(), i.getImgUrl(), i.getPrice(), i.getCategory().getName())).toList();
+        dto.setMenus(menuList);
+        m.addAttribute("shop", dto);
+
+        // 샵 카테고리
+        List<ShopCategory> shops = categoryService.findShopCategoryAll();
+        List<ShopCategoryDto> shopCategoryList = shops.stream()
+                .map(c -> new ShopCategoryDto(c.getName())).toList();
+        m.addAttribute("shopCategories", shopCategoryList);
+
+        // 메뉴 카테고리
+        List<MenuCategory> menus = categoryService.findMenuCategoryAll();
+        List<MenuCategoryDto> menuCategoryList = menus.stream()
+                .map(c -> new MenuCategoryDto(c.getId(), c.getName())).toList();
+        m.addAttribute("menuCategories", menuCategoryList);
+
+        return "/admin/modifyShop";
+    }
+
+    /** 샵 정보 수정 **/
+    @PutMapping("/admin/modify/shop")
+    public ResponseEntity<?> modifyShop(HttpSession session, @RequestBody ShopDto dto) {
+        try{
+            String userId = session.getAttribute("userId").toString();
+            Designer findDesigner = designerService.findOne(userId);
+
+            System.out.println("dto = " + dto);
+
+            Shop shop = shopService.modifyShop(findDesigner, dto);
+
+            System.out.println("shop = " + shop);
+
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    /** 샵 삭재 **/
+    @DeleteMapping("/admin/remove/shop")
+    public ResponseEntity<?> removeShop(HttpSession session) {
+        try{
+            String userId = session.getAttribute("userId").toString();
+            Designer findDesigner = designerService.findOne(userId);
+
+            shopService.removeShop(findDesigner);
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {

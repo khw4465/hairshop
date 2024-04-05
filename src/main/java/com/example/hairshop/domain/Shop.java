@@ -15,6 +15,7 @@ import static lombok.AccessLevel.*;
 
 @Entity
 @Getter @Setter
+@ToString
 @NoArgsConstructor
 public class Shop extends BaseEntity {
 
@@ -57,7 +58,6 @@ public class Shop extends BaseEntity {
     //== 샵 <--> 예약상세 ==//
     @OneToMany(mappedBy = "shop")
     private List<ReservationDetail> reservationDetails = new ArrayList<>();
-
 
     /**
      * 샵에 디자이너 등록하기

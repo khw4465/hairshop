@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -24,7 +25,7 @@ public class StyleMainCategory {
     private String name;
 
     //== 메인 카테고리 <--> 서브 카테고리 ==//
-    @OneToMany(mappedBy = "mainCategory", orphanRemoval = true)
+    @OneToMany(mappedBy = "mainCategory",cascade = ALL, orphanRemoval = true)
     private List<StyleSubCategory> categories = new ArrayList<>();
 
     public StyleMainCategory(String name) {

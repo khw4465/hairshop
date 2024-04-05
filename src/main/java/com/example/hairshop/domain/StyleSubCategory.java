@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -30,7 +31,7 @@ public class StyleSubCategory {
     private StyleMainCategory mainCategory;
 
     //== 서브 카테고리 <--> 스타일 ==//
-    @ManyToMany
+    @ManyToMany(cascade = ALL)
     @JoinTable(name = "styleCategory",
             joinColumns = @JoinColumn(name = "styleSubCategoryId"),
             inverseJoinColumns = @JoinColumn(name = "styleId")
