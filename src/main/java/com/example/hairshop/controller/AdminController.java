@@ -198,11 +198,7 @@ public class AdminController {
             String userId = session.getAttribute("userId").toString();
             Designer findDesigner = designerService.findOne(userId);
 
-            System.out.println("dto = " + dto);
-
             Shop shop = shopService.modifyShop(findDesigner, dto);
-
-            System.out.println("shop = " + shop);
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
@@ -223,5 +219,26 @@ public class AdminController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+//--------------------------------------------------------------------------------------------
+    /** 샵-디자이너 등록 화면 **/
+    @GetMapping("admin/registDesigner")
+    public String shop_designer(Model m, HttpSession session) {
+        String userId = session.getAttribute("userId").toString();
+        Designer findDesigner = designerService.findOne(userId);
+
+        List<Designer> designers = findDesigner.getShop().getDesigners();
+        List<DesignerDto> designerDtos = designers.stream()
+                .map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+        DesignerDto mainDesigner = designerDtos.get(0); // 메인 디자이너
+        m.addAttribute("mainDesigner", mainDesigner);
+
+        if (designers.size() > 1) {
+            List<DesignerDto> subDesigner = designerDtos.subList(1, designers.size()); // 서브 디자이너
+            m.addAttribute("subDesigner", subDesigner);
+        }
+
+        return "/admin/registDesigner";
     }
 }
