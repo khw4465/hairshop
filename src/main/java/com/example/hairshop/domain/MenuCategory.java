@@ -16,7 +16,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = PROTECTED)
-public class MenuCategory extends BaseEntity {
+public class MenuCategory {
 
     @Id @GeneratedValue
     @Column(name = "menuCategoryId")

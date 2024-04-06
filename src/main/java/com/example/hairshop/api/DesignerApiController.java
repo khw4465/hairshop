@@ -14,6 +14,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,4 +66,11 @@ public class DesignerApiController {
         return list;
     }
 
+    @PostMapping("api/admin/search")
+    public List<DesignerDto> searchDesigner(@RequestParam("searchInput") String searchInput) {
+         List<Designer> searchDesigner = designerService.findByName(searchInput);
+         List<DesignerDto> designerList = searchDesigner.stream().map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+
+         return designerList;
+    }
 }

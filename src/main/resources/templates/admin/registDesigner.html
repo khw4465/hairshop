@@ -16,8 +16,10 @@
     <h1>디자이너 등록</h1>
     <div>
         <div class="search">
-            <input class="searchText" type="text" placeholder="디자이너 이름을 입력하세요.">
-            <img class="searchImg" src="/img/pngwing.com.png">
+            <form action="/admin/search" method="post" id="searchForm">
+                <input class="searchText" type="text" id="searchInput" name="searchInput" placeholder="디자이너 이름을 입력하세요.">
+                <img class="searchImg" src="/img/pngwing.com.png" id="searchButton" onclick="submitForm()">
+            </form>
         </div>
     <table id="designerTable">
         <thead>
@@ -37,22 +39,21 @@
                 <input class="designerName" type="text" th:value="${mainDesigner.name}" readonly>
             </td>
             <td>
-                <textarea class="textarea" th:value="${mainDesigner.career}" readonly></textarea>
+                <textarea class="textarea" th:value="${mainDesigner.career}" th:text="${mainDesigner.career}" readonly></textarea>
             </td>
             <td>
                 <span id="mainDesigner">원장</span>
-<!--                <button onclick="removeDesignerRow(this)" class="deleteBtn">삭제</button>-->
             </td>
         </tr>
-        <tr th:each="subDesigner : ${subDesigner}" class="designer">
+        <tr th:each="sub : ${subDesigner}" class="designer">
             <td>
-                <img th:src="${subDesigner.img}" class="designerImg">
+                <img th:src="${sub.img}" class="designerImg">
             </td>
             <td>
-                <input class="designerName" type="text" th:value="${subDesigner.name}" readonly>
+                <input class="designerName" type="text" th:value="${sub.name}" readonly>
             </td>
             <td>
-                <textarea class="textarea" th:value="${subDesigner.career}" readonly></textarea>
+                <textarea class="textarea" th:value="${sub.career}" th:text="${sub.career}" readonly></textarea>
             </td>
             <td>
                 <button onclick="removeDesignerRow(this)" class="deleteBtn">삭제</button>
@@ -65,5 +66,6 @@
         <input type="button" value="디자이너 등록" id="registDesigner" onclick="registDesigner()">
     </div>
 </div>
+<script src="/js/registDesigner.js"></script>
 </body>
 </html>

@@ -35,6 +35,13 @@ public class DesignerRepository {
                 .getResultList();
     }
 
+    /** 디자이너 이름 조회 **/
+    public List<Designer> findByName(String name) {
+        return em.createQuery("select d from Designer d where d.name = :name", Designer.class)
+                .setParameter("name", name)
+                .getResultList();
+    }
+
     /** 카카오아이디 디자이너 유무 조회 **/
     public Optional<Designer> findOptionalByKakao(String kakaoId) {
         try {

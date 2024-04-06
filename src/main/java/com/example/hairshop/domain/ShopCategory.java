@@ -13,7 +13,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = PROTECTED)
-public class ShopCategory extends BaseEntity {
+public class ShopCategory {
 
     @Id @GeneratedValue
     @Column(name = "shopCategoryId")
