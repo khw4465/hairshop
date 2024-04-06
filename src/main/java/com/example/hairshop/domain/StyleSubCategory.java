@@ -31,7 +31,7 @@ public class StyleSubCategory {
     private StyleMainCategory mainCategory;
 
     //== 서브 카테고리 <--> 스타일 ==//
-    @ManyToMany(cascade = ALL)
+    @ManyToMany
     @JoinTable(name = "styleCategory",
             joinColumns = @JoinColumn(name = "styleSubCategoryId"),
             inverseJoinColumns = @JoinColumn(name = "styleId")

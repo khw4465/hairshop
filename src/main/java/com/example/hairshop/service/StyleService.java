@@ -23,6 +23,20 @@ public class StyleService {
     /** 스타일 등록 **/
     @Transactional
     public void save(Designer designer, List<StyleDto> stylesData) {
+        //기존에 스타일이 있다면 삭제
+        List<Style> originStyle = designer.getStyles();
+        if (originStyle.size() > 0) {
+            for (Style style : originStyle) {
+                List<StyleSubCategory> subCategorys = style.getSubCategorys();
+                for (StyleSubCategory subCategory : subCategorys) {
+                    subCategory.getStyles().remove(style);
+                }
+                styleRepository.delete(style);
+            }
+            originStyle.clear();
+        }
+
+        //받아온 값으로 스타일 생성
         for (StyleDto dto : stylesData) {
             StyleSubCategory subCategory1 = categoryService.findSubCategory(dto.getCategory1());
             StyleSubCategory subCategory2 = categoryService.findSubCategory(dto.getCategory2());

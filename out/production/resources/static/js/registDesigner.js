@@ -77,9 +77,15 @@ function addDesignerList(designerList) {
     });
 }
 
+// 테이블 제거 함수
 function removeExistingTable() {
     let existingTable = document.getElementById("searchList");
     if (existingTable) {
         existingTable.remove();
     }
+}
+
+// 디자이너 추가 함수
+function addDesigner() {
+
 }
