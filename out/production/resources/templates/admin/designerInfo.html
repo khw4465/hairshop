@@ -6,56 +6,112 @@
     <title>hairshop</title>
     <link href="/css/adminHeader.css" rel="stylesheet">
     <link href="/css/adminSidebar.css" rel="stylesheet">
-    <link href="/css/designerInfo.css" rel="stylesheet">
+    <link href="/css/createDesigner.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <div th:replace="~{fragment/adminHeader :: adminHeader}"></div>
 <div th:replace="~{fragment/adminSidebar :: adminSidebar}"></div>
 <div id="container">
-    <h1>개인정보 수정</h1>
+    <h1>디자이너 정보</h1>
     <table id="userInfo">
         <tbody>
-            <tr>
-                <th>프로필사진</th>
-                <td>
-                    <form action="/img/upload" method="post" enctype="multipart/form-data">
-                        <label class="btn-file">
-                            <img th:src="${designerInfo.img}" id="profileImg">
-                            <input type="file" name="file" id="inputFile" accept="image/*" onchange="changedImg(this)">
-                            <span>+</span>
-                        </label>
-                    </form>
-                </td>
-            </tr>
-            <tr>
-                <th>이름</th>
-                <td>
-                    <input type="text" id="username" name="name" th:value="${designerInfo.name}" readonly>
-                </td>
-            </tr>
-            <tr>
-                <th>소개글</th>
-                <td>
-                    <textarea id="designerContent" name="content" class="textarea"
-                              th:text="${designerInfo.content}" placeholder="간단한 소개글을 작성해주세요."></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th>경력</th>
-                <td>
-                    <textarea id="designerCareer" name="career" class="textarea"
-                              th:text="${designerInfo.career}" placeholder="경력을 입력해주세요."></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" id="editBtn">
-                    <input type="button" value="수정하기" id="editProfile">
-                </td>
-            </tr>
+        <tr>
+            <th>프로필사진</th>
+            <td>
+                <form action="/img/upload" method="post" enctype="multipart/form-data">
+                    <label class="btn-file">
+                        <input type="hidden" id="userId" th:value="${designerInfo.id}">
+                        <img th:src="${designerInfo.img}" id="profileImg">
+                        <input type="file" name="file" id="profile" accept="image/*" onchange="changedImg(this)">
+                        <span>+</span>
+                    </label>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td>
+                <input type="text" id="username" name="name" th:value="${designerInfo.name}" placeholder="이름을 입력해주세요.">
+            </td>
+        </tr>
+        <tr>
+            <th>소개글</th>
+            <td>
+                <textarea id="designerContent" name="content" class="textarea"
+                          th:text="${designerInfo.content}" placeholder="간단한 소개글을 작성해주세요."></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>경력</th>
+            <td>
+                <textarea id="designerCareer" name="career" class="textarea"
+                          th:text="${designerInfo.career}" placeholder="경력을 입력해주세요."></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>스타일</th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table id="styleTable">
+                    <thead>
+                    <tr>
+                        <th scope="col">이미지</th>
+                        <th scope="col">카테고리1</th>
+                        <th scope="col">카테고리2</th>
+                        <th scope="col" id="addStyle">
+                            <label id="addBtn">
+                                <input type="button" value="추가" id="addStyleBtn" onclick="addStyle()">
+                                <span>추가</span>
+                            </label>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="style : ${designerInfo.styles}" class="styles">
+                            <td>
+                                <form action="/img/upload" method="post" enctype="multipart/form-data">
+                                    <label class="btn-file">
+                                        <img th:src="${style.imgUrl}" class="styleImg">
+                                        <input type="file" class="inputFile" name="file" accept="image/*" onchange="changedImg(this)">
+                                        <span>+</span>
+                                    </label>
+                                </form>
+                            </td>
+                            <td>
+                                <select class="styleCategory1">
+                                    <option th:text="${style.category1}">카테고리 선택</option>
+                                    <option th:each="category : ${subCategories}" th:value="${category.name}" th:text="${category.name}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="styleCategory2">
+                                    <option th:text="${style.category2}">카테고리 선택</option>
+                                    <option th:each="category : ${subCategories}" th:value="${category.name}" th:text="${category.name}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <button onclick="removeStyleRow(this)" class="deleteBtn">삭제</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" id="modifyDesignerBtn">
+                <input type="button" value="수정하기" id="modifyDesigner">
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>
-<script src="/js/designerInfo.js"></script>
+<script th:inline="javascript">
+    let designerInfo = /*[[${designerInfo}]]*/ '';
+    let subCategories = /*[[${subCategories}]]*/ '';
+</script>
+<script src="/js/createDesigner.js"></script>
+<script src="/js/modifyDesigner.js"></script>
 </body>
 </html>

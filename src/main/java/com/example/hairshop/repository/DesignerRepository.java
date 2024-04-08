@@ -24,6 +24,11 @@ public class DesignerRepository {
         em.persist(designer);
     }
 
+    /** 디자이너 삭제 **/
+    public void delete(Designer designer) {
+        em.remove(designer);
+    }
+
     /** 디자이너 조회(단건) **/
     public Designer findOne(Long id) {
         return em.find(Designer.class, id);
@@ -37,8 +42,8 @@ public class DesignerRepository {
 
     /** 디자이너 이름 조회 **/
     public List<Designer> findByName(String name) {
-        return em.createQuery("select d from Designer d where d.name = :name", Designer.class)
-                .setParameter("name", name)
+        return em.createQuery("select d from Designer d where d.name like :name", Designer.class)
+                .setParameter("name", "%" + name + "%")
                 .getResultList();
     }
 

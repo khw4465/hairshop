@@ -14,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -34,41 +32,6 @@ public class AdminController {
     }
 
 //--------------------------------------------------------------------------------------------
-    /** 회원 정보 조회 **/
-    @GetMapping("/admin/myPage")
-    public String myPage(Model m, HttpSession session) {
-        String userId = session.getAttribute("userId").toString();
-        Designer findDesigner = designerService.findOne(userId);
-
-        // 디자이너 정보
-        DesignerDto dto = new DesignerDto();
-        dto.setName(findDesigner.getName());
-        dto.setImg(findDesigner.getImg());
-        dto.setContent(findDesigner.getContent());
-        dto.setCareer(findDesigner.getCareer());
-
-        m.addAttribute("designerInfo", dto);
-
-        return "admin/designerInfo";
-    }
-
-    /** 회원정보 수정 **/
-    @PutMapping("/admin/myPage/modify")
-    public ResponseEntity<?> modifyMyPage(HttpSession session, @RequestBody DesignerDto dto) {
-        try {
-            String userId = session.getAttribute("userId").toString();
-            Designer findDesigner = designerService.findOne(userId);
-
-            // 디자이너 정보 수정
-            Designer designer = designerService.modifyDesignerInfo(findDesigner, dto.getImg(), dto.getContent(), dto.getCareer());
-
-            return ResponseEntity.status(HttpStatus.OK).build();
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-//--------------------------------------------------------------------------------------------
     /** 스타일 사진 등록 화면 **/
     @GetMapping("/admin/style")
     public String style(Model m, HttpSession session) {
@@ -78,7 +41,7 @@ public class AdminController {
         // 회원의 스타일 가져오기
         List<Style> styles = findDesigner.getStyles();
         List<StyleDto> styleDtoList = styles.stream()
-                .map(s -> new StyleDto(s.getId(), s.getImgUrl(), s.getSubCategorys())).toList();
+                .map(s -> new StyleDto(s.getImgUrl(), s.getSubCategorys())).toList();
         m.addAttribute("styles", styleDtoList);
 
         // 모든 서브 카테고리 가져오기
@@ -126,25 +89,19 @@ public class AdminController {
         String userId = session.getAttribute("userId").toString();
         Designer findDesigner = designerService.findOne(userId);
 
-        Shop isShop = findDesigner.getShop();
+        // 샵 카테고리
+        List<ShopCategory> shops = categoryService.findShopCategoryAll();
+        List<ShopCategoryDto> shopList = shops.stream()
+                .map(c -> new ShopCategoryDto(c.getName())).toList();
+        m.addAttribute("shopCategories", shopList);
 
-        if (isShop == null) {
+        // 메뉴 카테고리
+        List<MenuCategory> menus = categoryService.findMenuCategoryAll();
+        List<MenuCategoryDto> menuList = menus.stream()
+                .map(c -> new MenuCategoryDto(c.getId(), c.getName())).toList();
+        m.addAttribute("menuCategories", menuList);
 
-            // 샵 카테고리
-            List<ShopCategory> shops = categoryService.findShopCategoryAll();
-            List<ShopCategoryDto> shopList = shops.stream()
-                    .map(c -> new ShopCategoryDto(c.getName())).toList();
-            m.addAttribute("shopCategories", shopList);
-
-            // 메뉴 카테고리
-            List<MenuCategory> menus = categoryService.findMenuCategoryAll();
-            List<MenuCategoryDto> menuList = menus.stream()
-                    .map(c -> new MenuCategoryDto(c.getId(), c.getName())).toList();
-            m.addAttribute("menuCategories", menuList);
-
-            return "/admin/createShop";
-        }
-        return "/admin/existShop";
+        return "/admin/createShop";
     }
 
     /** 샵 생성 **/
@@ -168,43 +125,37 @@ public class AdminController {
         String userId = session.getAttribute("userId").toString();
         Designer findDesigner = designerService.findOne(userId);
 
-        Shop isShop = findDesigner.getShop();
 
-        if (isShop != null) {
+        //샵 -> DTO로 변경
+        Shop findShop = shopService.findByDesigner(findDesigner);
+        ShopDto dto = new ShopDto();
+        dto.setName(findShop.getName());
+        dto.setShopCategory(findShop.getCategory().getName());
+        dto.setAddress(findShop.getAddress());
+        dto.setOpenTime(findShop.getOpenTime());
+        dto.setCloseTime(findShop.getCloseTime());
+        dto.setContent(findShop.getContent());
+        List<String> imgList = findShop.getShopImgs().stream()
+                .map(ShopImg::getImgUrl).toList();
+        dto.setShopImgs(imgList);
+        List<MenuDto> menuList = findShop.getMenus().stream()
+                .map(i -> new MenuDto(i.getName(), i.getImgUrl(), i.getPrice(), i.getCategory().getName())).toList();
+        dto.setMenus(menuList);
+        m.addAttribute("shop", dto);
 
-            //샵 -> DTO로 변경
-            Shop findShop = shopService.findByDesigner(findDesigner);
-            ShopDto dto = new ShopDto();
-            dto.setName(findShop.getName());
-            dto.setShopCategory(findShop.getCategory().getName());
-            dto.setAddress(findShop.getAddress());
-            dto.setOpenTime(findShop.getOpenTime());
-            dto.setCloseTime(findShop.getCloseTime());
-            dto.setContent(findShop.getContent());
-            List<String> imgList = findShop.getShopImgs().stream()
-                    .map(ShopImg::getImgUrl).toList();
-            dto.setShopImgs(imgList);
-            List<MenuDto> menuList = findShop.getMenus().stream()
-                    .map(i -> new MenuDto(i.getName(), i.getImgUrl(), i.getPrice(), i.getCategory().getName())).toList();
-            dto.setMenus(menuList);
-            m.addAttribute("shop", dto);
+        // 샵 카테고리
+        List<ShopCategory> shops = categoryService.findShopCategoryAll();
+        List<ShopCategoryDto> shopCategoryList = shops.stream()
+                .map(c -> new ShopCategoryDto(c.getName())).toList();
+        m.addAttribute("shopCategories", shopCategoryList);
 
-            // 샵 카테고리
-            List<ShopCategory> shops = categoryService.findShopCategoryAll();
-            List<ShopCategoryDto> shopCategoryList = shops.stream()
-                    .map(c -> new ShopCategoryDto(c.getName())).toList();
-            m.addAttribute("shopCategories", shopCategoryList);
+        // 메뉴 카테고리
+        List<MenuCategory> menus = categoryService.findMenuCategoryAll();
+        List<MenuCategoryDto> menuCategoryList = menus.stream()
+                .map(c -> new MenuCategoryDto(c.getId(), c.getName())).toList();
+        m.addAttribute("menuCategories", menuCategoryList);
 
-            // 메뉴 카테고리
-            List<MenuCategory> menus = categoryService.findMenuCategoryAll();
-            List<MenuCategoryDto> menuCategoryList = menus.stream()
-                    .map(c -> new MenuCategoryDto(c.getId(), c.getName())).toList();
-            m.addAttribute("menuCategories", menuCategoryList);
-
-            return "/admin/modifyShop";
-
-        }
-        return "/admin/noShop";
+        return "/admin/modifyShop";
     }
 
     /** 샵 정보 수정 **/
@@ -244,37 +195,18 @@ public class AdminController {
         String userId = session.getAttribute("userId").toString();
         Designer findDesigner = designerService.findOne(userId);
 
-        Shop isShop = findDesigner.getShop();
+        List<Designer> designers = findDesigner.getShop().getDesigners();
+        List<DesignerDto> designerDtos = designers.stream()
+                .map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+        DesignerDto mainDesigner = designerDtos.get(0); // 메인 디자이너
+        m.addAttribute("mainDesigner", mainDesigner);
 
-        if (isShop != null) {
-            List<Designer> designers = findDesigner.getShop().getDesigners();
-            List<DesignerDto> designerDtos = designers.stream()
-                    .map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
-            DesignerDto mainDesigner = designerDtos.get(0); // 메인 디자이너
-            m.addAttribute("mainDesigner", mainDesigner);
-
-            if (designers.size() > 1) {
-                List<DesignerDto> subDesigner = designerDtos.subList(1, designers.size()); // 서브 디자이너
-                m.addAttribute("subDesigner", subDesigner);
-            }
-
-            return "/admin/registDesigner";
+        if (designers.size() > 1) {
+            List<DesignerDto> subDesigner = designerDtos.subList(1, designers.size()); // 서브 디자이너
+            m.addAttribute("subDesigner", subDesigner);
         }
-        return "/admin/noShop";
+
+        return "/admin/registDesigner";
     }
 
-    /** 디자이너 검색 **/
-    @PostMapping("/admin/search")
-    public ResponseEntity<?> searchDesigner(@RequestBody SearchCondition condition) {
-        try {
-
-            System.out.println("condition = " + condition.getName());
-            List<Designer> searchDesigner = designerService.findByName(condition.getName());
-            List<DesignerDto> designerList = searchDesigner.stream().map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
-
-            return new ResponseEntity<>(designerList, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("1", HttpStatus.BAD_REQUEST);
-        }
-    }
 }

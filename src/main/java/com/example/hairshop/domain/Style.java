@@ -33,6 +33,15 @@ public class Style extends BaseEntity {
     @JoinColumn(name = "designerId")
     private Designer designer;
 
+    @Override
+    public String toString() {
+        return "Style{" +
+                "id=" + id +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", subCategorys=" + subCategorys +
+                '}';
+    }
+
     public Style(String imgUrl) {
         this.imgUrl = imgUrl;
     }

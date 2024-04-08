@@ -80,8 +80,9 @@ public class KakaoLoginApiController {
 
             // 체크박스가 true면 디자이너 생성 false면 일반회원 생성 후 클래스명 반환
             if (checkForm.getIsDesigner() == 1) {
-                Designer newDesigner = Designer.createDesigner(kakaoId, username);
-                Designer designer = designerService.join(newDesigner);
+                Designer newDesigner = Designer.createDesigner(username);
+                newDesigner.setKakaoId(kakaoId);
+                Designer designer = designerService.kakaoJoin(newDesigner);
                 return new ResponseEntity<>(designer.getClass().toString(), HttpStatus.OK);
             } else {
                 User newUser = User.createUser(kakaoId, username, userEmail);
@@ -100,7 +101,6 @@ public class KakaoLoginApiController {
         session.setAttribute("isDesigner", checkForm.getIsDesigner());
 
         Integer isDesigner = (Integer) session.getAttribute("isDesigner");
-        System.out.println("isDesigner = " + isDesigner.toString());
 
         Map<String, Integer> response = new HashMap<>();
         response.put("isDesigner", isDesigner);

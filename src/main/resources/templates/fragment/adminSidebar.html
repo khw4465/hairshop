@@ -4,13 +4,18 @@
 <nav class="left_sub_menu" th:fragment="adminSidebar">
     <div class="sub_menu">
         <ul class="big_menu">
+            <li>디자이너 관리</li>
+            <ul class="small_menu">
+                <li><a th:href="${'/admin/designer'}">디자이너 생성</a></li>
+                <li><a th:href="${'/admin/designerList'}">디자이너 목록</a></li>
+            </ul>
+        </ul>
+        <ul class="big_menu">
             <li>매장관리</li>
             <ul class="small_menu">
                 <li><a th:href="${'/admin/createShop'}">매장 등록</a></li>
-                <li><a th:href="${'/admin/registDesigner'}">디자이너 등록</a></li>
-                <li><a th:href="${'/admin/modifyShop'}">매장 정보</a></li>
-                <li><a href="#">예약회원</a></li>
-                <li><a href="#">리뷰관리</a></li>
+                <li><a th:href="${'/admin/registDesigner'}">매장 목록</a></li>
+<!--                <li><a th:href="${'/admin/modifyShop'}">매장 정보</a></li>-->
             </ul>
         </ul>
         <ul class="big_menu">
@@ -18,13 +23,6 @@
             <ul class="small_menu">
                 <li><a href="#">공지사항 등록</a></li>
                 <li><a href="#"></a>공지사항 목록</a></li>
-            </ul>
-        </ul>
-        <ul class="big_menu">
-            <li>MYPAGE</li>
-            <ul class="small_menu">
-                <li><a th:href="${'/admin/myPage'}">개인정보 수정</a></li>
-                <li><a th:href="${'/admin/style'}">스타일 사진 등록</a></li>
             </ul>
         </ul>
     </div>

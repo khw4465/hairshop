@@ -28,7 +28,7 @@ td {
 }
 
 input[type="text"] {
-    width: 300px;
+    width: 400px;
     height: 30px;
     margin: 30px 100px;
     border: 1px solid black;
@@ -36,18 +36,18 @@ input[type="text"] {
 }
 
 .textarea {
-    width: 300px;
+    width: 400px;
     height: 70px;
     margin: 15px 100px;
     border: 1px solid black;
     border-radius: 10px;
 }
 
-#editBtn {
+#addDesignerBtn, #modifyDesignerBtn {
     text-align: center;
 }
 
-#editProfile {
+#addDesigner, #modifyDesigner{
     background-color: #575757;
     border: none;
     color: white;
@@ -77,4 +77,31 @@ input[type="text"] {
 
 input[type=file]{
     display: none;
+}
+
+#styleTable {
+    text-align: center;
+    margin: 20px auto;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+#addStyleBtn {
+    display: none;
+}
+
+#addBtn {
+    padding: 5px 15px;
+    background-color: #797979;
+    color: white;
+    font-weight: bold;
+}
+
+.styleImg {
+    display: none;
+}
+
+thead>tr>th {
+    padding: 10px 50px;
 }

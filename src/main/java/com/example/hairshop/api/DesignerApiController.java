@@ -7,6 +7,7 @@ import com.example.hairshop.domain.Style;
 import com.example.hairshop.domain.StyleSubCategory;
 import com.example.hairshop.dto.DesignerDto;
 import com.example.hairshop.dto.ShopCategoryDto;
+import com.example.hairshop.dto.StyleDto;
 import com.example.hairshop.dto.SubCategoryDto;
 import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.DesignerService;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,15 +44,6 @@ public class DesignerApiController {
         return dto;
     }
 
-    @PostMapping("api/myPage/modify")
-    public Designer modifyMyPage(HttpSession session, @RequestBody DesignerDto dto) {
-        String userId = session.getAttribute("userId").toString();
-        Designer findDesigner = designerService.findOne(userId);
-
-        Designer designer = designerService.modifyDesignerInfo(findDesigner, dto.getImg(), dto.getContent(), dto.getCareer());
-        return designer;
-    }
-
     @GetMapping("api/admin/style")
     public List<SubCategoryDto> getCategory() {
         List<StyleSubCategory> subCategories = categoryService.findSubCategoryAll();
@@ -66,11 +59,22 @@ public class DesignerApiController {
         return list;
     }
 
+    /** 디자이너 전체 조회 **/
+    @GetMapping("api/admin/findAll")
+    public List<DesignerDto> findAll() {
+        List<Designer> all = designerService.findAll();
+        List<DesignerDto> list = all.stream()
+                .map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+        return list;
+    }
+
+    /** 디자이너 검색 **/
     @PostMapping("api/admin/search")
     public List<DesignerDto> searchDesigner(@RequestParam("searchInput") String searchInput) {
-         List<Designer> searchDesigner = designerService.findByName(searchInput);
-         List<DesignerDto> designerList = searchDesigner.stream().map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
-
-         return designerList;
+        List<Designer> searchDesigner = designerService.findByName(searchInput);
+        List<DesignerDto> list = searchDesigner.stream().map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+        return list;
     }
+
+    /** 디자이너 수정 **/
 }

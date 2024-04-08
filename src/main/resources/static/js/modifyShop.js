@@ -3,8 +3,8 @@ let shopImgs = document.getElementById('shopImg').querySelectorAll('.btn-file');
 shopImgs.forEach((row, i) => {
     let imgUrl = shop.shopImgs[i];
     let inputFile = row.querySelector('input[type="file"]');
-    inputFile.parentNode.style.backgroundImage = `url(${imgUrl})`
-    i++
+    inputFile.parentNode.style.backgroundImage = `url(${imgUrl})`;
+    i++;
 })
 
 let imgForm = document.getElementById('imgForm');
