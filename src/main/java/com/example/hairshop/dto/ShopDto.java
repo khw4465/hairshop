@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShopDto {
+    private Long id;
     private String name;
     private String shopCategory;
     private String address;
@@ -19,6 +20,14 @@ public class ShopDto {
     private LocalTime closeTime;
     private String content;
     private List<String> shopImgs;
-    private List<String> designers;
+    private List<DesignerDto> designers;
     private List<MenuDto> menus;
+
+    public ShopDto(Long id, String name, String shopCategory, String address, List<String> shopImgs) {
+        this.id = id;
+        this.name = name;
+        this.shopCategory = shopCategory;
+        this.address = address;
+        this.shopImgs = shopImgs;
+    }
 }

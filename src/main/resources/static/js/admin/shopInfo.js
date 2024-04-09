@@ -54,15 +54,15 @@ orgRows.forEach((row, i) => {
     inputFile.parentNode.style.backgroundImage = `url(${imgUrl})`;
     i++;
 })
+
 //--------------------------------------------------------------------
 //샵 수정하기
-function modifyShop() {
+function modifyShop(){
     //매장 이미지 리스트
     const shopImgList = [];
 
     const labels = document.querySelectorAll('.btn-file');
     labels.forEach(label => {
-        const shopImg = {};
         // 레이블 내의 이미지(img) 요소 선택
         const img = label.querySelector('.shopImg');
         if (img) { // 이미지 요소가 선택되었는지 확인
@@ -74,6 +74,9 @@ function modifyShop() {
             }
         }
     });
+
+    //샵 아이디
+    let id = new URLSearchParams(window.location.search).get('id');
 
     //샵 카테고리
     const shopCategory = document.querySelector('.shopCategory').value;
@@ -96,6 +99,30 @@ function modifyShop() {
 
     //매장 소개
     const content = document.getElementById('shopContent').value;
+
+    //디자이너
+    const designers = [];
+    const designerRows = document.querySelectorAll('.designers');
+    designerRows.forEach(row => {
+        const designerData = {};
+
+        const id = row.id;
+        designerData.id = id;
+
+        const name = document.querySelector('.designerName').textContent;
+        designerData.name = name;
+
+        const img = document.querySelector('.designerImg').src;
+        designerData.img = img;
+
+        const content = document.querySelector('.designerContent').value;
+        designerData.content = content;
+
+        const career = document.querySelector('.designerCareer').value;
+        designerData.career = career;
+
+        designers.push(designerData);
+    });
 
     //메뉴 리스트
     const menusData = [];
@@ -121,9 +148,10 @@ function modifyShop() {
         menuData.price = menuPrice;
 
         menusData.push(menuData);
-    })
+    });
 
     const shopDto = {
+        id : id,
         name: shopName,
         shopCategory: shopCategory,
         address: address,
@@ -131,8 +159,11 @@ function modifyShop() {
         closeTime: closeTime,
         content: content,
         shopImgs: shopImgList,
+        designers: designers,
         menus: menusData
-    }
+    };
+
+    console.log("shopDto = ", shopDto);
 
     $.ajax({
         url: "/admin/modify/shop",
@@ -154,12 +185,14 @@ function modifyShop() {
 //샵 삭제하기
 function removeShop() {
     if (confirm("정말 삭제하시겠습니까?")) {
+        //URL 주소의 id값을 변수로 둠
+        let id = new URLSearchParams(window.location.search).get('id');
+
         $.ajax({
             url: "/admin/remove/shop",
             type: "DELETE",
-            contentType: "application/json",
+            data: {id: id},
             success: function (response) {
-                console.log("매장 삭제 완료");
                 alert("삭제되었습니다.");
                 window.location.href = "/admin"
             },

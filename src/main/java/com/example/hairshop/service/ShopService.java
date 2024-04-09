@@ -1,6 +1,7 @@
 package com.example.hairshop.service;
 
 import com.example.hairshop.domain.*;
+import com.example.hairshop.dto.DesignerDto;
 import com.example.hairshop.dto.MenuDto;
 import com.example.hairshop.dto.ShopDto;
 import com.example.hairshop.repository.*;
@@ -69,10 +70,9 @@ public class ShopService {
         shopRepository.save(shop);
 
         //디자이너 연관관계
-        List<String> designers = shopDto.getDesigners();
-        for (String designerId : designers) {
-            long id = Long.parseLong(designerId);
-            Designer designer = designerRepository.findOne(id);
+        List<DesignerDto> designers = shopDto.getDesigners();
+        for (DesignerDto dto : designers) {
+            Designer designer = designerRepository.findOne(dto.getId());
             shop.getDesigners().add(designer);
             designer.setShop(shop);
         }
@@ -80,11 +80,25 @@ public class ShopService {
 
     /** 샵 수정 **/
     @Transactional
-    public Shop modifyShop(Designer designer, ShopDto shopDto) {
-        Shop findShop = shopRepository.findByDesigner(designer);
+    public Shop modifyShop(ShopDto shopDto) {
+        Shop originShop = shopRepository.findOne(shopDto.getId());
+
+        // 디자이너 연관관계 제거
+        for (Designer designer : originShop.getDesigners()) {
+            designer.setShop(null);
+        }
+        originShop.getDesigners().clear();
+
+        // 디자이너 연관관계 수정
+        List<DesignerDto> designers = shopDto.getDesigners();
+        for (DesignerDto dto : designers) {
+            Designer designer = designerRepository.findOne(dto.getId());
+            originShop.getDesigners().add(designer);
+            designer.setShop(originShop);
+        }
 
         // 메뉴 <--> 카테고리 연관관계 제거
-        List<Menu> originMenu = findShop.getMenus();
+        List<Menu> originMenu = originShop.getMenus();
         for (Menu menu : originMenu) {
             menu.getCategory().getMenus().remove(menu);
             menu.setCategory(null);
@@ -96,30 +110,30 @@ public class ShopService {
         List<MenuDto> menus = shopDto.getMenus();
         for (MenuDto dto : menus) {
             MenuCategory category = menuCategoryRepository.findByName(dto.getCategory());
-            Menu menu = new Menu(dto.getName(), dto.getImgUrl(), dto.getPrice(), category, findShop);
+            Menu menu = new Menu(dto.getName(), dto.getImgUrl(), dto.getPrice(), category, originShop);
             menuRepository.save(menu);
             category.getMenus().add(menu);
         }
 
         // 샵 <--> 카테고리 연관관계 제거
-        ShopCategory category = findShop.getCategory();
-        category.getShops().remove(findShop);
+        ShopCategory category = originShop.getCategory();
+        category.getShops().remove(originShop);
 
         //카테고리 연관관계 수정
         ShopCategory findCategory = shopCategoryRepository.findByName(shopDto.getShopCategory());
-        findShop.setCategory(findCategory);
-        findCategory.getShops().add(findShop);
+        originShop.setCategory(findCategory);
+        findCategory.getShops().add(originShop);
 
         //기본 속성 수정
-        findShop.setName(shopDto.getName());
-        findShop.setAddress(shopDto.getAddress());
-        findShop.setOpenTime(shopDto.getOpenTime());
-        findShop.setCloseTime(shopDto.getCloseTime());
-        findShop.setContent(shopDto.getContent());
+        originShop.setName(shopDto.getName());
+        originShop.setAddress(shopDto.getAddress());
+        originShop.setOpenTime(shopDto.getOpenTime());
+        originShop.setCloseTime(shopDto.getCloseTime());
+        originShop.setContent(shopDto.getContent());
 
         //샵 이미지 연관관계 제거
-        List<ShopImg> originImgs = findShop.getShopImgs();
-        findShop.getShopImgs().clear();
+        List<ShopImg> originImgs = originShop.getShopImgs();
+        originShop.getShopImgs().clear();
         for (ShopImg originImg : originImgs) {
             originImg.setShop(null);
             shopImgRepository.delete(originImg);
@@ -128,34 +142,34 @@ public class ShopService {
         //샵 이미지 수정
         List<String> imgs = shopDto.getShopImgs();
         for (String img : imgs) {
-            ShopImg shopImg = new ShopImg(img, findShop);
+            ShopImg shopImg = new ShopImg(img, originShop);
             shopImgRepository.save(shopImg);
-            findShop.getShopImgs().add(shopImg);
+            originShop.getShopImgs().add(shopImg);
         }
 
-        return findShop;
+        return originShop;
     }
 
     /** 샵 삭제 **/
     @Transactional
-    public void removeShop(Designer designer) {
-        Shop findShop = shopRepository.findByDesigner(designer);
+    public void removeShop(String id) {
+        long shopId = Long.parseLong(id);
+        Shop shop = shopRepository.findOne(shopId);
 
-        for (Designer findShopDesigner : findShop.getDesigners()) {
+        // 디자이너 연관관계 제거
+        for (Designer designer : shop.getDesigners()) {
             designer.setShop(null);
         }
 
-        findShop.getCategory().getShops().remove(findShop);
-        findShop.setCategory(null);
+        // 카테고리 연관관계 제거
+        shop.getCategory().getShops().remove(shop);
 
-        for (Menu menu : findShop.getMenus()) {
+        // 메뉴<-->카테고리 연관관계 제거
+        for (Menu menu : shop.getMenus()) {
             menu.getCategory().getMenus().remove(menu);
         }
-        findShop.getMenus().clear();
 
-        findShop.getShopImgs().clear();
-
-        shopRepository.delete(findShop);
+        shopRepository.delete(shop);
     }
 
     /** 디자이너로 찾기 **/
@@ -163,4 +177,18 @@ public class ShopService {
         return shopRepository.findByDesigner(designer);
     }
 
+    /** 샵 단일 조회 **/
+    public Shop findById(Long id) {
+        return shopRepository.findOne(id);
+    }
+
+    /** 모든 샵 조회 **/
+    public List<Shop> findAll() {
+        return shopRepository.findAll();
+    }
+
+    /** 이름으로 검색 **/
+    public List<Shop> findByName(String name) {
+        return shopRepository.findByName(name);
+    }
 }

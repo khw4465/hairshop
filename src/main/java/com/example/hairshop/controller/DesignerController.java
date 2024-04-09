@@ -62,7 +62,7 @@ public class DesignerController {
     }
 
     /** 디자이너 검색 **/
-    @PostMapping("/admin/search")
+    @PostMapping("/admin/search/designer")
     public ResponseEntity<?> searchDesigner(@RequestBody SearchCondition condition) {
         try {
             List<Designer> searchDesigner = designerService.findByName(condition.getName());

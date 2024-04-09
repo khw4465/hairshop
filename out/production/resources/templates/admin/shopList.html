@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hairshop</title>
+    <link href="/css/admin/adminHeader.css" rel="stylesheet">
+    <link href="/css/admin/adminSidebar.css" rel="stylesheet">
+    <link href="/css/admin/shopList.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="~{fragment/adminHeader :: adminHeader}"></div>
+<div th:replace="~{fragment/adminSidebar :: adminSidebar}"></div>
+<div id="container">
+    <h1>매장 목록</h1>
+    <div>
+        <div class="search">
+            <input class="searchText" type="text" id="searchInput" name="searchInput" placeholder="매장 이름을 입력하세요.">
+            <img class="searchImg" src="/img/pngwing.com.png" id="searchButton" onclick="submitForm()">
+        </div>
+        <table id="shopTable">
+            <tbody>
+            <tr th:each="shop : ${shopList}" class="shop" th:id="${shop.id}" onclick="shopInfo(this)">
+                <td>
+                    <img th:src="${shop.shopImgs[0]}" class="shopImg">
+                </td>
+                <td>
+                    <div class="shopName" th:text="${shop.name}"></div>
+                    <div class="shopCategory" th:text="${shop.shopCategory}"></div>
+                </td>
+                <td>
+                    <span class="shopAddress" th:text="${shop.address}"></span>
+                </td>
+                <td>
+                    <button onclick="removeShopRow(this, event)" class="deleteBtn">삭제</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="/js/admin/shopList.js"></script>
+</body>
+</html>

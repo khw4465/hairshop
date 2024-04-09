@@ -82,7 +82,7 @@ document.getElementById('deleteDesigner').addEventListener('click', function() {
                 window.location.href = "/admin/designerList";
             },
             error: function (xhr) {
-                console.log("스타일 삭제 실패");
+                console.log("디자이너 삭제 실패");
             }
         });
     }

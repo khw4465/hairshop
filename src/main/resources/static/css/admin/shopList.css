@@ -7,7 +7,7 @@ h1{
     text-align: center;
 }
 
-#designerTable {
+#shopTable {
     text-align: center;
     margin: 50px auto;
     border: 1px solid black;
@@ -15,12 +15,17 @@ h1{
     padding: 30px;
 }
 
-.designerImg {
+.shopImg {
     width: 60px;
     height: 60px;
 }
 
-.designerName {
+.shopCategory {
+    color: #545454;
+    font-size: 14px;
+}
+
+.shopAddress {
     width: 100px;
     height: 30px;
     margin: 15px 200px 15px 35px;
@@ -50,13 +55,4 @@ tbody>tr>td {
     top: 10px;
     right: -12px;
     margin: 0;
-}
-
-#searchList {
-    position: absolute;
-    width: 109%;
-    border: 1px solid #bbb;
-    border-top: none;
-    border-radius: 8px;
-    background-color: white;
 }

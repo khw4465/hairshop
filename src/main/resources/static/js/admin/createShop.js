@@ -43,7 +43,24 @@ function createShop(){
     const designers = [];
     const designerRows = document.querySelectorAll('.designers');
     designerRows.forEach(row => {
-        designers.push(row.id);
+        const designerData = {};
+
+        const id = row.id;
+        designerData.id = id;
+
+        const name = document.querySelector('.designerName').textContent;
+        designerData.name = name;
+
+        const img = document.querySelector('.designerImg').src;
+        designerData.img = img;
+
+        const content = document.querySelector('.designerContent').value;
+        designerData.content = content;
+
+        const career = document.querySelector('.designerCareer').value;
+        designerData.career = career;
+
+        designers.push(designerData);
     });
 
     //메뉴 리스트
@@ -87,7 +104,7 @@ function createShop(){
     console.log("shopDto = ", shopDto);
 
     $.ajax({
-        url: "/admin/create/shop",
+        url: "/admin/create/sho p",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(shopDto),
@@ -218,7 +235,7 @@ function submitForm() {
         let SearchCondition = {name: inputValue};
 
         $.ajax({
-            url: "/admin/search",
+            url: "/admin/search/designer",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(SearchCondition),
@@ -374,7 +391,7 @@ function addDesignerToList(designer) {
     // 다섯 번째 셀: 삭제 버튼
     const deleteCell = document.createElement("td");
     const deleteBtn = document.createElement("button");
-    deleteBtn.setAttribute("onclick", "removeMenuRow(this)");
+    deleteBtn.setAttribute("onclick", "removeDesignerRow(this)");
     deleteBtn.setAttribute("class", "deleteBtn");
     deleteBtn.innerText = "삭제";
     deleteCell.appendChild(deleteBtn);
@@ -382,4 +399,8 @@ function addDesignerToList(designer) {
 
     // 새로운 행을 tbody에 추가
     tbody.appendChild(newRow);
+}
+function removeDesignerRow(button) {
+    let row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
 }

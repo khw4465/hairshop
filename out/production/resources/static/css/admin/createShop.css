@@ -23,7 +23,7 @@ td {
     margin: 0 100px;
 }
 
-input[type="text"] {
+#shopName, #address, .menuName {
     width: 400px;
     height: 30px;
     margin: 15px 100px;
@@ -55,7 +55,7 @@ input[type=number] {
     text-align: center;
 }
 
-#modifyShop {
+#createShop, #modifyShop {
     background-color: #575757;
     border: none;
     color: white;
@@ -69,10 +69,10 @@ input[type=number] {
     border-radius: 10px;
 }
 
-#removeShop {
+#deleteShop {
     background-color: white;
-    border: 1px solid #575757;
-    color: #575757;
+    border: none;
+    color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -80,6 +80,7 @@ input[type=number] {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+    border: 1px solid #575757;
     border-radius: 10px;
 }
 
@@ -126,12 +127,13 @@ input[type=number] {
     border-bottom: none;
 }
 
-#menuTable {
+#menuTable, #designerTable {
     text-align: center;
     margin: 10px auto;
     border: 1px solid black;
     border-radius: 20px;
     padding: 30px;
+    width: 100%;
 }
 
 #addMenuBtn {
@@ -174,4 +176,52 @@ td>table>tbody>tr>td>input[type=number] {
     padding: 8px;
     font-size: 16px;
     border-bottom: 1px solid #ccc;
+}
+
+#searchForm {
+    position: relative;
+    width: 400px;
+    margin: 0px auto;
+    right: 3px;
+}
+
+.searchText {
+    width: 95%;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+}
+
+.searchImg {
+    position : absolute;
+    width: 17px;
+    top: 12px;
+    right: 10px;
+    margin: 0;
+}
+
+#searchList {
+    position: absolute;
+    width: 400px;
+    border: 1px solid #bbb;
+    border-top: none;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.imgList, .designerImg {
+    width: 80px;
+    height: 80px;
+}
+
+.addDesignerBtn {
+    display: none;
+}
+
+.addBtn {
+    padding: 5px 15px;
+    background-color: #797979;
+    color: white;
+    font-weight: bold;
 }

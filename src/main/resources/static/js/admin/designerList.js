@@ -5,7 +5,7 @@ function submitForm() {
     let SearchCondition = { name: inputValue };
 
     $.ajax({
-        url: "/admin/search",
+        url: "/admin/search/designer",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(SearchCondition),
@@ -57,7 +57,8 @@ function changeList(response) {
 
 //---------------------------------------------------------------------------
 // 디자이너 삭제
-function removeDesignerRow(button) {
+function removeDesignerRow(button, event) {
+    event.stopPropagation();
     if(confirm("정말 삭제하시겠습니까?")) {
         let row = button.parentNode.parentNode;
         let id = row.id;
