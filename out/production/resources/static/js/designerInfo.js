@@ -41,7 +41,6 @@ document.getElementById('modifyDesigner').addEventListener('click', function() {
     });
 
     let designerDto = { id: id, name: name, img: img, content: newContent, career: newCareer, styles: stylesData };
-    console.log('designerDto = ', designerDto)
 
     // AJAX 요청 보내기
     fetch('/admin/modify/designer', {
@@ -65,3 +64,26 @@ document.getElementById('modifyDesigner').addEventListener('click', function() {
             console.error('데이터 전송 실패:', error.message);
         });
 });
+
+//---------------------------------------------------------------------------
+// 디자이너 삭제
+document.getElementById('deleteDesigner').addEventListener('click', function() {
+    if(confirm("정말 삭제하시겠습니까?")) {
+        //URL 주소의 id값을 변수로 둠
+        let id = new URLSearchParams(window.location.search).get('id');
+
+        // AJAX 요청을 보냄
+        $.ajax({
+            url: "/admin/delete/designer",
+            type: "DELETE",
+            data: {id: id},
+            success: function (response) {
+                alert("삭제되었습니다.")
+                window.location.href = "/admin/designerList";
+            },
+            error: function (xhr) {
+                console.log("스타일 삭제 실패");
+            }
+        });
+    }
+})

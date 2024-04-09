@@ -70,7 +70,22 @@ public class DesignerController {
 
             return new ResponseEntity<>(designerList, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("1", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /** 디자이너 검색 후 추가 **/
+    @PostMapping("/admin/search/select")
+    public ResponseEntity<?> addDesigner(@RequestBody SearchCondition condition) {
+        try {
+            Designer designer = designerService.findById(condition.getName());
+            DesignerDto dto = new DesignerDto(designer.getId(), designer.getName(), designer.getImg(), designer.getContent(), designer.getCareer());
+
+            System.out.println("dto = " + dto);
+
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
         }
     }
 

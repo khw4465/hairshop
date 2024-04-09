@@ -18,6 +18,7 @@ import java.util.List;
 public class ShopService {
 
     private final ShopRepository shopRepository;
+    private final DesignerRepository designerRepository;
     private final ShopCategoryRepository shopCategoryRepository;
     private final MenuCategoryRepository menuCategoryRepository;
     private final MenuRepository menuRepository;
@@ -25,7 +26,7 @@ public class ShopService {
 
     /** 샵 생성 **/
     @Transactional
-    public void createShop(Designer designer, ShopDto shopDto) {
+    public void createShop(ShopDto shopDto) {
         Shop shop = new Shop();
 
         //카테고리 연관관계
@@ -56,10 +57,6 @@ public class ShopService {
         shop.setCloseTime(shopDto.getCloseTime());
         shop.setContent(shopDto.getContent());
 
-        //디자이너 연관관계
-        shop.getDesigners().add(designer);
-        designer.setShop(shop);
-
         //샵 이미지 연관관계
         List<String> imgs = shopDto.getShopImgs();
         for (String img : imgs) {
@@ -70,6 +67,15 @@ public class ShopService {
         }
 
         shopRepository.save(shop);
+
+        //디자이너 연관관계
+        List<String> designers = shopDto.getDesigners();
+        for (String designerId : designers) {
+            long id = Long.parseLong(designerId);
+            Designer designer = designerRepository.findOne(id);
+            shop.getDesigners().add(designer);
+            designer.setShop(shop);
+        }
     }
 
     /** 샵 수정 **/

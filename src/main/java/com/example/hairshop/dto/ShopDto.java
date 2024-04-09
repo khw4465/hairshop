@@ -19,5 +19,6 @@ public class ShopDto {
     private LocalTime closeTime;
     private String content;
     private List<String> shopImgs;
+    private List<String> designers;
     private List<MenuDto> menus;
 }

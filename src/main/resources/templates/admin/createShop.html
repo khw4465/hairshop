@@ -84,6 +84,35 @@
             </td>
         </tr>
         <tr>
+            <th>디자이너</th>
+            <td>
+                <div class="search">
+                    <form action="/admin/search" method="post" id="searchForm">
+                        <input class="searchText" type="text" id="searchInput" name="searchInput" placeholder="디자이너 이름을 입력하세요.">
+                        <img class="searchImg" src="/img/pngwing.com.png" id="searchButton" onclick="submitForm()">
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table id="designerTable">
+                    <thead>
+                    <tr>
+                        <th scope="col">이미지</th>
+                        <th scope="col">이름</th>
+                        <th scope="col">경력</th>
+                        <th scope="col">소개</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
             <th>메뉴</th>
             <td></td>
         </tr>

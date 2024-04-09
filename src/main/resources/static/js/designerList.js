@@ -10,7 +10,6 @@ function submitForm() {
         contentType: "application/json",
         data: JSON.stringify(SearchCondition),
         success: function(response) {
-            console.log(response);
             changeList(response);
         },
         error: function(error) {

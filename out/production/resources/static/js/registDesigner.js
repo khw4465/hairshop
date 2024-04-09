@@ -2,8 +2,6 @@ function submitForm() {
     let inputValue = document.getElementById("searchInput").value;
     let SearchCondition = { name: inputValue };
 
-    let result;
-
     $.ajax({
         url: "/admin/search",
         type: "POST",

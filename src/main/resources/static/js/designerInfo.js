@@ -64,3 +64,26 @@ document.getElementById('modifyDesigner').addEventListener('click', function() {
             console.error('데이터 전송 실패:', error.message);
         });
 });
+
+//---------------------------------------------------------------------------
+// 디자이너 삭제
+document.getElementById('deleteDesigner').addEventListener('click', function() {
+    if(confirm("정말 삭제하시겠습니까?")) {
+        //URL 주소의 id값을 변수로 둠
+        let id = new URLSearchParams(window.location.search).get('id');
+
+        // AJAX 요청을 보냄
+        $.ajax({
+            url: "/admin/delete/designer",
+            type: "DELETE",
+            data: {id: id},
+            success: function (response) {
+                alert("삭제되었습니다.")
+                window.location.href = "/admin/designerList";
+            },
+            error: function (xhr) {
+                console.log("스타일 삭제 실패");
+            }
+        });
+    }
+})

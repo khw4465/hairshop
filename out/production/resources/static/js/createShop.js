@@ -5,7 +5,6 @@ function createShop(){
 
     const labels = document.querySelectorAll('.btn-file');
     labels.forEach(label => {
-        const shopImg = {};
         // 레이블 내의 이미지(img) 요소 선택
         const img = label.querySelector('.shopImg');
         if (img) { // 이미지 요소가 선택되었는지 확인
@@ -40,6 +39,13 @@ function createShop(){
     //매장 소개
     const content = document.getElementById('shopContent').value;
 
+    //디자이너
+    const designers = [];
+    const designerRows = document.querySelectorAll('.designers');
+    designerRows.forEach(row => {
+        designers.push(row.id);
+    });
+
     //메뉴 리스트
     const menusData = [];
 
@@ -64,7 +70,7 @@ function createShop(){
         menuData.price = menuPrice;
 
         menusData.push(menuData);
-    })
+    });
 
     const shopDto = {
         name: shopName,
@@ -74,8 +80,11 @@ function createShop(){
         closeTime: closeTime,
         content: content,
         shopImgs: shopImgList,
+        designers: designers,
         menus: menusData
-    }
+    };
+
+    console.log("shopDto = ", shopDto);
 
     $.ajax({
         url: "/admin/create/shop",
@@ -90,7 +99,7 @@ function createShop(){
         error: function(xhr) {
             console.log("매장 등록 실패");
         }
-    })
+    });
 }
 
 //--------------------------------------------------------------------
@@ -198,4 +207,179 @@ function addMenu() {
 function removeMenuRow(button) {
     let row = button.parentNode.parentNode;
     row.parentNode.removeChild(row);
+}
+
+//-------------------------------------------------------------------
+// 디자이너 검색창
+function submitForm() {
+    let inputValue = document.getElementById("searchInput").value;
+
+    if (inputValue !== '') {
+        let SearchCondition = {name: inputValue};
+
+        $.ajax({
+            url: "/admin/search",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(SearchCondition),
+            success: function (response) {
+                console.log(response);
+                addDesignerList(response);
+            },
+            error: function (error) {
+                console.log("에러", error);
+            }
+        });
+    }
+}
+
+function addDesignerList(designerList) {
+    let searchDiv = document.querySelector("#searchForm");
+    let table = document.createElement("table");
+    table.setAttribute("id", "searchList");
+
+    if (designerList.length > 0) {
+        designerList.forEach(d => {
+            let tr = document.createElement("tr");
+            tr.setAttribute("id", d.id);
+
+            let imgTd = document.createElement("td");
+            let img = document.createElement("img");
+            img.setAttribute("src", d.img)
+            img.setAttribute("class", "imgList");
+            imgTd.appendChild(img);
+
+            let nameTd = document.createElement("td");
+            let name = document.createElement("span")
+            name.textContent = d.name;
+            nameTd.appendChild(name);
+
+            let btnTd = document.createElement("td");
+            let lable = document.createElement("label");
+            lable.setAttribute("class", "addBtn");
+            let input = document.createElement("input");
+            input.setAttribute("type", "button");
+            input.setAttribute("value", "추가");
+            input.setAttribute("class", "addDesignerBtn");
+            input.setAttribute("onclick", "addDesigner(this)")
+            let span = document.createElement("span");
+            span.textContent = "추가";
+            lable.appendChild(input);
+            lable.appendChild(span);
+            btnTd.appendChild(lable)
+
+            tr.appendChild(imgTd);
+            tr.appendChild(nameTd);
+            tr.appendChild(btnTd);
+            table.appendChild(tr);
+        })
+    } else {
+        let tr = document.createElement("tr");
+        let td = document.createElement("td");
+        let span = document.createElement("span");
+        span.textContent = "등록된 디자이너가 없습니다.";
+        td.appendChild(span);
+        tr.appendChild(td);
+        table.appendChild(tr);
+    }
+    searchDiv.appendChild(table);
+
+    // 테이블 외부 클릭 시 테이블 제거
+    let body = document.body;
+    body.addEventListener("click", function(event) {
+        if (!event.target.closest("#searchList")) {
+            removeExistingTable();
+        }
+    });
+}
+
+// 테이블 제거 함수
+function removeExistingTable() {
+    let existingTable = document.getElementById("searchList");
+    if (existingTable) {
+        existingTable.remove();
+    }
+}
+
+//-------------------------------------------------------------------
+// 테이블에 디자이너 추가
+function addDesigner(button) {
+    let id = button.parentNode.parentNode.parentNode.id;
+
+    let SearchCondition = {name: id};
+
+    $.ajax({
+        url: "/admin/search/select",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(SearchCondition),
+        success: function (response) {
+            addDesignerToList(response);
+            removeExistingTable();
+        },
+        error: function (error) {
+            console.log("에러", error);
+        }
+    });
+}
+
+function addDesignerToList(designer) {
+    console.log('designer = ', designer);
+    const tbody = document.querySelector("#designerTable tbody");
+
+    // 새로운 행 생성
+    const newRow = document.createElement("tr");
+    newRow.setAttribute("class", "designers");
+    newRow.setAttribute("id", designer.id);
+
+    // 첫 번째 셀: 이미지
+    const imgCell = document.createElement("td");
+
+    const imgTag = document.createElement("img");
+    imgTag.setAttribute("class", "designerImg")
+    imgTag.setAttribute("src", designer.img);
+
+    imgCell.appendChild(imgTag);
+    newRow.appendChild(imgCell);
+
+    // 두 번째 셀: 이름
+    const nameCell = document.createElement("td");
+
+    const name = document.createElement("span");
+    name.setAttribute("class", "designerName")
+    name.textContent = designer.name
+
+    nameCell.appendChild(name);
+    newRow.appendChild(nameCell);
+
+    // 세 번째 셀: 경력
+    const careerCell = document.createElement("td");
+    const career = document.createElement("textarea");
+    career.setAttribute("class", "designerCareer");
+    career.value = designer.career;
+    career.readOnly = true;
+    careerCell.appendChild(career);
+    newRow.appendChild(careerCell);
+
+    // 네 번째 셀: 소개
+    const contentCell = document.createElement("td");
+    const content = document.createElement("textarea");
+    content.setAttribute("class", "designerContent");
+    content.value = designer.content;
+    content.readOnly = true;
+
+    contentCell.appendChild(content);
+    newRow.appendChild(contentCell);
+
+    // 다섯 번째 셀: 삭제 버튼
+    const deleteCell = document.createElement("td");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.setAttribute("onclick", "removeMenuRow(this)");
+    deleteBtn.setAttribute("class", "deleteBtn");
+    deleteBtn.innerText = "삭제";
+    deleteCell.appendChild(deleteBtn);
+    newRow.appendChild(deleteCell);
+
+    // 새로운 행을 tbody에 추가
+    tbody.appendChild(newRow);
 }
