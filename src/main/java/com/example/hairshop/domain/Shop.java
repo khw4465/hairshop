@@ -1,17 +1,13 @@
 package com.example.hairshop.domain;
 
-import com.example.hairshop.dto.MenuDto;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.*;
-import static lombok.AccessLevel.*;
 
 @Entity
 @Getter @Setter

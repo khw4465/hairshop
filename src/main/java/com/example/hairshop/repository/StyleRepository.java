@@ -3,7 +3,6 @@ package com.example.hairshop.repository;
 import com.example.hairshop.domain.Designer;
 import com.example.hairshop.domain.Style;
 import com.example.hairshop.domain.StyleSubCategory;
-import com.example.hairshop.domain.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;

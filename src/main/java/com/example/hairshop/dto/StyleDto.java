@@ -1,7 +1,6 @@
 package com.example.hairshop.dto;
 
 import com.example.hairshop.domain.StyleSubCategory;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

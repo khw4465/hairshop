@@ -5,12 +5,10 @@ import com.example.hairshop.dto.DesignerDto;
 import com.example.hairshop.dto.MenuDto;
 import com.example.hairshop.dto.ShopDto;
 import com.example.hairshop.repository.*;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

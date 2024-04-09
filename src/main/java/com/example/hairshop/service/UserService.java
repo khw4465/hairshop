@@ -1,6 +1,5 @@
 package com.example.hairshop.service;
 
-import com.example.hairshop.domain.Designer;
 import com.example.hairshop.domain.User;
 import com.example.hairshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

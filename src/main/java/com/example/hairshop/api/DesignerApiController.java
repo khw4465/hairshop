@@ -1,25 +1,17 @@
 package com.example.hairshop.api;
 
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.example.hairshop.domain.Designer;
 import com.example.hairshop.domain.ShopCategory;
-import com.example.hairshop.domain.Style;
 import com.example.hairshop.domain.StyleSubCategory;
 import com.example.hairshop.dto.DesignerDto;
 import com.example.hairshop.dto.ShopCategoryDto;
-import com.example.hairshop.dto.StyleDto;
 import com.example.hairshop.dto.SubCategoryDto;
 import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.DesignerService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

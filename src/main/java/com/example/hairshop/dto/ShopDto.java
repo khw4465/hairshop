@@ -1,6 +1,5 @@
 package com.example.hairshop.dto;
 
-import com.example.hairshop.domain.ShopImg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

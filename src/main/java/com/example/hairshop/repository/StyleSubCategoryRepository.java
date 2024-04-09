@@ -1,7 +1,6 @@
 package com.example.hairshop.repository;
 
 import com.example.hairshop.domain.Style;
-import com.example.hairshop.domain.StyleMainCategory;
 import com.example.hairshop.domain.StyleSubCategory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
