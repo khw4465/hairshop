@@ -2,57 +2,8 @@
 // 검색
 function submitForm() {
     let inputValue = document.getElementById("searchInput").value;
-    let SearchCondition = { name: inputValue };
-
-    $.ajax({
-        url: "/admin/search/designer",
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(SearchCondition),
-        success: function(response) {
-            changeList(response);
-        },
-        error: function(error) {
-            console.log("에러", error);
-        }
-    });
-}
-
-//---------------------------------------------------------------------------
-// 검색한 디자이너 띄우기
-function changeList(response) {
-    //안의 내용 전체 삭제
-    let tbody = document.querySelector('#designerTable tbody');
-    while (tbody.firstChild) {
-        tbody.removeChild(tbody.firstChild);
-    }
-
-    response.forEach(designer => {
-        let tr = document.createElement("tr");
-        tr.setAttribute("id", designer.id);
-        tr.setAttribute("class", "designer");
-        tr.setAttribute("onclick", "designerInfo(this)");
-        let imgTd = document.createElement("td");
-        let image = document.createElement("img");
-        image.setAttribute("class", "designerImg");
-        image.setAttribute("src", designer.img);
-        imgTd.appendChild(image);
-        let nameTd = document.createElement("td");
-        let name = document.createElement("span");
-        name.setAttribute("class", "designerName");
-        name.textContent = designer.name;
-        nameTd.appendChild(name);
-        let btnTd = document.createElement("td");
-        let btn = document.createElement("button");
-        btn.setAttribute("class", "deleteBtn");
-        btn.setAttribute("onclick", "removeDesignerRow(this)");
-        btn.textContent = "삭제"
-        btnTd.appendChild(btn);
-        tr.appendChild(imgTd);
-        tr.appendChild(nameTd);
-        tr.appendChild(btnTd);
-        tbody.appendChild(tr);
-    })
+    document.getElementById('searchText').value = inputValue;
+    document.getElementById('searchForm').submit();
 }
 
 //---------------------------------------------------------------------------
@@ -85,4 +36,16 @@ function removeDesignerRow(button, event) {
 function designerInfo(designer) {
     let id = designer.getAttribute("id");
     window.location.href = "/admin/designerInfo?id=" + id;
+}
+
+//---------------------------------------------------------------------------
+// 검색 값이 없을 때
+if (designerList.length === 0) {
+    document.querySelector('#designerTable').remove();
+    let container = document.getElementById('container')
+
+    let div = document.createElement("div");
+    div.setAttribute("id", "designerTable");
+    div.textContent = "입력하신 이름의 디자이너가 없습니다."
+    container.appendChild(div);
 }

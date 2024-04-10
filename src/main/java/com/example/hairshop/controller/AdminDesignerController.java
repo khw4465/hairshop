@@ -3,10 +3,7 @@ package com.example.hairshop.controller;
 import com.example.hairshop.domain.Designer;
 import com.example.hairshop.domain.Style;
 import com.example.hairshop.domain.StyleSubCategory;
-import com.example.hairshop.dto.DesignerDto;
-import com.example.hairshop.dto.SearchCondition;
-import com.example.hairshop.dto.StyleDto;
-import com.example.hairshop.dto.SubCategoryDto;
+import com.example.hairshop.dto.*;
 import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.DesignerService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class DesignerController {
+public class AdminDesignerController {
 
     private final DesignerService designerService;
     private final CategoryService categoryService;
@@ -49,32 +46,42 @@ public class DesignerController {
         }
     }
 
-    /** 디자이너 목록 **/
-    @GetMapping("/admin/designerList")
-    public String designerList(Model m) {
-
-        List<Designer> all = designerService.findAll();
-        List<DesignerDto> list = all.stream()
-                .map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
-        m.addAttribute("designerList", list);
+    /** 디자이너 목록(페이징) **/
+    @GetMapping("/admin/designer/list")
+    public String designerList(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                               @RequestParam(value = "limit", defaultValue = "10") int limit,
+                               Model m) {
+        List<DesignerDto> result = designerService.findPageAll(offset, limit);
+        long count = designerService.countQueryAll();
+        m.addAttribute("designerList", result);
+        m.addAttribute("count", count);
+        m.addAttribute("offset", offset);
+        m.addAttribute("limit", limit);
+        m.addAttribute("searchText", null);
+        m.addAttribute("url", "/admin/designer/list");
 
         return "/admin/designerList";
     }
 
-    /** 디자이너 검색 **/
-    @PostMapping("/admin/search/designer")
-    public ResponseEntity<?> searchDesigner(@RequestBody SearchCondition condition) {
-        try {
-            List<Designer> searchDesigner = designerService.findByName(condition.getName());
-            List<DesignerDto> designerList = searchDesigner.stream().map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+    /** 디자이너 검색(페이징) **/
+    @GetMapping("/admin/search/designer")
+    public String searchDesigner(@RequestParam("search") String search,
+                                 @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                 @RequestParam(value = "limit", defaultValue = "10") int limit,
+                                 Model m) {
+        List<DesignerDto> result = designerService.findPageByName(search, offset, limit);
+        long count = designerService.countQueryByName(search);
+        m.addAttribute("designerList", result);
+        m.addAttribute("count", count);
+        m.addAttribute("offset", offset);
+        m.addAttribute("limit", limit);
+        m.addAttribute("searchText", search);
+        m.addAttribute("url", "/admin/search/designer");
 
-            return new ResponseEntity<>(designerList, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
-        }
+        return "/admin/designerList";
     }
 
-    /** 디자이너 검색 후 추가 **/
+    /** 샵 생성 -> 디자이너 검색 후 추가 **/
     @PostMapping("/admin/search/select")
     public ResponseEntity<?> addDesigner(@RequestBody SearchCondition condition) {
         try {

@@ -134,8 +134,37 @@ public class DesignerService {
         return designerRepository.findByName(name);
     }
 
+    /** 디자이너 전체 조회 **/
     public List<Designer> findAll() {
         return designerRepository.findAll();
     }
 
+    //---------------------------------------------------
+    //패아장
+    /** 디자이너 페이징 전체 조회 **/
+    public List<DesignerDto> findPageAll(int offset, int limit) {
+        List<Designer> pageAll = designerRepository.findPageAll(offset, limit);
+        //dto로 변경
+        List<DesignerDto> pageDtoList = pageAll.stream()
+                .map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+        return pageDtoList;
+    }
+
+    /** 전체 카운트 쿼리 **/
+    public long countQueryAll() {
+        return designerRepository.countQueryAll();
+    }
+
+    /** 디자이너 페이징 이름 조회 **/
+    public List<DesignerDto> findPageByName(String name, int offset, int limit) {
+        List<Designer> pageByName = designerRepository.findPageByName(name, offset, limit);
+        List<DesignerDto> list = pageByName.stream()
+                .map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+        return list;
+    }
+
+    /** 이름별 카운트 쿼리 **/
+    public long countQueryByName(String name) {
+        return designerRepository.countQueryByName(name);
+    }
 }

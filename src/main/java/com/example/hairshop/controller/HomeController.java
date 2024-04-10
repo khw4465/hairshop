@@ -23,16 +23,4 @@ public class HomeController {
         return mav;
     }
 
-    @GetMapping("/redirect")
-    public ModelAndView redirect(HttpSession session) {
-
-
-        ModelAndView mav = new ModelAndView();
-
-        Object userId = session.getAttribute("userId");
-        mav.addObject(userId);
-        mav.setViewName("home");
-
-        return mav;
-    }
 }

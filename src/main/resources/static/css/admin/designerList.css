@@ -51,3 +51,29 @@ tbody>tr>td {
     right: -12px;
     margin: 0;
 }
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #333;
+    padding: 8px 12px;
+    margin: 0 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .active {
+    background-color: #797979;
+    color: #fff;
+}

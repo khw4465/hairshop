@@ -104,7 +104,7 @@ function createShop(){
     console.log("shopDto = ", shopDto);
 
     $.ajax({
-        url: "/admin/create/sho p",
+        url: "/admin/create/shop",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(shopDto),

@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class ShopController {
+public class AdminShopController {
 
     private final ShopService shopService;
     private final CategoryService categoryService;
@@ -42,6 +42,7 @@ public class ShopController {
     @PostMapping("/admin/create/shop")
     public ResponseEntity<?> createShop(@RequestBody ShopDto shopDto) {
         try{
+            System.out.println("shopDto = " + shopDto);
             shopService.createShop(shopDto);
 
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -50,32 +51,38 @@ public class ShopController {
         }
     }
 
-    /** 샵 목록 **/
-    @GetMapping("/admin/shopList")
-    public String shopList(Model m) {
-        List<Shop> all = shopService.findAll();
-
-        List<ShopDto> list = all.stream()
-                .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(), s.getShopImgs().stream()
-                        .map(i -> i.getImgUrl()).toList())).toList();
-        m.addAttribute("shopList", list);
+    /** 샵 목록(페이징) **/
+    @GetMapping("/admin/shop/list")
+    public String shopList(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                           @RequestParam(value = "limit", defaultValue = "10") int limit,
+                           Model m) {
+        List<ShopDto> result = shopService.findPageAll(offset, limit);
+        long count = shopService.countQueryAll();
+        m.addAttribute("shopList", result);
+        m.addAttribute("count", count);
+        m.addAttribute("offset", offset);
+        m.addAttribute("limit", limit);
+        m.addAttribute("searchText", null);
+        m.addAttribute("url", "/admin/shop/list");
 
         return "/admin/shopList";
     }
 
-    /** 샵 검색 **/
-    @PostMapping("/admin/search/shop")
-    public ResponseEntity<?> searchShop(@RequestBody SearchCondition condition) {
-        try {
-            List<Shop> searchShop = shopService.findByName(condition.getName());
-            List<ShopDto> shopList = searchShop.stream()
-                    .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(), s.getShopImgs().stream()
-                            .map(i -> i.getImgUrl()).toList())).toList();
-
-            return new ResponseEntity<>(shopList, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
-        }
+    /** 샵 검색(페이징) **/
+    @GetMapping("/admin/search/shop")
+    public String searchShop(@RequestParam("search") String search,
+                                        @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                        @RequestParam(value = "limit", defaultValue = "10") int limit,
+                                        Model m) {
+        List<ShopDto> result = shopService.findPageByName(search, offset, limit);
+        long count = shopService.countQueryByName(search);
+            m.addAttribute("shopList", result);
+            m.addAttribute("count", count);
+            m.addAttribute("offset", offset);
+            m.addAttribute("limit", limit);
+            m.addAttribute("searchText", search);
+            m.addAttribute("url", "/admin/search/shop");
+        return "/admin/shopList";
     }
 
     /** 샵 삭제 **/

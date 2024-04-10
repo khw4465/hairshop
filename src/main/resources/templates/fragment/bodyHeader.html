@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="bodyHeader">
     <nav id="nav3">
+        <form id="categoryForm" th:action="${'/user/shop/list'}" method="GET">
+            <input type="hidden" id="categoryNameInput" name="categoryName">
+        </form>
+
         <ul class="navbar">
-            <li class="navbar-menu"><a href="#">헤어샵</a></li>
-            <li class="navbar-menu"><a href="#">네일샵</a></li>
-            <li class="navbar-menu"><a href="#">1인샵</a></li>
-            <li class="navbar-menu"><a href="#">바버샵</a></li>
+            <li class="navbar-menu"><a href="#" onclick="categorySubmit('헤어샵')">헤어샵</a></li>
+            <li class="navbar-menu"><a href="#" onclick="categorySubmit('네일샵')">네일샵</a></li>
+            <li class="navbar-menu"><a href="#"onclick="categorySubmit('1인샵')">1인샵</a></li>
+            <li class="navbar-menu"><a href="#"onclick="categorySubmit('바버샵')">바버샵</a></li>
             <li class="navbar-menu"><a href="#">별점높은샵</a></li>
             <li class="navbar-menu"><a href="#">스타일TIP</a></li>
         </ul>

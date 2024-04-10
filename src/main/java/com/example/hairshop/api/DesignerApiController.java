@@ -68,5 +68,11 @@ public class DesignerApiController {
         return list;
     }
 
-    /** 디자이너 수정 **/
+    /** 디자이너 페이징 전체 조회 **/
+    @GetMapping("api/pageAll")
+    public List<DesignerDto> pageAll(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                     @RequestParam(value = "limit", defaultValue = "10") int limit) {
+        List<DesignerDto> result = designerService.findPageAll(offset, limit);
+        return result;
+    }
 }

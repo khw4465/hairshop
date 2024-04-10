@@ -86,4 +86,36 @@ public class DesignerRepository {
         return em.createQuery("select s from Style s where s.designer = :designer", Style.class)
                 .getResultList();
     }
+
+    //---------------------------------------------------
+    //패아장
+    /** 디자이너 전체 페이징 조회 **/
+    public List<Designer> findPageAll(int offset, int limit) {
+        return em.createQuery("select d from Designer d", Designer.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    /** 전체 카운트쿼리 **/
+    public long countQueryAll() {
+        return em.createQuery("select count(d) from Designer d", Long.class)
+                .getSingleResult();
+    }
+
+    /** 디자이너 페이징 이름 조회 **/
+    public List<Designer> findPageByName(String name, int offset, int limit) {
+        return em.createQuery("select d from Designer d where d.name like :name", Designer.class)
+                .setParameter("name", "%" + name + "%")
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    /** 이름별 카운트쿼리 **/
+    public long countQueryByName(String name) {
+        return em.createQuery("select count(d) from Designer d where d.name like :name", Long.class)
+                .setParameter("name", "%" + name + "%")
+                .getSingleResult();
+    }
 }

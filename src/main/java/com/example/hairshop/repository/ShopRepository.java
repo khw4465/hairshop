@@ -58,13 +58,36 @@ public class ShopRepository {
     }
 
     /** 샵 조회(카테고리별) **/
-    public List<Shop> findByCategory(ShopCategory category) {
-        return em.createQuery("select s from Shop s where s.category = :category", Shop.class)
+    public List<Shop> findByCategory(String category) {
+        return em.createQuery("select s from Shop s where s.category.name = :category", Shop.class)
                 .setParameter("category", category)
                 .getResultList();
     }
-
-    public void merge(Shop findShop) {
-        em.merge(findShop);
+    //-------------------------------------------------------
+    /** 페이징 전체 조회 **/
+    public List<Shop> findPageAll(int offset, int limit) {
+        return em.createQuery("select s from Shop s", Shop.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+    /** 전체 카운트쿼리 **/
+    public long countQueryAll() {
+        return em.createQuery("select count(s) from Shop s", Long.class)
+                .getSingleResult();
+    }
+    /** 페이징 이름 조회 **/
+    public List<Shop> findPageByName(String name, int offset, int limit) {
+        return em.createQuery("select s from Shop s where s.name like :name", Shop.class)
+                .setParameter("name", "%" + name + "%")
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+    /** 이름별 카운트쿼리 **/
+    public long countQueryByName(String name) {
+        return em.createQuery("select count(s) from Shop s where s.name like :name", Long.class)
+                .setParameter("name", "%" + name + "%")
+                .getSingleResult();
     }
 }

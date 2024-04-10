@@ -189,4 +189,36 @@ public class ShopService {
     public List<Shop> findByName(String name) {
         return shopRepository.findByName(name);
     }
+
+    /** 카테고리명으로 검색 **/
+    public List<Shop> findByCategory(String name) {
+        return shopRepository.findByCategory(name);
+    }
+
+    //-----------------------------------------------------------
+    //페이징
+    /** 샵 페이징 전체 조회 **/
+    public List<ShopDto> findPageAll(int offset, int limit) {
+        List<Shop> pageAll = shopRepository.findPageAll(offset, limit);
+        List<ShopDto> list = pageAll.stream()
+                .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(),
+                        s.getShopImgs().stream().map(si -> si.getImgUrl()).toList())).toList();
+        return list;
+    }
+    /** 전체 카운트 쿼리 **/
+    public long countQueryAll() {
+        return shopRepository.countQueryAll();
+    }
+    /** 샵 페이징 이름 조회 **/
+    public List<ShopDto> findPageByName(String name, int offset, int limit) {
+        List<Shop> pageByName = shopRepository.findPageByName(name, offset, limit);
+        List<ShopDto> list = pageByName.stream()
+                .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(),
+                        s.getShopImgs().stream().map(si -> si.getImgUrl()).toList())).toList();
+        return list;
+    }
+    /** 이름별 카운트 쿼리 **/
+    public long countQueryByName(String name) {
+        return shopRepository.countQueryByName(name);
+    }
 }

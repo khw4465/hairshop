@@ -47,7 +47,7 @@ document.getElementById('addDesigner').addEventListener('click', function() {
             if (!response.ok) {
                 throw new Error('HTTP error, status = ' + response.status);
             }
-            alert("정보가 수정되었습니다.");
+            alert("디자이너가 등록되었습니다.");
             window.location.href = "/admin";
         })
         .then(data => {
