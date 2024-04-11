@@ -1,6 +1,5 @@
 package com.example.hairshop.controller;
 
-import com.example.hairshop.domain.Shop;
 import com.example.hairshop.dto.ShopDto;
 import com.example.hairshop.service.ShopService;
 import lombok.RequiredArgsConstructor;
@@ -17,16 +16,22 @@ public class UserShopController {
 
     private final ShopService shopService;
 
-//    @GetMapping("/user/shop/list")
-//    private String shopCategoryList(@RequestParam("categoryName") String categoryName, Model m) {
-//
-//        List<Shop> shop = shopService.findByCategory(categoryName);
-//        List<ShopDto> list = shop.stream()
-//                .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(), s.getShopImgs().stream()
-//                        .map(i -> i.getImgUrl()).toList())).toList();
-//
-//        m.addAttribute("shopList", list);
-//
-//        return "/user/shopList";
-//    }
+    /** 상단 헤더 카테고리(페이징) **/
+    @GetMapping("/shop/list")
+    private String shopCategoryList(@RequestParam("categoryName") String categoryName,
+                                    @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                    @RequestParam(value = "limit", defaultValue = "9") int limit,
+                                    Model m) {
+
+        List<ShopDto> result = shopService.findPageByCategory(categoryName, offset, limit);
+        long count = shopService.countQueryByCategory(categoryName);
+
+        m.addAttribute("shopList", result);
+        m.addAttribute("count", count);
+        m.addAttribute("offset", offset);
+        m.addAttribute("limit", limit);
+        m.addAttribute("searchText", categoryName);
+
+        return "/user/shopList";
+    }
 }

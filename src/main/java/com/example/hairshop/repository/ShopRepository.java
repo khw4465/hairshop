@@ -64,6 +64,7 @@ public class ShopRepository {
                 .getResultList();
     }
     //-------------------------------------------------------
+    //페이징(어드민)
     /** 페이징 전체 조회 **/
     public List<Shop> findPageAll(int offset, int limit) {
         return em.createQuery("select s from Shop s", Shop.class)
@@ -88,6 +89,22 @@ public class ShopRepository {
     public long countQueryByName(String name) {
         return em.createQuery("select count(s) from Shop s where s.name like :name", Long.class)
                 .setParameter("name", "%" + name + "%")
+                .getSingleResult();
+    }
+    //-------------------------------------------------------
+    //페이징(유저)
+    /** 페이징 카테고리별 조히 **/
+    public List<Shop> findPageByCategory(String name, int offset, int limit) {
+        return em.createQuery("select s from Shop s where s.category.name = :name", Shop.class)
+                .setParameter("name", name)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+    /** 카테고리별 카운트 쿼리 **/
+    public long countQueryByCategory(String name) {
+        return em.createQuery("select count(s) from Shop s where s.category.name = :name", Long.class)
+                .setParameter("name", name)
                 .getSingleResult();
     }
 }

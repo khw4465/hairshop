@@ -196,7 +196,7 @@ public class ShopService {
     }
 
     //-----------------------------------------------------------
-    //페이징
+    //페이징(어드민)
     /** 샵 페이징 전체 조회 **/
     public List<ShopDto> findPageAll(int offset, int limit) {
         List<Shop> pageAll = shopRepository.findPageAll(offset, limit);
@@ -220,5 +220,21 @@ public class ShopService {
     /** 이름별 카운트 쿼리 **/
     public long countQueryByName(String name) {
         return shopRepository.countQueryByName(name);
+    }
+
+    //-----------------------------------------------------------
+    //페이징(유저)
+    /** 페이징 카테고리별 조회 **/
+    public List<ShopDto> findPageByCategory(String name, int offset, int limit) {
+        List<Shop> pageByCategory = shopRepository.findPageByCategory(name, offset, limit);
+        List<ShopDto> list = pageByCategory.stream()
+                .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(),
+                        s.getShopImgs().stream().map(si -> si.getImgUrl()).toList())).toList();
+        return list;
+    }
+
+    /** 카테고리별 카운트 쿼리 **/
+    public long countQueryByCategory(String name) {
+        return shopRepository.countQueryByCategory(name);
     }
 }
