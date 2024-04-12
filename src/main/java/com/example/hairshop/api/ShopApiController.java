@@ -30,7 +30,7 @@ public class ShopApiController {
     }
 
     @GetMapping("/api/user/shop/list")
-    private List<ShopDto> shopCategoryList(@RequestParam("categoryName") String categoryName) {
+    public List<ShopDto> shopCategoryList(@RequestParam("categoryName") String categoryName) {
 
         System.out.println("categoryName = " + categoryName);
 
@@ -40,5 +40,14 @@ public class ShopApiController {
                         .map(i -> i.getImgUrl()).toList())).toList();
 
         return list;
+    }
+
+    /** 샵 정보 **/
+    @GetMapping("/api/shop/info")
+    public ShopDto shopInfo(@RequestParam("shopId") String shopId) {
+        long id = Long.parseLong(shopId);
+        ShopDto shop = shopService.findById(id);
+
+        return shop;
     }
 }

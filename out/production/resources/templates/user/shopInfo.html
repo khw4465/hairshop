@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hair shop</title>
+    <link href="/css/bodyHeader.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
+    <link href="/css/user/shopInfo.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
+<div th:replace="~{fragment/sidebar :: sidebar}"></div>
+<div id="container">
+    <div id="shopInfo" th:value="${shop.id}">
+        <div id="basicInfo">
+            <div id="shopImg">
+                <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                <img th:src="${shop.shopImgs[0]}" class="mainImg">
+                <button class="next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+            <div id="textInfo">
+                <h2 th:text="${shop.name}"></h2>
+                <span>별점</span>
+                <span>리뷰개수</span>
+                <p>영업시간</p>
+                <p th:text="${shop.openTime + ' ~ ' + shop.closeTime}"></p>
+                <p th:text="${shop.content}"></p>
+                <p th:text="${shop.address}"></p>
+                <div id="reservation">
+                    <a href="#" id="reservationBtn">예약하기</a>
+                </div>
+            </div>
+        </div>
+        <div id="addInfo">
+            <div id="menuList">
+                <h3>메뉴</h3>
+                <table>
+                    <tr th:each="menu : ${shop.menus}" class="menu" th:id="${menu.id}">
+                        <td>
+                            <img th:src="${menu.imgUrl}" class="menuImg">
+                        </td>
+                        <td>
+                            <p th:text="${menu.name}" class="menuName"></p>
+                            <p th:text="${menu.price}" class="menuPrice"></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="designerList">
+                <h3>디자이너</h3>
+                <table>
+                    <tr th:each="designer : ${shop.designers}" class="designer" th:id="${designer.id}">
+                        <td>
+                            <img th:src="${designer.img}" class="designerImg">
+                        </td>
+                        <td>
+                            <p th:text="${designer.name}" class="designerName"></p>
+                            <p th:text="${designer.career}" class="designerCareer"></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="styleList">
+                <h3>이 매장의 스타일</h3>
+                <div class="styleGrid">
+                    <div th:each="designer : ${shop.designers}" class="designers" th:id="${designer.id}">
+                        <div th:each="style : ${designer.styles}" class="style" th:id="${style.id}">
+                            <form method="GET" class="styleForm">
+                                <input type="hidden" th:value="${style.id}" name="styleId">
+                                <input type="hidden" th:value="${designer.id}" name="designerId">
+                                <div class="shopItem" onclick="submitForm(this)">
+                                    <img th:src="${style.imgUrl}" class="styleImg">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="reviewList">
+                <h3>리뷰</h3>
+                <table>
+                    <div th:each="designer : ${shop.designers}" class="designers" th:id="${designer.id}">
+                        <tr th:each="review : ${designer.reviews}" class="review" th:id="${review.id}">
+                            <td>
+                                <p th:text="${review.content}" class="reviewContent"></p>
+                            </td>
+                        </tr>
+                    </div>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/header.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/user/shopInfo.js"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.example.hairshop.dto;
 
+import com.example.hairshop.domain.Review;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class DesignerDto {
     private String content;
     private String career;
     private List<StyleDto> styles;
+    private List<ReviewDto> reviews;
 
     public DesignerDto(String name, String img, String content, String career) {
         this.name = name;

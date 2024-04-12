@@ -13,33 +13,37 @@
 <div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
 <div th:replace="~{fragment/sidebar :: sidebar}"></div>
 <div id="container">
-    <h1 th:text="${shopList.get(0).shopCategory}"></h1>
+    <h3 th:text="${shopList.get(0).shopCategory}"></h3>
     <div id="shopList">
         <div class="grid-container">
             <div th:each="shop : ${shopList}" class="shop" th:id="${shop.id}">
-                <div class="shopItem">
-                    <img th:src="${shop.shopImgs[0]}" class="shopImg">
-                    <p th:text="${shop.name}" class="shopName"></p>
-                    <p th:text="${shop.address}" class="shopAddress"></p>
-                </div>
+                <form th:action="${'/shop/info'}" method="GET" class="shopForm">
+                    <input type="hidden" th:value="${shop.id}" name="shopId">
+                    <div class="shopItem" onclick="submitForm(this)">
+                        <img th:src="${shop.shopImgs[0]}" class="shopImg">
+                        <p th:text="${shop.name}" class="shopName"></p>
+                        <p th:text="${shop.address}" class="shopAddress"></p>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="pagination">
             <!-- 이전 페이지로 이동하는 링크 -->
-            <a th:if="${offset > 0}" th:href="@{/user/shop/list(categoryName=${searchText}, offset=${offset - 10}, limit=${limit})}">&lt;</a>
+            <a th:if="${offset > 0}" th:href="@{/shop/list(categoryName=${searchText}, offset=${offset - 10}, limit=${limit})}">&lt;</a>
 
             <!-- 페이지 번호를 동적으로 생성 -->
             <a th:each="pageNo : ${#numbers.sequence(0, count div limit)}"
-               th:href="@{/user/shop/list(categoryName=${searchText}, offset=${pageNo*limit}, limit=${limit})}"
+               th:href="@{/shop/list(categoryName=${searchText}, offset=${pageNo*limit}, limit=${limit})}"
                th:text="${pageNo + 1}"
                th:class="${offset div limit == pageNo ? 'active' : ''}">1</a>
 
             <!-- 다음 페이지로 이동하는 링크 -->
-            <a th:if="${offset + limit < count}" th:href="@{/user/shop/list(categoryName=${searchText}, offset=${offset + 10}, limit=${limit})}">&gt;</a>
+            <a th:if="${offset + limit < count}" th:href="@{/shop/list(categoryName=${searchText}, offset=${offset + 10}, limit=${limit})}">&gt;</a>
         </div>
     </div>
 </div>
 <script src="/js/header.js"></script>
 <script src="/js/sidebar.js"></script>
+<script src="/js/user/shopList.js"></script>
 </body>
 </html>

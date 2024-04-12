@@ -1,9 +1,7 @@
 package com.example.hairshop.service;
 
 import com.example.hairshop.domain.*;
-import com.example.hairshop.dto.DesignerDto;
-import com.example.hairshop.dto.MenuDto;
-import com.example.hairshop.dto.ShopDto;
+import com.example.hairshop.dto.*;
 import com.example.hairshop.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -176,8 +174,17 @@ public class ShopService {
     }
 
     /** 샵 단일 조회 **/
-    public Shop findById(Long id) {
-        return shopRepository.findOne(id);
+    public ShopDto findById(Long id) {
+        Shop shop = shopRepository.findOne(id);
+        //dto로 변환
+        ShopDto dto = new ShopDto(shop.getId(), shop.getName(), shop.getCategory().getName(), shop.getAddress(), shop.getOpenTime(), shop.getCloseTime(), shop.getContent(),
+                shop.getShopImgs().stream().map(ShopImg::getImgUrl).toList(),
+                shop.getDesigners().stream().map(sd -> new DesignerDto(sd.getId(), sd.getName(), sd.getImg(), sd.getContent(), sd.getCareer(),
+                        sd.getStyles().stream().map(StyleDto::new).toList(),
+                        sd.getReviews().stream().map(ReviewDto::new).toList())).toList(),
+                shop.getMenus().stream().map(MenuDto::new).toList());
+
+        return dto;
     }
 
     /** 모든 샵 조회 **/

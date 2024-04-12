@@ -100,15 +100,10 @@ public class AdminShopController {
     /** 샵 상세 **/
     @GetMapping("/admin/shopInfo")
     public String shopInfo(@RequestParam("id") String id, Model m) {
-        long shopId = Long.parseLong(id);
-        Shop shop = shopService.findById(shopId);
-
         // 샵
-        ShopDto dto = new ShopDto(shop.getId(), shop.getName(), shop.getCategory().getName(), shop.getAddress(), shop.getOpenTime(), shop.getCloseTime(), shop.getContent(),
-                shop.getShopImgs().stream().map(i -> i.getImgUrl()).toList(),
-                shop.getDesigners().stream().map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList(),
-                shop.getMenus().stream().map(e -> new MenuDto(e.getName(), e.getImgUrl(), e.getPrice(), e.getCategory().getName())).toList());
-        m.addAttribute("shop", dto);
+        long shopId = Long.parseLong(id);
+        ShopDto shop = shopService.findById(shopId);
+        m.addAttribute("shop", shop);
 
         // 샵 카테고리
         List<ShopCategory> shops = categoryService.findShopCategoryAll();
