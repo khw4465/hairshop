@@ -10,14 +10,12 @@ import lombok.NoArgsConstructor;
 public class MenuDto {
     private Long id;
     private String name;
-    private String imgUrl;
     private int price;
     private String category;
 
     public MenuDto(Menu menu) {
         this.id = menu.getId();
         this.name = menu.getName();
-        this.imgUrl = menu.getImgUrl();
         this.price = menu.getPrice();
         this.category = menu.getCategory().getName();
     }

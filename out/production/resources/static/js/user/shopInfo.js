@@ -1,21 +1,19 @@
-// 현재 보이는 슬라이드의 인덱스
-let currentSlide = 0;
-// 이미지 목록
-const slides = document.querySelectorAll('#shopImg img');
+let slideIndex = 0; // 이미지의 인덱스를 추적하는 변수
 
-// 이전 또는 다음 슬라이드로 이동하는 함수
+// 이미지 슬라이드 함수
 function moveSlide(n) {
-    currentSlide += n;
-    // 마지막 슬라이드에서 다음 버튼을 클릭하면 첫 번째 슬라이드로 이동
-    if (currentSlide >= slides.length) {
-        currentSlide = 0;
+    let imgs = shopImgs;
+    let imgElement = document.querySelector(".mainImg");
+    slideIndex += n; // 인덱스 증가 또는 감소
+
+    // 인덱스가 배열 범위를 벗어나면 처음 또는 마지막 이미지로 이동
+    if (slideIndex >= imgs.length) {
+        slideIndex = 0;
+    } else if (slideIndex < 0) {
+        slideIndex = imgs.length - 1;
     }
-    // 첫 번째 슬라이드에서 이전 버튼을 클릭하면 마지막 슬라이드로 이동
-    if (currentSlide < 0) {
-        currentSlide = slides.length - 1;
-    }
-    // 모든 슬라이드를 숨김
-    slides.forEach(slide => slide.style.display = 'none');
-    // 현재 슬라이드만 보이도록 설정
-    slides[currentSlide].style.display = 'block';
+
+    // 새 이미지 설정
+    imgElement.src = imgs[slideIndex];
+    imgElement.style.left = (-slideIndex * 100) + "%";
 }

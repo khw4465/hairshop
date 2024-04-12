@@ -42,7 +42,6 @@ public class ShopService {
             menu.setCategory(menuCategory);
 
             menu.setName(m.getName());
-            menu.setImgUrl(m.getImgUrl());
             menu.setPrice(m.getPrice());
             menu.setShop(shop);
             shop.getMenus().add(menu);
@@ -106,7 +105,7 @@ public class ShopService {
         List<MenuDto> menus = shopDto.getMenus();
         for (MenuDto dto : menus) {
             MenuCategory category = menuCategoryRepository.findByName(dto.getCategory());
-            Menu menu = new Menu(dto.getName(), dto.getImgUrl(), dto.getPrice(), category, originShop);
+            Menu menu = new Menu(dto.getName(), dto.getPrice(), category, originShop);
             menuRepository.save(menu);
             category.getMenus().add(menu);
         }

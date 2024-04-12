@@ -66,9 +66,8 @@
         <tr>
             <th>디자이너</th>
             <td>
-
                 <div class="search">
-                    <form action="/admin/search/designer" method="post" id="searchForm">
+                    <form action="/admin/shop/search/designer" method="post" id="searchForm">
                         <input class="searchText" type="text" id="searchInput" name="searchInput" placeholder="디자이너 이름을 입력하세요.">
                         <img class="searchImg" src="/img/pngwing.com.png" id="searchButton" onclick="submitForm()">
                     </form>
@@ -118,7 +117,6 @@
                 <table id="menuTable">
                     <thead>
                     <tr>
-                        <th scope="col">이미지</th>
                         <th scope="col">카테고리</th>
                         <th scope="col">메뉴이름</th>
                         <th scope="col">가격</th>
@@ -132,15 +130,6 @@
                     </thead>
                     <tbody>
                     <tr th:each="menu : ${shop.menus}" class="menus">
-                        <td>
-                            <form action="/img/upload" method="post" enctype="multipart/form-data">
-                                <label class="btn-file">
-                                    <img th:src="${menu.imgUrl}" class="menuImg">
-                                    <input type="file" id="inputFile" name="file" accept="image/*" onchange="changedImg(this)">
-                                    <span>+</span>
-                                </label>
-                            </form>
-                        </td>
                         <td>
                             <select class="menuCategory">
                                 <option th:text="${menu.category}">카테고리 선택</option>

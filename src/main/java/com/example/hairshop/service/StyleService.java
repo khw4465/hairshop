@@ -1,14 +1,17 @@
 package com.example.hairshop.service;
 
 import com.example.hairshop.domain.Designer;
+import com.example.hairshop.domain.Shop;
 import com.example.hairshop.domain.Style;
 import com.example.hairshop.domain.StyleSubCategory;
 import com.example.hairshop.dto.StyleDto;
+import com.example.hairshop.repository.ShopRepository;
 import com.example.hairshop.repository.StyleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +22,7 @@ public class StyleService {
 
     private final StyleRepository styleRepository;
     private final CategoryService categoryService;
+    private final ShopRepository shopRepository;
 
     /** 스타일 등록 **/
     @Transactional
@@ -88,5 +92,21 @@ public class StyleService {
 
     public List<Style> findByCategory(StyleSubCategory category) {
         return styleRepository.findStyleByCategory(category);
+    }
+
+    /** 매장 별 스타일 전체 조회 **/
+    public List<StyleDto> findByShop(long id) {
+        Shop shop = shopRepository.findOne(id);
+        List<Designer> designers = shop.getDesigners();
+
+        List<StyleDto> styleList = new ArrayList<>();
+        for (Designer designer : designers) {
+            List<Style> styles = designer.getStyles();
+            List<StyleDto> styleDtoList = styles.stream().map(StyleDto::new).toList();
+            for (StyleDto styleDto : styleDtoList) {
+                styleList.add(styleDto);
+            }
+        }
+        return styleList;
     }
 }

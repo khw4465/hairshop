@@ -24,9 +24,6 @@ public class Menu extends BaseEntity {
     //== 시술메뉴 이름 ==//
     private String name;
 
-    //== 시술 사진 ==//
-    private String imgUrl;
-
     //== 시술 금액 ==//
     private int price;
 
@@ -44,29 +41,10 @@ public class Menu extends BaseEntity {
     @OneToOne(mappedBy = "menu", fetch = LAZY)
     private ReservationDetail reservationDetail;
 
-    public Menu(String name, String imgUrl, int price, MenuCategory category, Shop shop) {
+    public Menu(String name, int price, MenuCategory category, Shop shop) {
         this.name = name;
-        this.imgUrl = imgUrl;
         this.price = price;
         this.category = category;
         this.shop = shop;
-    }
-
-    //== 연관관계 메서드 ==//
-
-    /**
-     * 메뉴 객체 생성
-     */
-    public static List<Menu> createMenu(List<MenuDto> menuDtos) {
-        List<Menu> menuList = new ArrayList<>();
-        for (MenuDto menuDto : menuDtos) {
-            Menu menu = new Menu();
-            menu.setName(menuDto.getName());
-            menu.setImgUrl(menuDto.getImgUrl());
-            menu.setPrice(menuDto.getPrice());
-//            menuDto.getCategory()(menu);
-            menuList.add(menu);
-        }
-        return menuList;
     }
 }

@@ -81,6 +81,19 @@ public class AdminDesignerController {
         return "/admin/designerList";
     }
 
+    /** 샵 상세에서 디자이너 검색 **/
+    @PostMapping("/admin/shop/search/designer")
+    public ResponseEntity<?> searchDesigner(@RequestBody SearchCondition condition) {
+        try {
+            List<Designer> searchDesigner = designerService.findByName(condition.getName());
+            List<DesignerDto> designerList = searchDesigner.stream().map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+
+            return new ResponseEntity<>(designerList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     /** 샵 생성 -> 디자이너 검색 후 추가 **/
     @PostMapping("/admin/search/select")
     public ResponseEntity<?> addDesigner(@RequestBody SearchCondition condition) {

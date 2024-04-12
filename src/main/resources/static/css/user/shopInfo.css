@@ -1,5 +1,4 @@
 #shopInfo {
-    border: 1px solid black;
     width: 1200px;
     margin: 50px auto;
 }
@@ -12,10 +11,13 @@
 #shopImg {
     position: relative;
     margin: 0 50px;
+    height: 600px;
+    overflow: hidden;
 }
 
 .mainImg {
     width: 600px;
+    transition: transform 0.5s ease;
 }
 
 .prev, .next {
@@ -101,10 +103,38 @@ h3, .menu, .designer {
     margin-bottom: 10px;
 }
 
+#menuTable {
+    width: 900px;
+}
+
+.menuInnerTable {
+    width: 894px;
+}
+
+#designerTable>tbody>tr>td>form {
+    margin-left: 540px;
+}
+
+.reservationBtn {
+    background-color: #797979;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.reservationBtn:hover {
+    background-color: #555555;
+}
 /*-------스타일-------*/
 .styleGrid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 3개의 열 */
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px; /* 간격 조절 */
 }
 

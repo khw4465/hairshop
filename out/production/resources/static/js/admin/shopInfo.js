@@ -131,10 +131,6 @@ function modifyShop(){
     rows.forEach(row => {
         const menuData = {};
 
-        //메뉴 이미지 URL
-        const menuImgUrl = row.querySelector('.menuImg').getAttribute('src');
-        menuData.imgUrl = menuImgUrl;
-
         //메뉴 카테고리
         const menuCategory = row.querySelector('.menuCategory').value;
         menuData.category = menuCategory;

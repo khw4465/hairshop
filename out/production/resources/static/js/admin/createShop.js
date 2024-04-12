@@ -70,10 +70,6 @@ function createShop(){
     rows.forEach(row => {
         const menuData = {};
 
-        //메뉴 이미지 URL
-        const menuImgUrl = row.querySelector('.menuImg').getAttribute('src');
-        menuData.imgUrl = menuImgUrl;
-
         //메뉴 카테고리
         const menuCategory = row.querySelector('.menuCategory').value;
         menuData.category = menuCategory;
@@ -149,30 +145,6 @@ function addMenu() {
     const newRow = document.createElement("tr");
     newRow.setAttribute("class", "menus");
 
-    // 첫 번째 셀: 이미지 업로드
-    const imgCell = document.createElement("td");
-    const imgForm = document.createElement("form");
-    imgForm.setAttribute("action", "/img/upload");
-    imgForm.setAttribute("method", "post");
-    imgForm.setAttribute("enctype", "multipart/form-data");
-    const imgLabel = document.createElement("label");
-    imgLabel.setAttribute("class", "btn-file");
-    const imgTag = document.createElement("img");
-    imgTag.setAttribute("class", "menuImg")
-    const imgInput = document.createElement("input");
-    imgInput.setAttribute("type", "file");
-    imgInput.setAttribute("name", "file");
-    imgInput.setAttribute("accept", "image/*");
-    imgInput.setAttribute("onchange", "changedImg(this)");
-    const imgSpan = document.createElement("span");
-    imgSpan.innerText = "+";
-    imgLabel.appendChild(imgTag);
-    imgLabel.appendChild(imgInput);
-    imgLabel.appendChild(imgSpan);
-    imgForm.appendChild(imgLabel);
-    imgCell.appendChild(imgForm);
-    newRow.appendChild(imgCell);
-
     // 두 번째 셀: 메뉴 카테고리 선택
     const categoryCell = document.createElement("td");
     const categorySelect = document.createElement("select");
@@ -235,7 +207,7 @@ function submitForm() {
         let SearchCondition = {name: inputValue};
 
         $.ajax({
-            url: "/admin/search/designer",
+            url: "/admin/shop/search/designer",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(SearchCondition),

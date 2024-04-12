@@ -1,8 +1,14 @@
 package com.example.hairshop.controller;
 
+import com.example.hairshop.domain.MenuCategory;
 import com.example.hairshop.domain.Shop;
+import com.example.hairshop.dto.DesignerDto;
+import com.example.hairshop.dto.MenuDto;
 import com.example.hairshop.dto.ShopDto;
+import com.example.hairshop.dto.StyleDto;
+import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.ShopService;
+import com.example.hairshop.service.StyleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @Controller
@@ -17,6 +25,8 @@ import java.util.List;
 public class UserShopController {
 
     private final ShopService shopService;
+    private final StyleService styleService;
+    private final CategoryService categoryService;
 
     /** 상단 헤더 카테고리(페이징) **/
     @GetMapping("/shop/list")
@@ -41,8 +51,18 @@ public class UserShopController {
     public String shopInfo(@RequestParam("shopId") String shopId, Model m) {
         long id = Long.parseLong(shopId);
         ShopDto shop = shopService.findById(id);
-
         m.addAttribute("shop", shop);
+
+        List<MenuDto> menus = shop.getMenus();
+        LinkedHashSet<String> set = new LinkedHashSet<>();
+        for (MenuDto menu : menus) {
+            set.add(menu.getCategory());
+        }
+        List<String> menuCategoryList = new ArrayList<>(set);
+        m.addAttribute("menuCategory", menuCategoryList);
+
+        List<StyleDto> styles = styleService.findByShop(id);
+        m.addAttribute("styles", styles);
 
         return "/user/shopInfo";
     }
