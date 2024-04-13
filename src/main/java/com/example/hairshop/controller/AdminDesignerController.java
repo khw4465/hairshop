@@ -27,7 +27,7 @@ public class AdminDesignerController {
     @GetMapping("/admin/designer")
     public String designer(Model m) {
         List<StyleSubCategory> subCategories = categoryService.findSubCategoryAll();
-        List<SubCategoryDto> categoryDtoList = subCategories.stream().map(c -> new SubCategoryDto(c.getId(), c.getName())).toList();
+        List<StyleCategoryDto> categoryDtoList = subCategories.stream().map(c -> new StyleCategoryDto(c.getId(), c.getName())).toList();
         m.addAttribute("subCategories", categoryDtoList);
 
         return "/admin/createDesigner";
@@ -134,7 +134,7 @@ public class AdminDesignerController {
         m.addAttribute("designerInfo", dto);
 
         List<StyleSubCategory> subCategories = categoryService.findSubCategoryAll();
-        List<SubCategoryDto> categoryDtoList = subCategories.stream().map(c -> new SubCategoryDto(c.getId(), c.getName())).toList();
+        List<StyleCategoryDto> categoryDtoList = subCategories.stream().map(c -> new StyleCategoryDto(c.getId(), c.getName())).toList();
         m.addAttribute("subCategories", categoryDtoList);
 
         return "/admin/designerInfo";

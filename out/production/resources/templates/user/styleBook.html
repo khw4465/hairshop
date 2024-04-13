@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hairshop</title>
+    <link href="/css/bodyHeader.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
+    <link href="/css/user/styleBook.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
+<div th:replace="~{fragment/sidebar :: sidebar}"></div>
+<div id="container">
+    <h3>스타일북</h3>
+    <div id="mainCategory">
+        <ul id="categoryUl">
+            <form action="/styleBook/category" id="submitForm">
+                <input type="hidden" name="categoryName" id="categoryName">
+            </form>
+            <li th:each="mainCategory : ${mainCategories}" class="categoryList" onclick="subCategory(this)">
+                <span th:text="${mainCategory.name}"></span>
+            </li>
+        </ul>
+    </div>
+    <h4 th:text="${searchText}"></h4>
+    <div id="styleList">
+        <div class="styleGrid">
+            <div th:each="style : ${styles}" class="style" th:id="${style.id}">
+                <form method="GET" class="styleForm">
+                    <input type="hidden" th:value="${style.id}" name="styleId">
+                    <div class="shopItem" onclick="submitForm(this)">
+                        <img th:src="${style.imgUrl}" class="styleImg">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+        <!-- 이전 페이지로 이동하는 링크 -->
+        <a th:if="${offset > 0}" th:href="@{${url}(categoryName=${searchText}, offset=${offset - 16}, limit=${limit})}">&lt;</a>
+
+        <!-- 페이지 번호를 동적으로 생성 -->
+        <a th:each="pageNo : ${#numbers.sequence(0, count div limit)}"
+           th:href="@{${url}(categoryName=${searchText}, offset=${pageNo*limit}, limit=${limit})}"
+           th:text="${pageNo + 1}"
+           th:class="${offset div limit == pageNo ? 'active' : ''}">1</a>
+
+        <!-- 다음 페이지로 이동하는 링크 -->
+        <a th:if="${offset + limit < count}" th:href="@{${url}(categoryName=${searchText}, offset=${offset + 16}, limit=${limit})}">&gt;</a>
+    </div>
+</div>
+<script th:inline="javascript">
+    let subCategories = /*[[${subCategories}]]*/ '';
+</script>
+<script src="/js/header.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/user/styleBook.js"></script>
+</body>
+</html>

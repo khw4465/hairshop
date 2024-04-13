@@ -212,7 +212,7 @@ public class ShopService {
         return list;
     }
     /** 전체 카운트 쿼리 **/
-    public long countQueryAll() {
+    public Long countQueryAll() {
         return shopRepository.countQueryAll();
     }
     /** 샵 페이징 이름 조회 **/

@@ -78,22 +78,6 @@ public class StyleService {
         }
     }
 
-    public Style findOne(Long id) {
-        return styleRepository.findOne(id);
-    }
-
-    public List<Style> findAll() {
-        return styleRepository.findAll();
-    }
-
-    public List<Style> findByDesigner(Designer designer) {
-        return styleRepository.findStyleByDesigner(designer);
-    }
-
-    public List<Style> findByCategory(StyleSubCategory category) {
-        return styleRepository.findStyleByCategory(category);
-    }
-
     /** 매장 별 스타일 전체 조회 **/
     public List<StyleDto> findByShop(long id) {
         Shop shop = shopRepository.findOne(id);
@@ -108,5 +92,45 @@ public class StyleService {
             }
         }
         return styleList;
+    }
+
+    /** 스타일북 페이징 **/
+    public List<StyleDto> findPageAll(int offset, int limit) {
+        List<Style> pageAll = styleRepository.findPageAll(offset, limit);
+        List<StyleDto> styleDtoList = pageAll.stream().map(StyleDto::new).toList();
+        return styleDtoList;
+    }
+
+    /** 스타일북 카운트 쿼리 **/
+    public Long countQueryAll() {
+        return styleRepository.countQueryAll();
+    }
+
+    /** 스타일북 카테고리별 페이징 **/
+    public List<StyleDto> findPageByCategory(String categoryName, int offset, int limit) {
+        List<Style> pageByCategory = styleRepository.findPageByCategory(categoryName, offset, limit);
+        List<StyleDto> styleDtoList = pageByCategory.stream().map(StyleDto::new).toList();
+        return styleDtoList;
+    }
+
+    /** 스타일북 카테고리별 카운트 쿼리 **/
+    public Long countQueryByCategory(String categoryName) {
+        return styleRepository.countQueryByCategory(categoryName);
+    }
+
+    public Style findOne(Long id) {
+        return styleRepository.findOne(id);
+    }
+
+    public List<Style> findAll() {
+        return styleRepository.findAll();
+    }
+
+    public List<Style> findByDesigner(Designer designer) {
+        return styleRepository.findStyleByDesigner(designer);
+    }
+
+    public List<Style> findByCategory(StyleSubCategory category) {
+        return styleRepository.findStyleByCategory(category);
     }
 }

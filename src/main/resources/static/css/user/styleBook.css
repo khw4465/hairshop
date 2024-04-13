@@ -1,0 +1,74 @@
+#container {
+    margin: 50px auto;
+}
+
+h3, h4 {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#categoryUl {
+    list-style-type: none;
+    padding: 20px;
+    margin: 30px;
+    text-align: center;
+}
+
+.categoryList {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.subCategoryTable {
+    position: absolute;
+    width: 100%;
+    border: 1px solid black;
+    text-align: left;
+    background-color: white;
+    cursor: pointer;
+}
+
+#styleList {
+    margin: 100px 200px;
+}
+
+.styleGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px; /* 간격 조절 */
+}
+
+.styleImg {
+    width: 70%;
+    height: 70%;
+    margin: 0 20px;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #333;
+    padding: 8px 12px;
+    margin: 0 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .active {
+    background-color: #797979;
+    color: #fff;
+}

@@ -5,7 +5,7 @@ import com.example.hairshop.domain.ShopCategory;
 import com.example.hairshop.domain.StyleSubCategory;
 import com.example.hairshop.dto.DesignerDto;
 import com.example.hairshop.dto.ShopCategoryDto;
-import com.example.hairshop.dto.SubCategoryDto;
+import com.example.hairshop.dto.StyleCategoryDto;
 import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.DesignerService;
 import jakarta.servlet.http.HttpSession;
@@ -37,9 +37,9 @@ public class DesignerApiController {
     }
 
     @GetMapping("api/admin/style")
-    public List<SubCategoryDto> getCategory() {
+    public List<StyleCategoryDto> getCategory() {
         List<StyleSubCategory> subCategories = categoryService.findSubCategoryAll();
-        List<SubCategoryDto> list = subCategories.stream().map(category -> new SubCategoryDto(category.getId(), category.getName())).toList();
+        List<StyleCategoryDto> list = subCategories.stream().map(category -> new StyleCategoryDto(category.getId(), category.getName())).toList();
 
         return list;
     }

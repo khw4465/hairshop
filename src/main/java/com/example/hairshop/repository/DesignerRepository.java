@@ -98,7 +98,7 @@ public class DesignerRepository {
     }
 
     /** 전체 카운트쿼리 **/
-    public long countQueryAll() {
+    public Long countQueryAll() {
         return em.createQuery("select count(d) from Designer d", Long.class)
                 .getSingleResult();
     }

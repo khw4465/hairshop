@@ -63,4 +63,34 @@ public class StyleRepository {
             return Optional.empty();
         }
     }
+
+    /** 스타일북 페이징 **/
+    public List<Style> findPageAll(int offset, int limit) {
+        return em.createQuery("select s from Style s", Style.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    /** 스타일북 카운트 쿼리 **/
+    public Long countQueryAll() {
+        return em.createQuery("select count(s) from Style s", Long.class)
+                .getSingleResult();
+    }
+
+    /** 스타일북 카테고리별 페이징 **/
+    public List<Style> findPageByCategory(String categoryName, int offset, int limit) {
+        return em.createQuery("select s from Style s join s.subCategorys sc where sc.name = :category", Style.class)
+                .setParameter("category", categoryName)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    /** 스타일북 카테고리별 카운트 쿼리 **/
+    public Long countQueryByCategory(String categoryName) {
+        return em.createQuery("select count(s) from Style s join s.subCategorys sc where sc.name = :category", Long.class)
+                .setParameter("category", categoryName)
+                .getSingleResult();
+    }
 }

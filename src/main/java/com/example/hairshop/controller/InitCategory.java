@@ -131,7 +131,7 @@ public class InitCategory implements CommandLineRunner {
 //        dye.addSubCategory(dyeCategory5);
 //        dye.addSubCategory(dyeCategory6);
 //
-//        StyleSubCategory nailCategory1 = new StyleSubCategory("[매니큐어] 플컬러");
+//        StyleSubCategory nailCategory1 = new StyleSubCategory("[매니큐어] 풀컬러");
 //        StyleSubCategory nailCategory2 = new StyleSubCategory("[매니큐어] 그라데이션");
 //        StyleSubCategory nailCategory3 = new StyleSubCategory("[매니큐어] 체크");
 //        StyleSubCategory nailCategory4 = new StyleSubCategory("[매니큐어] 드로잉");
@@ -152,7 +152,7 @@ public class InitCategory implements CommandLineRunner {
 //        nail.addSubCategory(nailCategory5);
 //        nail.addSubCategory(nailCategory6);
 //
-//        StyleSubCategory pediCategory1 = new StyleSubCategory("[페디큐어] 플컬러");
+//        StyleSubCategory pediCategory1 = new StyleSubCategory("[페디큐어] 풀컬러");
 //        StyleSubCategory pediCategory2 = new StyleSubCategory("[페디큐어] 그라데이션");
 //        StyleSubCategory pediCategory3 = new StyleSubCategory("[페디큐어] 체크");
 //        StyleSubCategory pediCategory4 = new StyleSubCategory("[페디큐어] 드로잉");

@@ -73,7 +73,7 @@ public class ShopRepository {
                 .getResultList();
     }
     /** 전체 카운트쿼리 **/
-    public long countQueryAll() {
+    public Long countQueryAll() {
         return em.createQuery("select count(s) from Shop s", Long.class)
                 .getSingleResult();
     }

@@ -151,7 +151,7 @@ public class DesignerService {
     }
 
     /** 전체 카운트 쿼리 **/
-    public long countQueryAll() {
+    public Long countQueryAll() {
         return designerRepository.countQueryAll();
     }
 
