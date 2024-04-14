@@ -28,9 +28,9 @@
     <div id="styleList">
         <div class="styleGrid">
             <div th:each="style : ${styles}" class="style" th:id="${style.id}">
-                <form method="GET" class="styleForm">
+                <form th:action="${'/styleInfo'}" method="GET" class="styleForm">
                     <input type="hidden" th:value="${style.id}" name="styleId">
-                    <div class="shopItem" onclick="submitForm(this)">
+                    <div class="styleImgDiv" onclick="submitForm(this)">
                         <img th:src="${style.imgUrl}" class="styleImg">
                     </div>
                 </form>

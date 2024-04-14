@@ -14,7 +14,7 @@ public class StyleDto {
     private String imgUrl;
     private String category1;
     private String category2;
-    private long designerId;
+    private String designerId;
 
     public StyleDto(String imgUrl, List<StyleSubCategory> categories) {
         this.imgUrl = imgUrl;
@@ -27,6 +27,6 @@ public class StyleDto {
         this.imgUrl = style.getImgUrl();
         this.category1 = style.getSubCategorys().get(0).getName();
         this.category2 = style.getSubCategorys().get(1).getName();
-        this.designerId = style.getDesigner().getId();
+        this.designerId = style.getDesigner().getId().toString();
     }
 }

@@ -118,8 +118,9 @@ public class StyleService {
         return styleRepository.countQueryByCategory(categoryName);
     }
 
-    public Style findOne(Long id) {
-        return styleRepository.findOne(id);
+    public StyleDto findOne(Long id) {
+        Style style = styleRepository.findOne(id);
+        return new StyleDto(style);
     }
 
     public List<Style> findAll() {

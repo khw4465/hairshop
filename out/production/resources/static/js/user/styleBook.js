@@ -39,3 +39,7 @@ function findStyleByCategory(element) {
     document.getElementById("categoryName").value = element.id;
     document.getElementById("submitForm").submit();
 }
+
+function submitForm(element) {
+    element.closest('.styleForm').submit();
+}

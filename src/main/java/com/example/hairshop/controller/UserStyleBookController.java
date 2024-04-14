@@ -1,11 +1,10 @@
 package com.example.hairshop.controller;
 
-import com.example.hairshop.domain.Style;
-import com.example.hairshop.domain.StyleMainCategory;
-import com.example.hairshop.domain.StyleSubCategory;
+import com.example.hairshop.domain.*;
 import com.example.hairshop.dto.StyleCategoryDto;
 import com.example.hairshop.dto.StyleDto;
 import com.example.hairshop.service.CategoryService;
+import com.example.hairshop.service.DesignerService;
 import com.example.hairshop.service.StyleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +20,7 @@ public class UserStyleBookController {
 
     private final CategoryService categoryService;
     private final StyleService styleService;
+    private final DesignerService designerService;
 
     /** 스타일북 **/
     @GetMapping("/styleBook")
@@ -81,7 +81,16 @@ public class UserStyleBookController {
 
     /** 스타일 상세 **/
     @GetMapping("/styleInfo")
-    public String styleInfo(Model m) {
+    public String styleInfo(@RequestParam("styleId") String styleId, Model m) {
+        long id = Long.parseLong(styleId);
+        StyleDto dto = styleService.findOne(id);
+        m.addAttribute("style", dto);
+
+        Designer designer = designerService.findById(dto.getDesignerId());
+        m.addAttribute("designer", designer);
+
+        String shopName = designer.getShop().getName();
+        m.addAttribute("shop", shopName);
 
         return "/user/styleInfo";
     }
