@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hair shop</title>
+    <link href="/css/bodyHeader.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
+    <link href="/css/user/reservationDesigner.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
+<div th:replace="~{fragment/sidebar :: sidebar}"></div>
+<div id="container">
+    <h3>디자이너를 선택해주세요</h3>
+    <div id="designerList">
+        <div th:each="designer : ${designers}" style="margin: 20px auto;">
+            <form th:action="${'/reservation/menu'}" method="GET">
+                <input type="hidden" th:value="${designer.id}" name="designerId" class="designerId">
+                <table class="designerTable" onclick="submitForm(this)">
+                    <tr class="designerTr">
+                        <td class="imgTd">
+                            <img th:src="${designer.img}" class="designerImg">
+                        </td>
+                        <td class="textTd">
+                            <div th:text="${designer.name}"></div>
+                            <p th:text="${designer.career}"></p>
+                        </td>
+                        <td class="contentTd">
+                            <p th:text="${designer.content}" class="designerContent"></p>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/js/header.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/user/reservationDesigner.js"></script>
+</body>
+</html>

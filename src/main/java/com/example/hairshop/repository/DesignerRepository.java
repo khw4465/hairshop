@@ -42,7 +42,7 @@ public class DesignerRepository {
 
     /** 디자이너 이름 조회 **/
     public List<Designer> findByName(String name) {
-        return em.createQuery("select d from Designer d where d.name like :name", Designer.class)
+        return em.createQuery("select d from Designer d where d.name like :name and d.shop.id IS NULL", Designer.class)
                 .setParameter("name", "%" + name + "%")
                 .getResultList();
     }

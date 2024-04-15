@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @Transactional(readOnly = true)
@@ -186,9 +187,20 @@ public class ShopService {
         return dto;
     }
 
-    /** 모든 샵 조회 **/
     public List<Shop> findAll() {
         return shopRepository.findAll();
+    }
+
+    /** 모든 샵 조회 (모든 데이터) **/
+    public List<ShopDto> findAllShopData() {
+        List<Shop> all = shopRepository.findAll();
+        List<ShopDto> list = all.stream().map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(), s.getOpenTime(), s.getCloseTime(), s.getContent(),
+                s.getShopImgs().stream().map(ShopImg::getImgUrl).toList(),
+                s.getDesigners().stream().map(sd -> new DesignerDto(sd.getId(), sd.getName(), sd.getImg(), sd.getContent(), sd.getCareer(),
+                        sd.getStyles().stream().map(StyleDto::new).toList(),
+                        sd.getReviews().stream().map(ReviewDto::new).toList())).toList(),
+                s.getMenus().stream().map(MenuDto::new).toList())).toList();
+        return list;
     }
 
     /** 이름으로 검색 **/

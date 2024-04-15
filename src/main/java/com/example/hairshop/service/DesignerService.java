@@ -129,7 +129,7 @@ public class DesignerService {
         return designerRepository.findByKakao(kakaoId);
     }
 
-    /** 디자이너 이름 조회 **/
+    /** 디자이너 이름 조회(샵이 없는) **/
     public List<Designer> findByName(String name) {
         return designerRepository.findByName(name);
     }

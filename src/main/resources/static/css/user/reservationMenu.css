@@ -1,0 +1,45 @@
+#shopInfo {
+    text-align: center;
+    margin-top: 100px;
+}
+
+#designerTable {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#designerImg {
+    width: 150px;
+    height: 150px;
+}
+
+#menuList {
+    margin: 100px auto;
+    width: 1200px;
+}
+
+h3, .menu {
+    border-bottom: 1px solid #dedede;
+}
+
+#menuTable {
+    width: 1200px;
+}
+
+.menuInnerTable {
+    width: 1150px;
+    margin: 0 20px;
+}
+
+.menuTr {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.submitBtn {
+    width: 1150px;
+    background-color: white;
+    border: none;
+    text-align: left;
+    font-size: 1em;
+    margin: 0 20px;
+}

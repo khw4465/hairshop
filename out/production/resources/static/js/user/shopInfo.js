@@ -17,3 +17,7 @@ function moveSlide(n) {
     imgElement.src = imgs[slideIndex];
     imgElement.style.left = (-slideIndex * 100) + "%";
 }
+
+function submitForm(element) {
+    element.closest('form').submit();
+}

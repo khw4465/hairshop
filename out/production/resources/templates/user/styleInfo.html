@@ -33,8 +33,8 @@
                         <p class="shopName" th:text="${shop}"></p>
                     </td>
                     <td>
-                        <form action="#" method="GET" id="reservationForm">
-                            <input type="hidden" th:value="${designer.id}">
+                        <form th:action="${'/reservation/menu'}" method="GET" id="reservationForm">
+                            <input type="hidden" th:value="${designer.id}" name="designerId">
                             <button onclick="" class="reservationBtn">예약</button>
                         </form>
                     </td>

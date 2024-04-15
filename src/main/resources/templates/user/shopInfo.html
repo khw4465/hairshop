@@ -30,7 +30,10 @@
                 <p th:text="${shop.address}"></p>
                 <p th:text="${shop.content}" style="margin-top: 50px"></p>
                 <div id="reservation">
-                    <a href="#" id="reservationBtn">예약하기</a>
+                    <form th:action="${'/reservation/designer'}">
+                        <input type="hidden" th:value="${shop.id}" name="shopId">
+                        <a href="#" id="reservationBtn" onclick="submitForm(this)">예약하기</a>
+                    </form>
                 </div>
             </div>
         </div>
@@ -68,8 +71,8 @@
                             <p th:text="${designer.career}" class="designerCareer"></p>
                         </td>
                         <td>
-                            <form action="#" method="GET">
-                                <input type="hidden" th:value="${designer.id}">
+                            <form th:action="${'/reservation/menu'}" method="GET">
+                                <input type="hidden" th:value="${designer.id}" name="designerId">
                                 <button onclick="" class="reservationBtn">예약</button>
                             </form>
                         </td>
@@ -80,7 +83,7 @@
                 <h3>이 매장의 스타일</h3>
                 <div class="styleGrid">
                     <div th:each="style : ${styles}" class="style" th:id="${style.id}">
-                        <form method="GET" class="styleForm">
+                        <form th:action="${'/styleInfo'}" method="GET" class="styleForm">
                             <input type="hidden" th:value="${style.id}" name="styleId">
                             <div class="shopItem" onclick="submitForm(this)">
                                 <img th:src="${style.imgUrl}" class="styleImg">

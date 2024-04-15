@@ -6,15 +6,58 @@
     <title>hairshop</title>
     <link href="/css/bodyHeader.css" rel="stylesheet">
     <link href="/css/sidebar.css" rel="stylesheet">
+    <link href="/css/home.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
 <div th:replace="~{fragment/sidebar :: sidebar}"></div>
+<div id="container">
+    <div id="styleBanner">
+        <h3>메인 배너 들어갈자리</h3>
+    </div>
+    <div id="todayShop">
+        <div id="shopList">
+            <h3>today's shop</h3>
+            <div class="shopGrid">
+                <div th:each="shop : ${shops}" class="shop" th:id="${shop.id}">
+                    <form th:action="${'/shop/info'}" method="GET" class="shopForm">
+                        <input type="hidden" th:value="${shop.id}" name="shopId">
+                        <div class="shopItem" onclick="submitForm(this)">
+                            <img th:src="${shop.shopImgs[0]}" class="shopImg">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bestStyle">
+        <div id="styleList">
+            <h3>best style</h3>
+            <div class="styleGrid">
+                <div th:each="style : ${styles}" class="shop" th:id="${style.id}">
+                    <form th:action="${'/styleInfo'}" method="GET" class="styleForm">
+                        <input type="hidden" th:value="${style.id}" name="styleId">
+                        <div class="shopItem" onclick="submitForm(this)">
+                            <img th:src="${style.imgUrl}" class="styleImg">
+                            <div class="styleCategory">
+                                <span th:text="${'#' + style.category1}"></span>
+                                <span th:text="${'#' + style.category2}"></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-home
-
+    </div>
+</div>
+<script th:inline="javascript">
+    let shops = /*[[${shops}]]*/ '';
+    let styles = /*[[${styles}]]*/ '';
+</script>
 <script src="/js/header.js"></script>
 <script src="/js/sidebar.js"></script>
+<script src="/js/home.js"></script>
 </body>
 </html>

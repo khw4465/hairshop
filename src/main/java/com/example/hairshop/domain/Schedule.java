@@ -30,6 +30,14 @@ public class Schedule {
     //== 16 - 18:00  17 - 18:30  18 - 19:00  19 - 19:30 ==//
     private boolean[] time;
 
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "date=" + date +
+                ", time=" + Arrays.toString(time) +
+                '}';
+    }
+
     //== 스케쥴 <--> 디자이너 ==//
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "designerId")

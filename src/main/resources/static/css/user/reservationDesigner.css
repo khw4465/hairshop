@@ -1,0 +1,41 @@
+h3 {
+    text-align: center;
+    margin: 50px auto;
+}
+
+#designerList {
+    width: 1000px;
+    padding: 10px 0;
+    margin: 50px auto;
+}
+
+.designerTable {
+    background-color: white;
+    width: 900px;
+    margin: 20px 50px;
+}
+
+.designerTr {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.designerImg {
+    width: 100px;
+    height: 100px;
+}
+
+.imgTd {
+    width: 100px;
+}
+
+.textTd {
+    width: 150px;
+}
+
+.contentTd {
+    width: 500px;
+}
+
+.designerContent {
+    margin-right: 70px;
+}

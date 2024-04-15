@@ -109,6 +109,7 @@ h3, .menu, .designer {
 
 .menuInnerTable {
     width: 894px;
+    margin: 0 20px;
 }
 
 #designerTable>tbody>tr>td>form {
