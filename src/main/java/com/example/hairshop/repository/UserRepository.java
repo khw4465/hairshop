@@ -25,6 +25,13 @@ public class UserRepository {
         return em.find(User.class, id);
     }
 
+    /** 회원 조회(카카오) **/
+    public User findByKakaoId(String id) {
+        return em.createQuery("select u from User u where u.kakaoId = :kakaoId", User.class)
+                .setParameter("kakaoId", id)
+                .getSingleResult();
+    }
+
     /** 회원 조회(전체) **/
     public List<User> findAll() {
         return em.createQuery("select u from User u", User.class)

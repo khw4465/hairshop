@@ -1,6 +1,7 @@
 package com.example.hairshop.service;
 
 import com.example.hairshop.domain.User;
+import com.example.hairshop.dto.UserDto;
 import com.example.hairshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,4 +26,15 @@ public class UserService {
         return findUser.get();
     }
 
+    public UserDto findUser(Long id) {
+        User user = userRepository.findOne(id);
+        UserDto userDto = new UserDto(user);
+        return userDto;
+    }
+
+    public UserDto findUserByKakaoId(String id) {
+        User user = userRepository.findByKakaoId(id);
+        UserDto userDto = new UserDto(user);
+        return userDto;
+    }
 }

@@ -13,11 +13,26 @@
 <div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
 <div th:replace="~{fragment/sidebar :: sidebar}"></div>
 <div id="container">
-    <div th:each="schedule : ${schedules}">
-        <p th:text="${schedule.date}"></p>
+    <div id="date">
+        <h3>날짜 선택</h3>
+        <div id="selectDate">
+        </div>
+    </div>
+    <div id="time">
+        <h3>시간 선택</h3>
+        <div id="timeSlotList">
+        </div>
+    </div>
+    <div id="reservation">
+        <form th:action="${'/reservation'}" method="GET" id="reservationForm">
+            <a href="#" id="reservationBtn" onclick="submitReservation()">예약하기</a>
+        </form>
     </div>
 </div>
 <script th:inline="javascript">
+    let designerId = /*[[${designerId}]]*/ '';
+    let menuId = /*[[${menuId}]]*/ '';
+    let shopTime = /*[[${shopTime}]]*/ '';
     let schedules = /*[[${schedules}]]*/ '';
 </script>
 <script src="/js/header.js"></script>

@@ -55,7 +55,7 @@ public class KakaoLoginApiController {
         // 토큰
         session.setAttribute("accessToken", oauthToken.getAccess_token());
         // 회원아이디
-        session.setAttribute("userId", kakaoProfile.getId());
+        session.setAttribute("userId", kakaoProfile.getId().toString());
         // 회원 이름
         session.setAttribute("username", kakaoProfile.getProperties().getNickname());
         // 회원 이메일

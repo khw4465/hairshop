@@ -24,11 +24,16 @@ document.getElementById('isDesigner').addEventListener('change', function() {
         });
 });
 
-let userId = /*[[${userId}]]*/ '';
-
 window.onload = function () {
     let isDesigner = sessionStorage.getItem('isDesigner');
-    if (userId != null) {
+    if (userId === null) {
+        let url = new URL(document.referrer);
+        let path = url.pathname;
+        if (url.search || url.hash) {
+            path += url.search + url.hash;
+        }
+        sessionStorage.setItem("path", path);
+    } else {
         sendPostRequset(isDesigner);
         sessionStorage.setItem('isDesigner', '0');
     }
@@ -42,27 +47,19 @@ function sendPostRequset(isDesigner) {
     };
 
     // fetch API를 사용하여 POST 요청 보내기
-    fetch('/login/kakao', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(checkForm)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('POST 요청이 실패했습니다.');
-            }
-            return response.text();
-        })
-        .then(data => {
+    $.ajax({
+        url: '/login/kakao',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(checkForm),
+        success: function(data) {
             if (data === 'class com.example.hairshop.domain.Designer') {
                 window.location.href = '/admin';
             } else {
-                window.location.href = '/';
+                window.location.href = sessionStorage.getItem("path");
             }
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        },
+        error: function(xhr, status, error) {
+        }
+    });
 }

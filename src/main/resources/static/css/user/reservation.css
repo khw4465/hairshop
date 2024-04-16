@@ -1,0 +1,47 @@
+#reservation {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+h3 {
+    text-align: center;
+}
+
+#userInfo, #reservationInfo, #orderInfo {
+    width: 700px;
+    margin: 0 auto;
+}
+
+#userNameInput, #userEmailInput, #userPhoneNumberInput {
+    width: 650px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid black;
+    font-size: 1.1em;
+    padding: 5px;
+    margin: 20px auto;
+}
+
+#request {
+    width: 650px;
+    height: 80px;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 20px auto;
+    resize: none;
+}
+
+#reservationTable, #orderTable {
+    width: 700px;
+}
+
+#orderTable>tbody>tr>td>p {
+    text-align: right;
+    margin-right: 50px;
+}
+
+#priceSum {
+    font-size: 1.3em;
+    font-weight: bold;
+}

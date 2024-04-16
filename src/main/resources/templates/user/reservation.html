@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hair shop</title>
+    <link href="/css/bodyHeader.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
+    <link href="/css/user/reservation.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
+<div th:replace="~{fragment/sidebar :: sidebar}"></div>
+<div id="container">
+    <div id="reservation">
+        <h3>결제하기</h3>
+        <div id="userInfo">
+            <h4>예약자 정보</h4>
+            <div id="userName">
+                <input type="text" id="userNameInput" placeholder="예약자 이름" th:value="${user.name}" readonly>
+            </div>
+            <div id="userEmail">
+                <input type="text" id="userEmailInput" placeholder="이메일" th:value="${user.email}" readonly>
+            </div>
+            <div id="userPhoneNumber">
+                <input type="text" id="userPhoneNumberInput" placeholder="휴대폰번호(-제외)" th:value="${user.phoneNumber}">
+            </div>
+            <div>
+                <textarea id="request" placeholder="예약 전 요청사항이 있다면 말씀해 주세요."></textarea>
+            </div>
+        </div>
+        <div id="reservationInfo">
+            <h4>예약 정보</h4>
+            <table id="reservationTable">
+                <tr>
+                    <td>날짜/시간</td>
+                    <td>
+                        <p th:text="${#temporals.format(date, 'yyyy년 MM월 dd일')}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>매장/담당</td>
+                    <td>
+                        <p th:text="${shop}"></p>
+                        <p th:text="${designer.name} + ' 디자이너'"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>선택메뉴</td>
+                    <td>
+                        <p th:text="${menu.name}"></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="orderInfo">
+            <h4>결제 정보</h4>
+            <table id="orderTable">
+                <tr>
+                    <td>메뉴 가격</td>
+                    <td>
+                        <p th:text="${#numbers.formatInteger(menu.price, 3, 'COMMA') + '원'}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>총 결제금액</td>
+                    <td>
+                        <p th:text="${#numbers.formatInteger(menu.price, 3, 'COMMA') + '원'}" id="priceSum"></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="/js/header.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/user/reservation.js"></script>
+</body>
+</html>

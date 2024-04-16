@@ -65,9 +65,9 @@ public class ShopRepository {
     }
     //-------------------------------------------------------
     //페이징(어드민)
-    /** 페이징 전체 조회 **/
+    /** 랜덤 페이징 전체 조회 **/
     public List<Shop> findPageAll(int offset, int limit) {
-        return em.createQuery("select s from Shop s", Shop.class)
+        return em.createQuery("select s from Shop s order by FUNCTION('RAND')", Shop.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();

@@ -29,4 +29,10 @@ public class ShopDto {
         this.address = address;
         this.shopImgs = shopImgs;
     }
+
+    public ShopDto(Long id, LocalTime openTime, LocalTime closeTime) {
+        this.id = id;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+    }
 }
