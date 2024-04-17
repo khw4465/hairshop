@@ -1,6 +1,7 @@
 package com.example.hairshop.controller;
 
 import com.example.hairshop.domain.Designer;
+import com.example.hairshop.domain.Reservation;
 import com.example.hairshop.domain.Schedule;
 import com.example.hairshop.domain.Shop;
 import com.example.hairshop.dto.*;
@@ -8,9 +9,13 @@ import com.example.hairshop.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
@@ -127,5 +132,24 @@ public class UserReservationController {
             return "/user/reservation";
         }
         return "redirect:/login/loginForm";
+    }
+
+    /** 예약 생성 **/
+    @PostMapping("/create/reservation")
+    public ResponseEntity<?> createReservation(@RequestBody ReservationForm form) {
+        try {
+            ReservationDto reservationDto = reservationService.create(form);
+            System.out.println("reservationDto = " + reservationDto);
+
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    /** 예약 성공 화면 **/
+    @GetMapping("/reservation/success")
+    public String success() {
+        return "/user/reservationSuccess";
     }
 }

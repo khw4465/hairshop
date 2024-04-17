@@ -10,7 +10,7 @@ import static lombok.AccessLevel.*;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor
 public class User extends BaseEntity {
 
     @Id @GeneratedValue

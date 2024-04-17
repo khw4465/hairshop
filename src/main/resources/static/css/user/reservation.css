@@ -34,11 +34,16 @@ h2 {
 
 #reservationTable, #orderTable {
     width: 700px;
+    height: 180px;
 }
 
-#orderTable>tbody>tr>td>p {
-    text-align: right;
+#orderTable>tbody>tr>td>span {
+    float: right;
     margin-right: 50px;
+}
+
+tr {
+    margin-bottom: 10px;
 }
 
 #priceSum {

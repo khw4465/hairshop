@@ -59,18 +59,6 @@ public class Designer extends BaseEntity {
     @OneToMany(mappedBy = "designer")
     private List<Reservation> reservations = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "Designer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", img='" + img + '\'' +
-                ", content='" + content + '\'' +
-                ", career='" + career + '\'' +
-                ", styles=" + styles +
-                '}';
-    }
-
     //== 연관관계 메서드 ==//
     /**
      * 디자이너 생성

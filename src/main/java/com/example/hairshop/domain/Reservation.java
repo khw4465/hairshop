@@ -3,7 +3,10 @@ package com.example.hairshop.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +14,9 @@ import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor
+@ToString
 public class Reservation extends BaseEntity {
 
     @Id @GeneratedValue
@@ -21,6 +25,12 @@ public class Reservation extends BaseEntity {
 
     //== 예약 요청사항 ==//
     private String content;
+
+    //== 예약 일시 ==//
+    private LocalDateTime dateTime;
+
+    //== 금액 ==//
+    private int price;
 
     //== 예약 상태 ==//
     private Status status;

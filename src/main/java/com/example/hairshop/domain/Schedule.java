@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Arrays;
 
 import static jakarta.persistence.FetchType.LAZY;
@@ -13,7 +14,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor
 public class Schedule {
 
     @Id @GeneratedValue
@@ -44,7 +45,7 @@ public class Schedule {
     private Designer designer;
 
     //== 특정 날짜의 모든 시간대 false로 초기화 ==//
-    protected Schedule(LocalDate date) {
+    public Schedule(LocalDate date) {
         this.date = date;
         this.time = new boolean[20];
         Arrays.fill(time, false);
@@ -53,13 +54,31 @@ public class Schedule {
     /**
      * 선택된 시간대 true로 변경 후 반환
      */
-    public Schedule getReserve(int index) {
-        if (index >= 0 && index < 20) {
-            this.time[index] = true;
-            return this;
+    public Schedule getReserve(int index, int length) {
+        if (index >= 0 && index < length) {
+            if (this.time[index] == true) {
+                throw new IllegalArgumentException("이미 예약된 시간대입니다.");
+            } else {
+                this.time[index] = true;
+                return this;
+            }
         } else {
             // 잘못 선택한 경우 예외처리
             throw new IllegalArgumentException("예약 가능한 시간대가 아닙니다.");
         }
+    }
+
+    /** 샵의 시간을 30분 단위로 나눔 **/
+    public static String[] getTimeSlots(LocalTime openTime, LocalTime closeTime) {
+        int slotCount = (int) ((closeTime.toSecondOfDay() - openTime.toSecondOfDay()) / (30 * 60));
+        String[] timeSlots = new String[slotCount];
+
+        LocalTime currentTime = openTime;
+        for (int i = 0; i < slotCount; i++) {
+            timeSlots[i] = currentTime.toString();
+            currentTime = currentTime.plusMinutes(30);
+        }
+
+        return timeSlots;
     }
 }
