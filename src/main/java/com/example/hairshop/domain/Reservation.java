@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = PROTECTED)
+@NoArgsConstructor
 public class Reservation extends BaseEntity {
 
     @Id @GeneratedValue
@@ -30,13 +30,28 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "userId")
     private User user;
 
-    //== 예약 <--> 예약 상세 ==//
-    @OneToMany(mappedBy = "reservation")
-    private List<ReservationDetail> reservationDetails = new ArrayList<>();
+    //== 예약 <--> 디자이너 ==//
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "designerId")
+    private Designer designer;
 
-    /** 연관관계 메서드 **/
-    public void setReservation(User user) {
-        ReservationDetail reservationDetail = new ReservationDetail();
+    //== 예약 <--> 샵 ==//
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "shopId")
+    private Shop shop;
 
-    }
+    //== 예약 <--> 메뉴 ==//
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "menuId")
+    private Menu menu;
+
+//    //== 예약 <--> 예약 상세 ==//
+//    @OneToMany(mappedBy = "reservation")
+//    private List<ReservationDetail> reservationDetails = new ArrayList<>();
+//
+//    /** 연관관계 메서드 **/
+//    public void setReservation(User user) {
+//        ReservationDetail reservationDetail = new ReservationDetail();
+//
+//    }
 }

@@ -3,17 +3,17 @@
     margin: 0 auto;
 }
 
-h3 {
+h2 {
     text-align: center;
 }
 
-#userInfo, #reservationInfo, #orderInfo {
+#userInfo, #reservationInfo, #orderInfo, #paymentMethod, #order {
     width: 700px;
-    margin: 0 auto;
+    margin: 100px auto;
 }
 
 #userNameInput, #userEmailInput, #userPhoneNumberInput {
-    width: 650px;
+    width: 688px;
     height: 40px;
     border-radius: 10px;
     border: 1px solid black;
@@ -23,7 +23,7 @@ h3 {
 }
 
 #request {
-    width: 650px;
+    width: 688px;
     height: 80px;
     border-radius: 10px;
     border: 1px solid black;
@@ -44,4 +44,30 @@ h3 {
 #priceSum {
     font-size: 1.3em;
     font-weight: bold;
+}
+
+.p {
+    margin: 0;
+}
+
+#kakaoPayImg {
+    width: 500px;
+    margin: 50px 100px;
+}
+
+#orderBtn {
+    background-color: #575757;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    width: 500px;
+    font-size: 16px;
+    margin: 4px 100px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#orderBtn:hover {
+    background-color: #797979;
 }

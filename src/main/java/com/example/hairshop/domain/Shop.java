@@ -51,9 +51,9 @@ public class Shop extends BaseEntity {
     @OneToMany(mappedBy = "shop", cascade = ALL, orphanRemoval = true)
     private List<ShopImg> shopImgs = new ArrayList<>();
 
-    //== 샵 <--> 예약상세 ==//
+    //== 샵 <--> 예약 ==//
     @OneToMany(mappedBy = "shop")
-    private List<ReservationDetail> reservationDetails = new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
 
     /**
      * 샵에 디자이너 등록하기

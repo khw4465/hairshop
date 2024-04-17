@@ -34,7 +34,6 @@ window.onload = function () {
         }
         sessionStorage.setItem("path", path);
     } else {
-        console.log('userId', userId);
         sendPostRequset(isDesigner);
         sessionStorage.setItem('isDesigner', '0');
     }

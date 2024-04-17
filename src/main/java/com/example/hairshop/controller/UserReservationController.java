@@ -74,19 +74,23 @@ public class UserReservationController {
     @GetMapping("/reservation/time")
     public String selectTime(@RequestParam("designerId") String designerId,
                              @RequestParam("menuId") String menuId,
+                             HttpSession session,
                              Model m) {
-        Designer designer = designerService.findById(designerId);
-        List<ScheduleDto> list = designer.getSchedules().stream().map(ScheduleDto::new).toList();
-        m.addAttribute("schedules", list);
+        if (session.getAttribute("userId") != null) {
+            Designer designer = designerService.findById(designerId);
+            List<ScheduleDto> list = designer.getSchedules().stream().map(ScheduleDto::new).toList();
+            m.addAttribute("schedules", list);
 
-        Shop shop = designer.getShop();
-        ShopDto dto = new ShopDto(shop.getId(), shop.getOpenTime(), shop.getCloseTime());
-        m.addAttribute("shopTime", dto);
+            Shop shop = designer.getShop();
+            ShopDto dto = new ShopDto(shop.getId(), shop.getOpenTime(), shop.getCloseTime());
+            m.addAttribute("shopTime", dto);
 
-        m.addAttribute("designerId", designerId);
-        m.addAttribute("menuId", menuId);
+            m.addAttribute("designerId", designerId);
+            m.addAttribute("menuId", menuId);
 
-        return "/user/reservationTime";
+            return "/user/reservationTime";
+        }
+        return "redirect:/login/loginForm";
     }
 
     /** 예약 화면 **/
@@ -97,30 +101,31 @@ public class UserReservationController {
                               @RequestParam("time") String selectedTimeValue,
                               HttpSession session,
                               Model m) {
-        //유저 정보
-        String userId = session.getAttribute("userId").toString();
-        UserDto user = userService.findUserByKakaoId(userId);
-        m.addAttribute("user", user);
+        if (session.getAttribute("userId") != null) {
+            //유저 정보
+            String userId = session.getAttribute("userId").toString();
+            UserDto user = userService.findUserByKakaoId(userId);
+            m.addAttribute("user", user);
 
-        //디자이너 정보
-        Designer designer = designerService.findById(designerId);
-        DesignerDto dto = new DesignerDto(designer.getId(), designer.getName(), designer.getImg(), designer.getContent(), designer.getCareer());
-        m.addAttribute("designer", dto);
+            //디자이너 정보
+            Designer designer = designerService.findById(designerId);
+            DesignerDto dto = new DesignerDto(designer.getId(), designer.getName(), designer.getImg(), designer.getContent(), designer.getCareer());
+            m.addAttribute("designer", dto);
 
-        //샵 이름
-        String shopName = designer.getShop().getName();
-        m.addAttribute("shop", shopName);
+            //샵 이름
+            String shopName = designer.getShop().getName();
+            m.addAttribute("shop", shopName);
 
-        //메뉴 정보
-        MenuDto menu = menuService.findById(menuId);
-        m.addAttribute("menu", menu);
+            //메뉴 정보
+            MenuDto menu = menuService.findById(menuId);
+            m.addAttribute("menu", menu);
 
-        //예약 일시
-        m.addAttribute("date", LocalDate.parse(selectedDateValue));
-        m.addAttribute("time", LocalTime.parse(selectedTimeValue));
-        System.out.println("LocalDate.parse(selectedDateValue) = " + LocalDate.parse(selectedDateValue));
-        System.out.println("LocalTime.parse(selectedTimeValue) = " + LocalTime.parse(selectedTimeValue));
+            //예약 일시
+            m.addAttribute("date", LocalDate.parse(selectedDateValue));
+            m.addAttribute("time", LocalTime.parse(selectedTimeValue));
 
-        return "/user/reservation";
+            return "/user/reservation";
+        }
+        return "redirect:/login/loginForm";
     }
 }

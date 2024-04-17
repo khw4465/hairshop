@@ -37,9 +37,9 @@ public class Menu extends BaseEntity {
     @JoinColumn(name = "shopId")
     private Shop shop;
 
-    //== 메뉴 <--> 예약 상세 ==//
-    @OneToOne(mappedBy = "menu", fetch = LAZY)
-    private ReservationDetail reservationDetail;
+    //== 메뉴 <--> 예약 ==//
+    @OneToMany(mappedBy = "menu")
+    private List<Reservation> reservations = new ArrayList<>();
 
     public Menu(String name, int price, MenuCategory category, Shop shop) {
         this.name = name;

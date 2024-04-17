@@ -38,20 +38,20 @@ public class ReservationRepository {
                 .getResultList();
     }
 
-    /** 예약 조회(디자이너별) **/
-    public List<Reservation> findByDesigner(Designer designer) {
-        return em.createQuery("select rd from ReservationDetail rd" +
-                        " where rd.designer = :designer" +
-                        " order by rd.schedule.date", Reservation.class)
-                .setParameter("designer", designer)
-                .getResultList();
-    }
-    /** 예약 조회(매장별) **/
-    public List<Reservation> findByShop(Shop shop) {
-        return em.createQuery("select rd from ReservationDetail rd" +
-                        " where rd.shop = :shop" +
-                        " order by rd.schedule.date", Reservation.class)
-                .setParameter("shop", shop)
-                .getResultList();
-    }
+//    /** 예약 조회(디자이너별) **/
+//    public List<Reservation> findByDesigner(Designer designer) {
+//        return em.createQuery("select rd from ReservationDetail rd" +
+//                        " where rd.designer = :designer" +
+//                        " order by rd.schedule.date", Reservation.class)
+//                .setParameter("designer", designer)
+//                .getResultList();
+//    }
+//    /** 예약 조회(매장별) **/
+//    public List<Reservation> findByShop(Shop shop) {
+//        return em.createQuery("select rd from ReservationDetail rd" +
+//                        " where rd.shop = :shop" +
+//                        " order by rd.schedule.date", Reservation.class)
+//                .setParameter("shop", shop)
+//                .getResultList();
+//    }
 }

@@ -55,9 +55,9 @@ public class Designer extends BaseEntity {
     @OneToMany(mappedBy = "designer")
     private List<Review> reviews = new ArrayList<>();
 
-    //== 디자이너 <--> 예약상세 ==//
+    //== 디자이너 <--> 예약 ==//
     @OneToMany(mappedBy = "designer")
-    private List<ReservationDetail> reservationDetails = new ArrayList<>();
+    private List<Reservation> reservations = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -79,31 +79,31 @@ public class Designer extends BaseEntity {
         Designer designer = new Designer();
         designer.setName(name);
         designer.setImg("/img/basicProfile.png");
-        designer.getReservationTime();
+//        designer.getReservationTime();
         return designer;
     }
 
-    /**
-     * 날짜별 스케쥴 생성
-     */
-    public void getReservationTime() {
-        LocalDate currentDate = LocalDate.now();
-        //현재 날짜로부터 3개월 후의 스케쥴을 생성하도록 설정
-        for (int i = 0; i < 3; i++) {
-            YearMonth yearMonth = YearMonth.from(currentDate.plusMonths(i));
-            int lastDayOfMonth = yearMonth.lengthOfMonth(); // 해당 월의 마지막 날짜 구하기
-            //새로 추가된 월의 첫째 날부터 마지막 날까지 스케쥴 생성
-            LocalDate newMonthFirstDay = yearMonth.atDay(1);
-            for (int day = 1; day <= lastDayOfMonth; day++) {
-                LocalDate date = newMonthFirstDay.plusDays(day - 1);
-                Schedule schedule = new Schedule(date);
-                this.schedules.add(schedule);
-                schedule.setDesigner(this);
-            }
-            // 매월 1일일 때 한 달을 추가하여 스케쥴 생성
-            if (currentDate.getDayOfMonth() == 1) {
-                currentDate = currentDate.plusMonths(1); // 한 달 추가
-            }
-        }
-    }
+//    /**
+//     * 날짜별 스케쥴 생성
+//     */
+//    public void getReservationTime() {
+//        LocalDate currentDate = LocalDate.now();
+//        //현재 날짜로부터 3개월 후의 스케쥴을 생성하도록 설정
+//        for (int i = 0; i < 3; i++) {
+//            YearMonth yearMonth = YearMonth.from(currentDate.plusMonths(i));
+//            int lastDayOfMonth = yearMonth.lengthOfMonth(); // 해당 월의 마지막 날짜 구하기
+//            //새로 추가된 월의 첫째 날부터 마지막 날까지 스케쥴 생성
+//            LocalDate newMonthFirstDay = yearMonth.atDay(1);
+//            for (int day = 1; day <= lastDayOfMonth; day++) {
+//                LocalDate date = newMonthFirstDay.plusDays(day - 1);
+//                Schedule schedule = new Schedule(date);
+//                this.schedules.add(schedule);
+//                schedule.setDesigner(this);
+//            }
+//            // 매월 1일일 때 한 달을 추가하여 스케쥴 생성
+//            if (currentDate.getDayOfMonth() == 1) {
+//                currentDate = currentDate.plusMonths(1); // 한 달 추가
+//            }
+//        }
+//    }
 }
