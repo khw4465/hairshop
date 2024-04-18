@@ -102,7 +102,7 @@ public class AdminShopController {
     public String shopInfo(@RequestParam("id") String id, Model m) {
         // 샵
         long shopId = Long.parseLong(id);
-        ShopDto shop = shopService.findById(shopId);
+        ShopDto shop = shopService.findDtoById(shopId);
         m.addAttribute("shop", shop);
 
         // 샵 카테고리

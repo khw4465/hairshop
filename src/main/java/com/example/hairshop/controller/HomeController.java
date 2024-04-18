@@ -24,11 +24,11 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model m) {
-        List<ShopDto> shopAll = shopService.findPageAll(0, 8);
+        List<ShopDto> shopAll = shopService.findRandomPageAll(0, 8);
         m.addAttribute("shops", shopAll);
 
         List<Style> styleAll = styleService.findAll();
-        List<StyleDto> styleList = styleAll.stream().map(s -> new StyleDto(s)).toList();
+        List<StyleDto> styleList = styleAll.stream().map(StyleDto::new).toList();
         m.addAttribute("styles", styleList);
 
         return "home";

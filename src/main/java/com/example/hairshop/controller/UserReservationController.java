@@ -37,7 +37,7 @@ public class UserReservationController {
     public String selectDesigner(@RequestParam("shopId") String shopId, Model m, HttpSession session) {
         if (session.getAttribute("userId") != null) {
             long id = Long.parseLong(shopId);
-            List<DesignerDto> designerDtos = shopService.findById(id).getDesigners();
+            List<DesignerDto> designerDtos = shopService.findDtoById(id).getDesigners();
             m.addAttribute("designers", designerDtos);
             m.addAttribute("shopId", shopId);
 
@@ -54,7 +54,7 @@ public class UserReservationController {
             DesignerDto dto = new DesignerDto(designer.getId(), designer.getName(), designer.getImg(), designer.getContent(), designer.getCareer());
             m.addAttribute("designer", dto);
 
-            ShopDto shopDto = shopService.findById(designer.getShop().getId());
+            ShopDto shopDto = shopService.findDtoById(designer.getShop().getId());
             m.addAttribute("shop", shopDto);
 
             List<MenuDto> menus = shopDto.getMenus();
@@ -176,10 +176,15 @@ public class UserReservationController {
     /** 예약 상세 **/
     @GetMapping("/reservation/detail")
     public String reservationDetail(@RequestParam("reservationId") String reservationId,
+                                    HttpSession session,
                                     Model m) {
-        ReservationDto reservation = reservationService.findById(reservationId);
-        m.addAttribute("reservation", reservation);
+//        if (session.getAttribute("userId") != null) {
+            ReservationDto reservation = reservationService.findById(reservationId);
+            System.out.println("reservation = " + reservation);
+            m.addAttribute("reservation", reservation);
 
-        return "/user/reservationDetail";
+            return "/user/reservationDetail";
+//        }
+//        return "redirect:/login/loginForm";
     }
 }

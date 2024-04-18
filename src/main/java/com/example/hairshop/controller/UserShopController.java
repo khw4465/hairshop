@@ -50,7 +50,7 @@ public class UserShopController {
     @GetMapping("/shop/info")
     public String shopInfo(@RequestParam("shopId") String shopId, Model m) {
         long id = Long.parseLong(shopId);
-        ShopDto shop = shopService.findById(id);
+        ShopDto shop = shopService.findDtoById(id);
         m.addAttribute("shop", shop);
 
         List<MenuDto> menus = shop.getMenus();

@@ -1,9 +1,6 @@
 package com.example.hairshop.repository;
 
-import com.example.hairshop.domain.Designer;
-import com.example.hairshop.domain.Reservation;
-import com.example.hairshop.domain.Shop;
-import com.example.hairshop.domain.User;
+import com.example.hairshop.domain.*;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -45,6 +42,26 @@ public class ReservationRepository {
         return em.createQuery("select count(r) from Reservation r where r.user.id = :userId", Long.class)
                 .setParameter("userId", userId)
                 .getSingleResult();
+    }
+
+    /** 매장 아이디로 조회 (예약중인것만) **/
+    public List<Reservation> findByShopId(Long id, Status status) {
+        return em.createQuery("select r from Reservation r where r.shop.id = :shopId " +
+                        "and r.status = :status", Reservation.class)
+                .setParameter("shopId", id)
+                .setParameter("status", status)
+                .getResultList();
+    }
+
+    /** 매장 아이디 & 디자이너 아이디로 조회 (예약중인것만) **/
+    public List<Reservation> findByShopAndDesigner(long id1, long id2, Status status) {
+        return em.createQuery("select r from Reservation r where r.shop.id = :shopId " +
+                        "and r.designer.id = :designerId " +
+                        "and r.status = :status", Reservation.class)
+                .setParameter("shopId", id1)
+                .setParameter("designerId", id2)
+                .setParameter("status", status)
+                .getResultList();
     }
 
 //    /** 예약 조회(디자이너별) **/

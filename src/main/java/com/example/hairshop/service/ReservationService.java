@@ -77,7 +77,7 @@ public class ReservationService {
         LocalDateTime dateTime = LocalDateTime.of(date, time);
         reservation.setDateTime(dateTime);
         reservation.setPrice(form.getPrice());
-        reservation.setStatus(Status.Reservation); //예약상태
+        reservation.setStatus(Status.예약완료); //예약상태
         reservation.setUser(user);
         reservation.setDesigner(designer);
         reservation.setShop(shop);
@@ -110,5 +110,19 @@ public class ReservationService {
     /** 카운트쿼리 **/
     public Long countQueryByUserId(Long userId) {
         return reservationRepository.countQueryByUserId(userId);
+    }
+
+    /** 매장 아이디로 조회 (예약중) **/
+    public List<ReservationDto> findByShopId(Long id, Status status) {
+        List<Reservation> reservations = reservationRepository.findByShopId(id, status);
+        List<ReservationDto> list = reservations.stream().map(ReservationDto::new).toList();
+        return list;
+    }
+
+    /** 매장 아이디 & 디자이너 아이디로 조회 (예약중) **/
+    public List<ReservationDto> findByShopAndDesigner(long id1, long id2, Status status) {
+        List<Reservation> reservations = reservationRepository.findByShopAndDesigner(id1, id2, status);
+        List<ReservationDto> list = reservations.stream().map(ReservationDto::new).toList();
+        return list;
     }
 }

@@ -27,10 +27,19 @@
                     <p th:text="${reservation.menu.name + ' - ' + #numbers.formatInteger(reservation.menu.price, 3, 'COMMA') + '원'}"></p>
                 </td>
                 <td class="timeTd">
+                    <p th:text="${'[' + reservation.status + ']'}"></p>
                     <p th:text="${#temporals.format(reservation.dateTime, 'yyyy년 MM월 dd일 HH시 mm분')}"></p>
                 </td>
-                <td>
-                    <form th:action="${'/reservation/detail'}" method="GET">
+                <td class="btnTd">
+                    <form action="" method="" class="formBtn" th:if="${reservation.status == '예약완료'}">
+                        <input type="hidden" th:value="${reservation.id}" name="reservationId">
+                        <input type="submit" value="예약취소" class="cancelBtn">
+                    </form>
+                    <form action="" method="" class="formBtn" th:if="${reservation.status == '시술완료'}">
+                        <input type="hidden" th:value="${reservation.id}" name="reservationId">
+                        <input type="submit" value="리뷰작성" class="reviewBtn">
+                    </form>
+                    <form th:action="${'/reservation/detail'}" method="GET" class="formBtn">
                         <input type="hidden" th:value="${reservation.id}" name="reservationId">
                         <input type="submit" value="상세보기" class="detailBtn">
                     </form>

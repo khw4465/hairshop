@@ -63,11 +63,19 @@ public class ShopRepository {
                 .setParameter("category", category)
                 .getResultList();
     }
+
+    /** 랜덤 페이징 전체 조회 **/
+    public List<Shop> findRandomPageAll(int offset, int limit) {
+        return em.createQuery("select s from Shop s order by FUNCTION('RAND')", Shop.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
     //-------------------------------------------------------
     //페이징(어드민)
-    /** 랜덤 페이징 전체 조회 **/
+    /** 페이징 전체 조회 **/
     public List<Shop> findPageAll(int offset, int limit) {
-        return em.createQuery("select s from Shop s order by FUNCTION('RAND')", Shop.class)
+        return em.createQuery("select s from Shop s", Shop.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();

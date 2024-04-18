@@ -9,8 +9,9 @@ import java.time.LocalDateTime;
 public class ReservationDto {
     private Long id;
     private String content;
-    private Status status;
+    private String status;
     private LocalDateTime dateTime;
+    private int price;
     private UserDto user;
     private DesignerDto designer;
     private ShopDto shop;
@@ -19,8 +20,9 @@ public class ReservationDto {
     public ReservationDto(Reservation reservation) {
         this.id = reservation.getId();
         this.content = reservation.getContent();
-        this.status = reservation.getStatus();
+        this.status = reservation.getStatus().name();
         this.dateTime = reservation.getDateTime();
+        this.price = reservation.getPrice();
         this.user = new UserDto(reservation.getUser());
 
         Designer d = reservation.getDesigner();

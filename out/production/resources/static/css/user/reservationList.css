@@ -32,6 +32,10 @@ p {
 }
 
 .nameTd {
+    width: 180px;
+}
+
+.timeTd {
     width: 200px;
 }
 
@@ -66,7 +70,15 @@ p {
     color: #fff;
 }
 
-.detailBtn {
+.btnTd {
+    text-align: right;
+}
+
+.formBtn {
+    display: inline-block;
+}
+
+.detailBtn, .cancelBtn, .reviewBtn {
     background-color: #575757;
     border: none;
     color: white;

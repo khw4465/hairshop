@@ -46,7 +46,7 @@ public class ShopApiController {
     @GetMapping("/api/shop/info")
     public ShopDto shopInfo(@RequestParam("shopId") String shopId) {
         long id = Long.parseLong(shopId);
-        ShopDto shop = shopService.findById(id);
+        ShopDto shop = shopService.findDtoById(id);
 
         return shop;
     }

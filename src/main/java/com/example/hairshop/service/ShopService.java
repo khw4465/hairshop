@@ -174,7 +174,12 @@ public class ShopService {
     }
 
     /** 샵 단일 조회 **/
-    public ShopDto findById(Long id) {
+    public Shop findById(Long id) {
+        return shopRepository.findOne(id);
+    }
+
+    /** 샵 단일 조회 (DTO) **/
+    public ShopDto findDtoById(Long id) {
         Shop shop = shopRepository.findOne(id);
         //dto로 변환
         ShopDto dto = new ShopDto(shop.getId(), shop.getName(), shop.getCategory().getName(), shop.getAddress(), shop.getOpenTime(), shop.getCloseTime(), shop.getContent(),
@@ -213,6 +218,15 @@ public class ShopService {
         return shopRepository.findByCategory(name);
     }
 
+    /** 샵 랜덤 페이징 전체 조회 **/
+    public List<ShopDto> findRandomPageAll(int offset, int limit) {
+        List<Shop> pageAll = shopRepository.findRandomPageAll(offset, limit);
+        List<ShopDto> list = pageAll.stream()
+                .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(),
+                        s.getShopImgs().stream().map(ShopImg::getImgUrl).toList())).toList();
+        return list;
+    }
+
     //-----------------------------------------------------------
     //페이징(어드민)
     /** 샵 페이징 전체 조회 **/
@@ -220,7 +234,7 @@ public class ShopService {
         List<Shop> pageAll = shopRepository.findPageAll(offset, limit);
         List<ShopDto> list = pageAll.stream()
                 .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(),
-                        s.getShopImgs().stream().map(si -> si.getImgUrl()).toList())).toList();
+                        s.getShopImgs().stream().map(ShopImg::getImgUrl).toList())).toList();
         return list;
     }
     /** 전체 카운트 쿼리 **/
