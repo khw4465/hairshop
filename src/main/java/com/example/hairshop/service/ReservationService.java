@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -90,5 +91,24 @@ public class ReservationService {
         menu.getReservations().add(reservation);
 
         return new ReservationDto(reservation);
+    }
+
+    /** 예약 조회 **/
+    public ReservationDto findById(String reservationId) {
+        long id = Long.parseLong(reservationId);
+        Reservation reservation = reservationRepository.findOne(id);
+        ReservationDto dto = new ReservationDto(reservation);
+        return dto;
+    }
+
+    /** 유저 예약 리스트 조회 (페이징) **/
+    public List<ReservationDto> findByUserId(Long userId, int offset, int limit) {
+        List<Reservation> list = reservationRepository.findByUserId(userId, offset, limit);
+        List<ReservationDto> result = list.stream().map(ReservationDto::new).toList();
+        return result;
+    }
+    /** 카운트쿼리 **/
+    public Long countQueryByUserId(Long userId) {
+        return reservationRepository.countQueryByUserId(userId);
     }
 }

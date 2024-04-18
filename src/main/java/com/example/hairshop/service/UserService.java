@@ -32,9 +32,14 @@ public class UserService {
         return userDto;
     }
 
-    public UserDto findUserByKakaoId(String id) {
+    public UserDto findUserDtoByKakaoId(String id) {
         User user = userRepository.findByKakaoId(id);
         UserDto userDto = new UserDto(user);
         return userDto;
+    }
+
+    public User findUserByKakaoId(String id) {
+        return userRepository.findByKakaoId(id);
+
     }
 }

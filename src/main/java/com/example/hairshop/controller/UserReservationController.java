@@ -1,9 +1,6 @@
 package com.example.hairshop.controller;
 
-import com.example.hairshop.domain.Designer;
-import com.example.hairshop.domain.Reservation;
-import com.example.hairshop.domain.Schedule;
-import com.example.hairshop.domain.Shop;
+import com.example.hairshop.domain.*;
 import com.example.hairshop.dto.*;
 import com.example.hairshop.service.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -109,7 +106,7 @@ public class UserReservationController {
         if (session.getAttribute("userId") != null) {
             //유저 정보
             String userId = session.getAttribute("userId").toString();
-            UserDto user = userService.findUserByKakaoId(userId);
+            UserDto user = userService.findUserDtoByKakaoId(userId);
             m.addAttribute("user", user);
 
             //디자이너 정보
@@ -151,5 +148,38 @@ public class UserReservationController {
     @GetMapping("/reservation/success")
     public String success() {
         return "/user/reservationSuccess";
+    }
+
+    /** 예약 리스트 **/
+    @GetMapping("/reservation/list")
+    public String reservationList(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                  @RequestParam(value = "limit", defaultValue = "10") int limit,
+                                  HttpSession session, Model m) {
+        if (session.getAttribute("userId") != null) {
+            String userId = session.getAttribute("userId").toString();
+            User user = userService.findUserByKakaoId(userId);
+
+            List<ReservationDto> reservations = reservationService.findByUserId(user.getId(), offset, limit);
+            System.out.println("reservations = " + reservations);
+
+            Long count = reservationService.countQueryByUserId(user.getId());
+            m.addAttribute("reservationList", reservations);
+            m.addAttribute("count", count);
+            m.addAttribute("offset", offset);
+            m.addAttribute("limit", limit);
+
+            return "/user/reservationList";
+        }
+        return "redirect:/login/loginForm";
+    }
+
+    /** 예약 상세 **/
+    @GetMapping("/reservation/detail")
+    public String reservationDetail(@RequestParam("reservationId") String reservationId,
+                                    Model m) {
+        ReservationDto reservation = reservationService.findById(reservationId);
+        m.addAttribute("reservation", reservation);
+
+        return "/user/reservationDetail";
     }
 }

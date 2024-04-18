@@ -32,10 +32,19 @@ public class ReservationRepository {
     }
 
     /** 예약 조회(특정 회원) **/
-    public List<Reservation> findByUser(User user) {
-        return em.createQuery("select r from Reservation r where r.user = :user", Reservation.class)
-                .setParameter("user", user)
+    public List<Reservation> findByUserId(Long userId, int offset, int limit) {
+        return em.createQuery("select r from Reservation r where r.user.id = :userId", Reservation.class)
+                .setParameter("userId", userId)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
                 .getResultList();
+    }
+
+    /** 카운트 쿼리 **/
+    public Long countQueryByUserId(Long userId) {
+        return em.createQuery("select count(r) from Reservation r where r.user.id = :userId", Long.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
     }
 
 //    /** 예약 조회(디자이너별) **/

@@ -3,11 +3,14 @@ package com.example.hairshop.dto;
 import com.example.hairshop.domain.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class ReservationDto {
     private Long id;
     private String content;
     private Status status;
+    private LocalDateTime dateTime;
     private UserDto user;
     private DesignerDto designer;
     private ShopDto shop;
@@ -17,6 +20,7 @@ public class ReservationDto {
         this.id = reservation.getId();
         this.content = reservation.getContent();
         this.status = reservation.getStatus();
+        this.dateTime = reservation.getDateTime();
         this.user = new UserDto(reservation.getUser());
 
         Designer d = reservation.getDesigner();

@@ -58,7 +58,7 @@ function sendPost(response) {
 
         },
         error: function(xhr) {
-
+            alert('예약 실패');
         }
     });
 }
