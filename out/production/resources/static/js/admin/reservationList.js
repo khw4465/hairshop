@@ -6,3 +6,9 @@ function updateDesignerId(select) {
 function searchDesigner(element) {
     element.closest('form').submit();
 }
+
+function cancelForm(element) {
+    if (alert("예약을 취소하시겠습니까?")) {
+        element.closest('form').submit();
+    }
+}

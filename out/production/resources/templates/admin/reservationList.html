@@ -47,9 +47,9 @@
                 <td th:text="${#temporals.format(reservation.dateTime, 'yyyy년 MM월 dd일 HH시 mm분')}"></td>
                 <td th:text="${reservation.status}"></td>
                 <td>
-                    <form action="" method="POST">
+                    <form th:action="${'/admin/reservation/cancel'}" method="POST">
                         <input type="hidden" name="reservationId" th:value="${reservation.id}">
-                        <input type="submit" value="예약취소" class="cancelBtn">
+                        <input type="button" value="예약취소" class="cancelBtn" onclick="cancelForm(this)">
                     </form>
                 </td>
             </tr>

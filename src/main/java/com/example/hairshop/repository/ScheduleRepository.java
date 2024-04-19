@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,6 +20,13 @@ public class ScheduleRepository {
     /** 스케쥴 생성 **/
     public void create(Schedule schedule) {
         em.persist(schedule);
+    }
+
+    /** 디자이너 스케쥴 객체 전체 조회 **/
+    public List<Schedule> findAllScheduleByDesigner(Long designerId) {
+        return em.createQuery("select s from Schedule s where s.designer.id = :designerId", Schedule.class)
+                .setParameter("designerId", designerId)
+                .getResultList();
     }
 
     /** 디자이너, 일자별 스케쥴 객체 조회 **/

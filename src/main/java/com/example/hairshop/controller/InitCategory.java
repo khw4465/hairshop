@@ -79,7 +79,7 @@ public class InitCategory implements CommandLineRunner {
 //
 //        StyleSubCategory permCategory1 = new StyleSubCategory("히피펌");
 //        StyleSubCategory permCategory2 = new StyleSubCategory("레이어드펌");
-//        StyleSubCategory permCategory3 = new StyleSubCategory("내츄럴펌");
+//        StyleSubCategory permCategory3 = new StyleSubCategory("네츄럴펌");
 //        StyleSubCategory permCategory4 = new StyleSubCategory("S컬펌");
 //        StyleSubCategory permCategory5 = new StyleSubCategory("애즈펌");
 //        StyleSubCategory permCategory6 = new StyleSubCategory("가르마펌");

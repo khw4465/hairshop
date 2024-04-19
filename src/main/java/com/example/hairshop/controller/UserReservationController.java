@@ -10,10 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -178,13 +175,21 @@ public class UserReservationController {
     public String reservationDetail(@RequestParam("reservationId") String reservationId,
                                     HttpSession session,
                                     Model m) {
-//        if (session.getAttribute("userId") != null) {
+        if (session.getAttribute("userId") != null) {
             ReservationDto reservation = reservationService.findById(reservationId);
             System.out.println("reservation = " + reservation);
             m.addAttribute("reservation", reservation);
 
             return "/user/reservationDetail";
-//        }
-//        return "redirect:/login/loginForm";
+        }
+        return "redirect:/login/loginForm";
+    }
+
+    /** 예약 취소 **/
+    @PostMapping("/reservation/cancel")
+    public String reservationCancel(@RequestParam("reservationId") String reservationId) {
+        reservationService.changeCancel(reservationId);
+
+        return "redirect:/reservation/list";
     }
 }

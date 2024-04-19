@@ -31,9 +31,9 @@
                     <p th:text="${#temporals.format(reservation.dateTime, 'yyyy년 MM월 dd일 HH시 mm분')}"></p>
                 </td>
                 <td class="btnTd">
-                    <form action="" method="" class="formBtn" th:if="${reservation.status == '예약완료'}">
+                    <form th:action="${'/reservation/cancel'}" method="POST" class="formBtn" th:if="${reservation.status == '예약완료'}">
                         <input type="hidden" th:value="${reservation.id}" name="reservationId">
-                        <input type="submit" value="예약취소" class="cancelBtn">
+                        <input type="button" value="예약취소" class="cancelBtn" onclick="cancelForm(this)">
                     </form>
                     <form action="" method="" class="formBtn" th:if="${reservation.status == '시술완료'}">
                         <input type="hidden" th:value="${reservation.id}" name="reservationId">
@@ -67,5 +67,6 @@
 </div>
 <script src="/js/header.js"></script>
 <script src="/js/sidebar.js"></script>
+<script src="/js/user/reservationList.js"></script>
 </body>
 </html>

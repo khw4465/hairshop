@@ -55,10 +55,10 @@ function sendPost(response) {
         contentType: "application/json",
         data: JSON.stringify(reservationForm),
         success: function(response) {
-
+            window.location.href = '/reservation/success';
         },
         error: function(xhr) {
-            alert('예약 실패');
+            alert('예약 실패 + ' + xhr.responseText);
         }
     });
 }

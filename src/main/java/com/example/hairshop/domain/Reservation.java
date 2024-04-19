@@ -16,7 +16,6 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@ToString
 public class Reservation extends BaseEntity {
 
     @Id @GeneratedValue
@@ -33,6 +32,7 @@ public class Reservation extends BaseEntity {
     private int price;
 
     //== 예약 상태 ==//
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     //== 예약 <--> 회원 ==//

@@ -4,7 +4,9 @@ import com.example.hairshop.domain.*;
 import com.example.hairshop.dto.ReservationDto;
 import com.example.hairshop.dto.ReservationForm;
 import com.example.hairshop.repository.*;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
@@ -28,6 +31,7 @@ public class ReservationService {
     private final DesignerRepository designerRepository;
     private final ScheduleRepository scheduleRepository;
     private final MenuRepository menuRepository;
+    private final EntityManager em;
 
     @Transactional
     public ReservationDto create(ReservationForm form) {
@@ -124,5 +128,44 @@ public class ReservationService {
         List<Reservation> reservations = reservationRepository.findByShopAndDesigner(id1, id2, status);
         List<ReservationDto> list = reservations.stream().map(ReservationDto::new).toList();
         return list;
+    }
+
+    /** 예약 취소 **/
+    @Transactional
+    public ReservationDto changeCancel(String reservationId) {
+        //기존 예약 찾아서 상태 변경
+        long id = Long.parseLong(reservationId);
+        Reservation reservation = reservationRepository.findOne(id);
+        reservation.setStatus(Status.예약취소);
+
+        Designer designer = reservation.getDesigner();
+        Long designerId = designer.getId();
+
+        //예약 일시로 스케쥴객체 찾기
+        LocalDateTime dateTime = reservation.getDateTime();
+        LocalDate date = dateTime.toLocalDate();
+        LocalTime time = dateTime.toLocalTime();
+        Schedule schedule = scheduleRepository.findSchedule(designerId, date).get();
+
+        //샵에서 운영시간 가져오기
+        Shop shop = reservation.getShop();
+        LocalTime openTime = shop.getOpenTime();
+        LocalTime closeTime = shop.getCloseTime();
+
+        //운영시간 30분단위로 나누기
+        String[] timeSlots = Schedule.getTimeSlots(openTime, closeTime);
+        //받아온 시간이 몇번째 인덱스인지 확인
+        int index = Arrays.asList(timeSlots).indexOf(time.toString());
+
+        //스케쥴 객체에서 해당 시간 false로 변경
+        boolean[] timeArray = schedule.getTime();
+        timeArray[index] = false;
+
+        //연관관계 제거
+        designer.getReservations().remove(reservation);
+        shop.getReservations().remove(reservation);
+        reservation.getMenu().getReservations().remove(reservation);
+
+        return new ReservationDto(reservation);
     }
 }

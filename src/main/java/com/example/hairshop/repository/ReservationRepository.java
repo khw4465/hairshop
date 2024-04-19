@@ -30,7 +30,7 @@ public class ReservationRepository {
 
     /** 예약 조회(특정 회원) **/
     public List<Reservation> findByUserId(Long userId, int offset, int limit) {
-        return em.createQuery("select r from Reservation r where r.user.id = :userId", Reservation.class)
+        return em.createQuery("select r from Reservation r where r.user.id = :userId order by r.dateTime DESC", Reservation.class)
                 .setParameter("userId", userId)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
