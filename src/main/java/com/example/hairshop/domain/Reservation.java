@@ -55,6 +55,11 @@ public class Reservation extends BaseEntity {
     @JoinColumn(name = "menuId")
     private Menu menu;
 
+    //== 예약 <--> 리뷰 ==//
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "reviewId")
+    private Review review;
+
 //    //== 예약 <--> 예약 상세 ==//
 //    @OneToMany(mappedBy = "reservation")
 //    private List<ReservationDetail> reservationDetails = new ArrayList<>();

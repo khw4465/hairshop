@@ -1,6 +1,7 @@
 package com.example.hairshop.service;
 
 import com.example.hairshop.domain.Reservation;
+import com.example.hairshop.domain.Review;
 import com.example.hairshop.domain.Status;
 import com.example.hairshop.domain.User;
 import com.example.hairshop.dto.ReservationDto;
@@ -63,8 +64,9 @@ public class ReservationTest {
 
     @Test
     @Rollback(false)
-    public void 예약조회() {
-
-
+    public void 리뷰조회() {
+        Reservation reservation = reservationRepository.findOne(52L);
+        Review review = reservation.getReview();
+        System.out.println("review = " + review);
     }
 }

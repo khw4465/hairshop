@@ -66,9 +66,11 @@ public class AdminReservationController {
 
     /** 예약 취소 **/
     @PostMapping("/admin/reservation/cancel")
-    public String reservationCancel(@RequestParam("reservationId") String reservationId) {
+    public String reservationCancel(@RequestParam("reservationId") String reservationId,
+                                    @RequestParam("shopId") String shopId) {
+        System.out.println("reservationId = " + reservationId);
         reservationService.changeCancel(reservationId);
 
-        return "redirect:/admin/reservation/list";
+        return "redirect:/admin/reservation/list?shopId="+shopId;
     }
 }

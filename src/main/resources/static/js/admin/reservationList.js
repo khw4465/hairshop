@@ -8,7 +8,7 @@ function searchDesigner(element) {
 }
 
 function cancelForm(element) {
-    if (alert("예약을 취소하시겠습니까?")) {
+    if (confirm("예약을 취소하시겠습니까?")) {
         element.closest('form').submit();
     }
 }

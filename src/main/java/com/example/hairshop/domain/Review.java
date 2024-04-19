@@ -3,13 +3,14 @@ package com.example.hairshop.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Getter
-@NoArgsConstructor(access = PROTECTED)
+@Getter @Setter
+@NoArgsConstructor
 public class Review extends BaseEntity {
 
     @Id @GeneratedValue
@@ -32,8 +33,16 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "designerId")
     private Designer designer;
 
-    public Review(double rate, String content) {
-        this.rate = rate;
-        this.content = content;
+    //== 리뷰 <--> 예약 ==//
+    @OneToOne(fetch = LAZY, mappedBy = "review")
+    private Reservation reservation;
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", rate=" + rate +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

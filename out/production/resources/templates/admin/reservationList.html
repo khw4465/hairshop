@@ -49,6 +49,7 @@
                 <td>
                     <form th:action="${'/admin/reservation/cancel'}" method="POST">
                         <input type="hidden" name="reservationId" th:value="${reservation.id}">
+                        <input type="hidden" name="shopId" th:value="${reservation.shop.id}">
                         <input type="button" value="예약취소" class="cancelBtn" onclick="cancelForm(this)">
                     </form>
                 </td>

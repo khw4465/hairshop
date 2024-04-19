@@ -16,6 +16,7 @@ public class ReservationDto {
     private DesignerDto designer;
     private ShopDto shop;
     private MenuDto menu;
+    private ReviewDto review;
 
     public ReservationDto(Reservation reservation) {
         this.id = reservation.getId();
@@ -33,5 +34,10 @@ public class ReservationDto {
 
         Menu m = reservation.getMenu();
         this.menu = new MenuDto(m);
+
+        Review r = reservation.getReview();
+        if (r != null) {
+            this.review = new ReviewDto(r);
+        }
     }
 }
