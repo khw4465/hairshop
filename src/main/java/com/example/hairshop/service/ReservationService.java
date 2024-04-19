@@ -7,6 +7,7 @@ import com.example.hairshop.repository.*;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -167,5 +168,19 @@ public class ReservationService {
         reservation.getMenu().getReservations().remove(reservation);
 
         return new ReservationDto(reservation);
+    }
+
+    /** 예약 시간이 지나면 자동으로 시술 완료 변경 **/
+    @Scheduled(fixedDelay = 1000*60*30)
+    @Transactional
+    public void updateComplete() {
+        List<Reservation> all = reservationRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Reservation reservation : all) {
+            if (reservation.getStatus() == Status.예약완료 && reservation.getDateTime().isBefore(now)) {
+                reservation.setStatus(Status.시술완료);
+            }
+        }
     }
 }
