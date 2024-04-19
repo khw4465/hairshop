@@ -145,7 +145,7 @@ h3, .menu, .designer {
     margin: 0 20px;
 }
 
-/*-------리뷰-------*/
+/*-------리뷰, 별점-------*/
 
 #reviewList {
     width: 900px;
@@ -153,29 +153,32 @@ h3, .menu, .designer {
 }
 
 .review {
-    background-color: #e7e7e7;
+    background-color: #f1f1f1;
     padding: 30px 50px;
     border-radius: 10px;
 }
 
-.starRate{
+.starRate, .avgStarRate{
     display: inline-block;
     direction: rtl;
     border:0;
 }
-.starRate legend{
+.starRate legend, .avgStarRate legend {
     text-align: right;
 }
-.starRate input[type=radio]{
+.starRate input[type=radio], .avgStarRate input[type=radio]{
     display: none;
 }
-.starRate label{
+.starRate label, .avgStarRate label{
     font-size: 1em;
     color: transparent;
-    text-shadow: 0 0 0 #ffffff;
+    text-shadow: 0 0 0 #e0e0e0;
 }
 .starRate input[type=radio]:checked ~ label{
     color: black;
+}
+.avgStarRate input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 
 .menuName {

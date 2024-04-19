@@ -65,6 +65,15 @@ public class UserShopController {
         List<ReviewDto> reviews = reviewService.findByShopId(id);
         m.addAttribute("reviewList", reviews);
 
+        double rate = 0.0;
+        for (ReviewDto review : reviews) {
+            rate += review.getRate();
+        }
+        double avgRate = rate / reviews.size();
+        double floor = Math.floor(avgRate);
+        m.addAttribute("avgRate", avgRate);
+        m.addAttribute("floor", floor);
+        m.addAttribute("size", reviews.size());
         return "/user/shopInfo";
     }
 }

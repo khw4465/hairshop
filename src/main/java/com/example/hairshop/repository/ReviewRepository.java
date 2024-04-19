@@ -25,7 +25,8 @@ public class ReviewRepository {
 
     /** 매장별 리뷰 **/
     public List<Review> findByShopId(long id) {
-        return em.createQuery("select r from Review r join fetch r.shop s where s.id = :shopId", Review.class)
+        return em.createQuery("select r from Review r join fetch r.shop s where s.id = :shopId " +
+                        "order by r.createDate DESC", Review.class)
                 .setParameter("shopId", id)
                 .getResultList();
     }
@@ -33,7 +34,8 @@ public class ReviewRepository {
     /** 매장 + 디자이너별 리뷰 조회 **/
     public List<Review> findByShopAndDesigner(long id1, long id2) {
         return em.createQuery("select r from Review r where r.shop.id = :shopId " +
-                        "and r.designer.id = :designerId", Review.class)
+                        "and r.designer.id = :designerId " +
+                        "order by r.createDate DESC", Review.class)
                 .setParameter("shopId", id1)
                 .setParameter("designerId", id2)
                 .getResultList();

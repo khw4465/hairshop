@@ -22,8 +22,20 @@
             </div>
             <div id="textInfo">
                 <h2 th:text="${shop.name}"></h2>
-                <span>별점</span>
-                <span>리뷰개수</span>
+                <div class="avgStarRate">
+                    <span class="avgRate"></span>
+                    <input type="radio" name="avgStar" value="5" id="starRate1"><label
+                        for="starRate1">★</label>
+                    <input type="radio" name="avgStar" value="4" id="starRate2"><label
+                        for="starRate2">★</label>
+                    <input type="radio" name="avgStar" value="3" id="starRate3"><label
+                        for="starRate3">★</label>
+                    <input type="radio" name="avgStar" value="2" id="starRate4"><label
+                        for="starRate4">★</label>
+                    <input type="radio" name="avgStar" value="1" id="starRate5"><label
+                        for="starRate5">★</label>
+                </div>
+                <span th:text="${'(' + size + ')'}"></span>
                 <p><strong>영업시간</strong></p>
                 <p th:text="${shop.openTime + ' ~ ' + shop.closeTime}"></p>
                 <p><strong>주소</strong></p>
@@ -93,7 +105,7 @@
                 </div>
             </div>
             <div id="reviewDiv">
-                <h3>리뷰</h3>
+                <h3 th:text="${'리뷰 (' + size + ')'}"></h3>
                 <div id="reviewList">
                     <div th:each="review : ${reviewList}" class="review">
                         <div>
@@ -125,6 +137,8 @@
 <script th:inline="javascript">
     let shopImgs = /*[[${shop.shopImgs}]]*/ '';
     let reviewList = /*[[${reviewList}]]*/ '';
+    let avgRate = /*[[${avgRate}]]*/ '';
+    let floor = /*[[${floor}]]*/ '';
 </script>
 <script src="/js/header.js"></script>
 <script src="/js/sidebar.js"></script>

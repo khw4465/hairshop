@@ -22,6 +22,25 @@ function submitForm(element) {
     element.closest('form').submit();
 }
 
+// 평균 별점
+// 리뷰가 없으면 0으로 설정
+if (isNaN(avgRate)) {
+    avgRate = 0;
+} else {
+    avgRate = avgRate.toFixed(1);
+}
+document.querySelector('.avgRate').textContent = avgRate;
+
+let avgStarInputs = document.querySelectorAll('input[name="avgStar"]');
+avgStarInputs.forEach(function (avgInput, index) {
+    if (index === 5 - floor) {
+        avgInput.checked = true;
+    } else {
+        avgInput.checked = false;
+    }
+    avgInput.disabled = true;
+})
+
 // 별점 체크
 reviewList.forEach(review => {
     let rate = review.rate;
