@@ -26,11 +26,11 @@
                 <tbody>
                 <tr class="designer" th:id="${designer.id}">
                     <td style="width: 120px">
-                        <img th:src="${designer.img}" class="designerImg">
+                        <img th:src="${designer.img}" class="designerImg" onclick="designerInfo(this)">
                     </td>
                     <td>
-                        <p class="designerName" th:text="${designer.name}"></p>
-                        <p class="shopName" th:text="${shop}"></p>
+                        <p class="designerName" th:text="${designer.name}" onclick="designerInfo(this)"></p>
+                        <p class="shopName" th:text="${shop}" onclick="designerInfo(this)"></p>
                     </td>
                     <td>
                         <form th:action="${'/reservation/menu'}" method="GET" id="reservationForm">

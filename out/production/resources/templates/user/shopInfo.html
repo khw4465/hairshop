@@ -76,11 +76,11 @@
                 <table id="designerTable">
                     <tr th:each="designer : ${shop.designers}" class="designer" th:id="${designer.id}">
                         <td>
-                            <img th:src="${designer.img}" class="designerImg">
+                            <img th:src="${designer.img}" class="designerImg" onclick="designerInfo(this)">
                         </td>
                         <td style="width: 200px">
-                            <p th:text="${designer.name}" class="designerName"></p>
-                            <p th:text="${designer.career}" class="designerCareer"></p>
+                            <p th:text="${designer.name}" class="designerName" onclick="designerInfo(this)"></p>
+                            <p th:text="${designer.career}" class="designerCareer" onclick="designerInfo(this)"></p>
                         </td>
                         <td>
                             <form th:action="${'/reservation/menu'}" method="GET">

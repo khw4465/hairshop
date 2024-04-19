@@ -182,12 +182,7 @@ public class ShopService {
     public ShopDto findDtoById(Long id) {
         Shop shop = shopRepository.findOne(id);
         //dto로 변환
-        ShopDto dto = new ShopDto(shop.getId(), shop.getName(), shop.getCategory().getName(), shop.getAddress(), shop.getOpenTime(), shop.getCloseTime(), shop.getContent(),
-                shop.getShopImgs().stream().map(ShopImg::getImgUrl).toList(),
-                shop.getDesigners().stream().map(sd -> new DesignerDto(sd.getId(), sd.getName(), sd.getImg(), sd.getContent(), sd.getCareer(),
-                        sd.getStyles().stream().map(StyleDto::new).toList(),
-                        sd.getReviews().stream().map(ReviewDto::new).toList())).toList(),
-                shop.getMenus().stream().map(MenuDto::new).toList());
+        ShopDto dto = new ShopDto(shop);
 
         return dto;
     }
@@ -199,12 +194,7 @@ public class ShopService {
     /** 모든 샵 조회 (모든 데이터) **/
     public List<ShopDto> findAllShopData() {
         List<Shop> all = shopRepository.findAll();
-        List<ShopDto> list = all.stream().map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(), s.getOpenTime(), s.getCloseTime(), s.getContent(),
-                s.getShopImgs().stream().map(ShopImg::getImgUrl).toList(),
-                s.getDesigners().stream().map(sd -> new DesignerDto(sd.getId(), sd.getName(), sd.getImg(), sd.getContent(), sd.getCareer(),
-                        sd.getStyles().stream().map(StyleDto::new).toList(),
-                        sd.getReviews().stream().map(ReviewDto::new).toList())).toList(),
-                s.getMenus().stream().map(MenuDto::new).toList())).toList();
+        List<ShopDto> list = all.stream().map(ShopDto::new).toList();
         return list;
     }
 
@@ -244,10 +234,7 @@ public class ShopService {
     /** 샵 페이징 이름 조회 **/
     public List<ShopDto> findPageByName(String name, int offset, int limit) {
         List<Shop> pageByName = shopRepository.findPageByName(name, offset, limit);
-        List<ShopDto> list = pageByName.stream()
-                .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(),
-                        s.getShopImgs().stream().map(si -> si.getImgUrl()).toList())).toList();
-        return list;
+        return pageByName.stream().map(ShopDto::new).toList();
     }
     /** 이름별 카운트 쿼리 **/
     public long countQueryByName(String name) {
@@ -260,8 +247,7 @@ public class ShopService {
     public List<ShopDto> findPageByCategory(String name, int offset, int limit) {
         List<Shop> pageByCategory = shopRepository.findPageByCategory(name, offset, limit);
         List<ShopDto> list = pageByCategory.stream()
-                .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(),
-                        s.getShopImgs().stream().map(si -> si.getImgUrl()).toList())).toList();
+                .map(ShopDto::new).toList();
         return list;
     }
 

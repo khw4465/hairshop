@@ -30,8 +30,30 @@ h3 {
 .shopImg {
     display: block;
     margin: 0 40px;
-    width: 80%;
-    height: 80%;
+    width: 400px;
+    height: 350px;
+    border-radius: 20px;
+}
+
+.avgStarRate{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+    margin: 5px 40px;
+}
+.avgStarRate legend {
+    text-align: right;
+}
+.avgStarRate input[type=radio]{
+    display: none;
+}
+.avgStarRate label{
+    font-size: 1.2em;
+    color: transparent;
+    text-shadow: 0 0 0 #e0e0e0;
+}
+.avgStarRate input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
 
 .shopName {

@@ -21,6 +21,20 @@
                     <input type="hidden" th:value="${shop.id}" name="shopId">
                     <div class="shopItem" onclick="submitForm(this)">
                         <img th:src="${shop.shopImgs[0]}" class="shopImg">
+                        <div class="avgStarRate">
+                            <span class="reviewLength"></span>
+                            <span class="avgRate"></span>
+                            <input type="radio" name="avgStar" value="5" id="starRate1"><label
+                                for="starRate1">★</label>
+                            <input type="radio" name="avgStar" value="4" id="starRate2"><label
+                                for="starRate2">★</label>
+                            <input type="radio" name="avgStar" value="3" id="starRate3"><label
+                                for="starRate3">★</label>
+                            <input type="radio" name="avgStar" value="2" id="starRate4"><label
+                                for="starRate4">★</label>
+                            <input type="radio" name="avgStar" value="1" id="starRate5"><label
+                                for="starRate5">★</label>
+                        </div>
                         <p th:text="${shop.name}" class="shopName"></p>
                         <p th:text="${shop.address}" class="shopAddress"></p>
                     </div>
@@ -42,6 +56,9 @@
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+    let shopList = /*[[${shopList}]]*/ '';
+</script>
 <script src="/js/header.js"></script>
 <script src="/js/sidebar.js"></script>
 <script src="/js/user/shopList.js"></script>

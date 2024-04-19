@@ -56,7 +56,7 @@ public class DesignerApiController {
     public List<DesignerDto> findAll() {
         List<Designer> all = designerService.findAll();
         List<DesignerDto> list = all.stream()
-                .map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+                .map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
         return list;
     }
 
@@ -64,7 +64,7 @@ public class DesignerApiController {
     @PostMapping("api/admin/search")
     public List<DesignerDto> searchDesigner(@RequestParam("searchInput") String searchInput) {
         List<Designer> searchDesigner = designerService.findByName(searchInput);
-        List<DesignerDto> list = searchDesigner.stream().map(d -> new DesignerDto(d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
+        List<DesignerDto> list = searchDesigner.stream().map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
         return list;
     }
 

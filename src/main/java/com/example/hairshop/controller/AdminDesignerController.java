@@ -130,7 +130,7 @@ public class AdminDesignerController {
         List<StyleDto> styleList = styles.stream()
                 .map(s -> new StyleDto(s.getImgUrl(), s.getSubCategorys())).toList();
 
-        DesignerDto dto = new DesignerDto(designer.getId(), designer.getName(), designer.getImg(), designer.getContent(), designer.getCareer(), styleList, null);
+        DesignerDto dto = new DesignerDto(designer.getId(), designer.getName(), designer.getImg(), designer.getContent(), designer.getCareer(), styleList);
         m.addAttribute("designerInfo", dto);
 
         List<StyleSubCategory> subCategories = categoryService.findSubCategoryAll();
