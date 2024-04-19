@@ -3,9 +3,10 @@ function updateDesignerId(select) {
     hiddenField.value = select.value;
 }
 
-function searchDesigner(element) {
-    element.closest('form').submit();
-}
+document.getElementById('searchDesigner').addEventListener('click', function() {
+    let form = document.getElementById('designerForm');
+    form.submit();
+})
 
 function cancelForm(element) {
     if (confirm("예약을 취소하시겠습니까?")) {

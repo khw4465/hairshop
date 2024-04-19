@@ -33,6 +33,11 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "designerId")
     private Designer designer;
 
+    //== 리뷰 <--> 디자이너 ==//
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "shopId")
+    private Shop shop;
+
     //== 리뷰 <--> 예약 ==//
     @OneToOne(fetch = LAZY, mappedBy = "review")
     private Reservation reservation;

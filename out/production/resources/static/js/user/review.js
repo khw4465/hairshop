@@ -14,20 +14,18 @@ document.getElementById('createReview').addEventListener('click', function() {
         reservationId: reservationId
     };
 
-    console.log('reviewData = ', reviewForm);
-
-    $.ajax({
-        url: "/create/review",
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(reviewForm),
-        success: function(response) {
-            if (confirm('리뷰를 등록하시겠습니까?')) {
+    if (confirm('리뷰를 등록하시겠습니까?')) {
+        $.ajax({
+            url: "/create/review",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(reviewForm),
+            success: function (response) {
                 window.location.href = "/reservation/list";
+            },
+            error: function (xhr) {
+                alert('실패');
             }
-        },
-        error: function(xhr) {
-            alert('실패');
-        }
-    });
+        });
+    }
 })

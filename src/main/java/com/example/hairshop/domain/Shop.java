@@ -55,6 +55,10 @@ public class Shop extends BaseEntity {
     @OneToMany(mappedBy = "shop")
     private List<Reservation> reservations = new ArrayList<>();
 
+    //== 샵 <--> 예약 ==//
+    @OneToMany(mappedBy = "shop")
+    private List<Review> reviews = new ArrayList<>();
+
 
     /**
      * 샵에 디자이너 등록하기

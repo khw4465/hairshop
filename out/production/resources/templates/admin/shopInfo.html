@@ -19,7 +19,7 @@
             <input type="hidden" th:value="${shop.id}" name="shopId">
             <input type="submit" id="reservation" value="예약 관리">
         </form>
-        <form action="" class="formBtn">
+        <form th:action="${'/admin/review/list'}" class="formBtn">
             <input type="hidden" th:value="${shop.id}" name="shopId">
             <input type="submit" id="review" value="리뷰 관리">
         </form>

@@ -31,9 +31,9 @@ public class AdminReservationController {
     public String reservationList(@RequestParam("shopId") String shopId,
                                   Model m) {
         long id = Long.parseLong(shopId);
-        Shop shop = shopService.findById(id);
         m.addAttribute("shopId", id);
 
+        Shop shop = shopService.findById(id);
         List<Designer> designers = shop.getDesigners();
         List<DesignerDto> dto = designers.stream().map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
         m.addAttribute("designerList", dto);
@@ -50,17 +50,21 @@ public class AdminReservationController {
                                             @RequestParam("designerId") String designerId,
                                             Model m) {
         long id1 = Long.parseLong(shopId);
-        Shop shop = shopService.findById(id1);
         m.addAttribute("shopId", id1);
 
+        Shop shop = shopService.findById(id1);
         List<Designer> designers = shop.getDesigners();
         List<DesignerDto> dto = designers.stream().map(d -> new DesignerDto(d.getId(), d.getName(), d.getImg(), d.getContent(), d.getCareer())).toList();
         m.addAttribute("designerList", dto);
 
-        long id2 = Long.parseLong(designerId);
-        List<ReservationDto> reservations = reservationService.findByShopAndDesigner(id1, id2, Status.예약완료);
-        m.addAttribute("reservationList", reservations);
-
+        if (designerId == "") {
+            List<ReservationDto> reservations = reservationService.findByShopId(id1, Status.예약완료);
+            m.addAttribute("reservationList", reservations);
+        } else {
+            long id2 = Long.parseLong(designerId);
+            List<ReservationDto> reservations = reservationService.findByShopAndDesigner(id1, id2, Status.예약완료);
+            m.addAttribute("reservationList", reservations);
+        }
         return "/admin/reservationList";
     }
 

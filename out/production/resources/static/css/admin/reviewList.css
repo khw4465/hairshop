@@ -35,27 +35,48 @@ h1 {
     margin: 15px 0;
 }
 
-#reservationList {
-    width: 1000px;
+#reviewList {
+    width: 900px;
     margin: 0 auto;
 }
 
-#reservationListTable {
-    width: 1000px;
-    text-align: center;
-}
-
-#reservationListTable tbody tr {
-    height: 80px;
-}
-
-.cancelBtn {
-    background-color: #575757;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
+.review {
+    background-color: #e7e7e7;
+    padding: 30px 50px;
     border-radius: 10px;
 }
+
+.starRate{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+.starRate legend{
+    text-align: right;
+}
+.starRate input[type=radio]{
+    display: none;
+}
+.starRate label{
+    font-size: 1em;
+    color: transparent;
+    text-shadow: 0 0 0 #ffffff;
+}
+.starRate input[type=radio]:checked ~ label{
+    color: black;
+}
+
+.menuName {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.content {
+    padding: 20px 0;
+}
+
+.userName {
+    margin-right: 10px;
+}
+

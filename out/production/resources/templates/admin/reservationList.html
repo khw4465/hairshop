@@ -15,14 +15,14 @@
 <div id="container">
     <h1>예약 관리</h1>
     <div id="designer">
-        <form th:action="${'/reservationList/select/designer'}" method="GET">
+        <form th:action="${'/reservationList/select/designer'}" method="GET" id="designerForm">
             <input type="hidden" th:value="${shopId}" name="shopId" id="shopId">
             <input type="hidden" value="" name="designerId" id="designerId">
             <select id="designerSelect" onchange="updateDesignerId(this)">
                 <option value="">디자이너 선택</option>
                 <option th:each="designer : ${designerList}" th:value="${designer.id}" th:text="${designer.name}"></option>
             </select>
-            <button id="searchDesigner" onclick="searchDesigner(this)">검색</button>
+            <input type="button" id="searchDesigner" value="검색">
         </form>
     </div>
     <div id="reservationList">
