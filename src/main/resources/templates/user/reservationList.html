@@ -35,7 +35,7 @@
                         <input type="hidden" th:value="${reservation.id}" name="reservationId">
                         <input type="button" value="예약취소" class="cancelBtn" onclick="cancelForm(this)">
                     </form>
-                    <form th:action="${'/review'}" method="GET" class="formBtn" th:if="${reservation.status == '시술완료' && reservation.review == null}">
+                    <form th:action="${'/review'}" method="GET" class="formBtn" th:if="${reservation.status == '시술완료' && reservation.reviewId == null}">
                         <input type="hidden" th:value="${reservation.id}" name="reservationId">
                         <input type="submit" value="리뷰작성" class="reviewBtn">
                     </form>

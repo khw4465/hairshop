@@ -92,23 +92,39 @@
                     </div>
                 </div>
             </div>
-            <div id="reviewList">
+            <div id="reviewDiv">
                 <h3>리뷰</h3>
-                <table id="reviewTable">
-                    <div th:each="designer : ${shop.designers}" class="designers" th:id="${designer.id}">
-                        <tr th:each="review : ${designer.reviews}" class="review" th:id="${review.id}">
-                            <td>
-                                <p th:text="${review.content}" class="reviewContent"></p>
-                            </td>
-                        </tr>
+                <div id="reviewList">
+                    <div th:each="review : ${reviewList}" class="review">
+                        <div>
+                            <span th:text="${review.reservation.menu.name}" class="menuName"></span>
+                            <span th:text="${'디자이너 ' + review.designer}" class="designerName"></span>
+                        </div>
+                        <div class="starRate">
+                            <span th:text="${review.rate}" class="rate"></span>
+                            <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                                for="rate1">★</label>
+                            <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                                for="rate2">★</label>
+                            <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                                for="rate3">★</label>
+                            <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                                for="rate4">★</label>
+                            <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                                for="rate5">★</label>
+                        </div>
+                        <div th:text="${review.content}" class="content"></div>
+                        <span th:text="${review.user}" class="userName"></span>
+                        <span th:text="${#temporals.format(review.createdDate, 'MM월 dd일 HH:mm')}" class="createdDate"></span>
                     </div>
-                </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script th:inline="javascript">
     let shopImgs = /*[[${shop.shopImgs}]]*/ '';
+    let reviewList = /*[[${reviewList}]]*/ '';
 </script>
 <script src="/js/header.js"></script>
 <script src="/js/sidebar.js"></script>

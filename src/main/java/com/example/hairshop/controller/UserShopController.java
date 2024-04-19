@@ -2,11 +2,9 @@ package com.example.hairshop.controller;
 
 import com.example.hairshop.domain.MenuCategory;
 import com.example.hairshop.domain.Shop;
-import com.example.hairshop.dto.DesignerDto;
-import com.example.hairshop.dto.MenuDto;
-import com.example.hairshop.dto.ShopDto;
-import com.example.hairshop.dto.StyleDto;
+import com.example.hairshop.dto.*;
 import com.example.hairshop.service.CategoryService;
+import com.example.hairshop.service.ReviewService;
 import com.example.hairshop.service.ShopService;
 import com.example.hairshop.service.StyleService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +24,7 @@ public class UserShopController {
 
     private final ShopService shopService;
     private final StyleService styleService;
-    private final CategoryService categoryService;
+    private final ReviewService reviewService;
 
     /** 상단 헤더 카테고리(페이징) **/
     @GetMapping("/shop/list")
@@ -63,6 +61,9 @@ public class UserShopController {
 
         List<StyleDto> styles = styleService.findByShop(id);
         m.addAttribute("styles", styles);
+
+        List<ReviewDto> reviews = reviewService.findByShopId(id);
+        m.addAttribute("reviewList", reviews);
 
         return "/user/shopInfo";
     }
