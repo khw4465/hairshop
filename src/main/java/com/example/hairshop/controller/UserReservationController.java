@@ -155,8 +155,6 @@ public class UserReservationController {
                                   @RequestParam(value = "limit", defaultValue = "10") int limit,
                                   HttpSession session, Model m) {
         if (session.getAttribute("userId") != null) {
-            System.out.println("status = " + status);
-
             String userId = session.getAttribute("userId").toString();
             User user = userService.findUserByKakaoId(userId);
 

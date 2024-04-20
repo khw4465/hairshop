@@ -1,3 +1,62 @@
+#banner-container {
+    height: 700px;
+}
+
+.banner {
+    width: 100%;
+    overflow: hidden;
+}
+
+.bannerImg {
+    display: flex;
+    animation: banner-animation 15s infinite;
+}
+
+.bannerImg img {
+    margin: 2%;
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+    transform: translateX(45%); /* 이미지를 가운데로 이동 */
+}
+
+@keyframes banner-animation {
+    0% {
+        transform: translateX(0);
+    }
+    15% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-54%);
+    }
+    35% {
+        transform: translateX(-54%);
+    }
+    40% {
+        transform: translateX(-108%);
+    }
+    55% {
+        transform: translateX(-108%);
+    }
+    60% {
+        transform: translateX(-162%);
+    }
+    75% {
+        transform: translateX(-162%);
+    }
+    80% {
+        transform: translateX(-215%);
+    }
+    95% {
+        transform: translateX(-215%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/*--------------------------*/
 #todayShop {
     padding: 20px;
     background-color: #e5e5e5;

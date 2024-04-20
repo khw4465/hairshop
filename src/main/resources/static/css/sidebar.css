@@ -28,6 +28,7 @@ a {
     padding:2em;
     transform:translateX(-100%);
     transition: transform 0.3s ease-in-out;
+    z-index: 100;
 }
 
 #nav.active {
