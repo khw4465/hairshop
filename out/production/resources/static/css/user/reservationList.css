@@ -4,6 +4,39 @@
 
 h3 {
     text-align: center;
+    margin-bottom: 80px;
+}
+
+#statusDiv {
+    width: 800px;
+    margin: 20px auto;
+}
+
+#statusForm {
+    margin: 0 30px;
+}
+
+#statusSelect {
+    width: 125px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    cursor: pointer;
+    margin: 15px 0;
+}
+
+#searchStatus {
+    width: 60px;
+    padding: 8px;
+    font-size: 16px;
+    color: white;
+    border: 1px solid #797979;
+    border-radius: 10px;
+    background-color: #797979;
+    cursor: pointer;
+    margin: 15px 0;
 }
 
 #reservationList {
@@ -14,7 +47,7 @@ h3 {
 .reservationTable {
     width: 800px;
     padding-left: 10px;
-    margin: 100px auto;
+    margin: 0 auto;
 }
 
 p {

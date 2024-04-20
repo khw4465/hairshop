@@ -29,9 +29,12 @@ public class ReservationRepository {
     }
 
     /** 예약 조회(특정 회원) **/
-    public List<Reservation> findByUserId(Long userId, int offset, int limit) {
-        return em.createQuery("select r from Reservation r where r.user.id = :userId order by r.dateTime DESC", Reservation.class)
+    public List<Reservation> findByUserId(Long userId, Status status, int offset, int limit) {
+        return em.createQuery("select r from Reservation r where r.user.id = :userId " +
+                        "and r.status = :status " +
+                        "order by r.dateTime DESC", Reservation.class)
                 .setParameter("userId", userId)
+                .setParameter("status", status)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();

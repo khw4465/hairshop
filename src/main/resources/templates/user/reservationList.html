@@ -15,6 +15,15 @@
 <div th:replace="~{fragment/sidebar :: sidebar}"></div>
 <div id="container">
     <h3>예약 내역</h3>
+    <div id="statusDiv">
+        <form th:action="${'/reservation/list'}" method="GET" id="statusForm">
+            <input type="hidden" value="" name="status" id="status">
+            <select id="statusSelect" onchange="updateStatus(this)">
+                <option th:each="status : ${statusList}" th:value="${status}" th:text="${status}"></option>
+            </select>
+            <input type="submit" id="searchStatus" value="검색">
+        </form>
+    </div>
     <div id="reservationList">
         <table class="reservationTable">
             <tr th:each="reservation : ${reservationList}" th:id="${reservation.id}" class="list">
@@ -23,7 +32,7 @@
                 </td>
                 <td class="nameTd">
                     <p th:text="${reservation.shop.name}" class="shopName"></p>
-                    <p th:text="${reservation.designer.name}" class="designerName"></p>
+                    <p th:text="${'디자이너 ' + reservation.designer.name}" class="designerName"></p>
                     <p th:text="${reservation.menu.name + ' - ' + #numbers.formatInteger(reservation.menu.price, 3, 'COMMA') + '원'}"></p>
                 </td>
                 <td class="timeTd">

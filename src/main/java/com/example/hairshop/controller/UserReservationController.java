@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -149,15 +150,21 @@ public class UserReservationController {
 
     /** 예약 리스트 **/
     @GetMapping("/reservation/list")
-    public String reservationList(@RequestParam(value = "offset", defaultValue = "0") int offset,
+    public String reservationList(@RequestParam(value = "status", defaultValue = "예약완료") String status,
+                                  @RequestParam(value = "offset", defaultValue = "0") int offset,
                                   @RequestParam(value = "limit", defaultValue = "10") int limit,
                                   HttpSession session, Model m) {
         if (session.getAttribute("userId") != null) {
+            System.out.println("status = " + status);
+
             String userId = session.getAttribute("userId").toString();
             User user = userService.findUserByKakaoId(userId);
 
-            List<ReservationDto> reservations = reservationService.findByUserId(user.getId(), offset, limit);
+            List<ReservationDto> reservations = reservationService.findByUserId(user.getId(), status, offset, limit);
             System.out.println("reservations = " + reservations);
+
+            List<String> statusList = Arrays.asList(Status.values()).stream().map(Enum::name).toList();
+            m.addAttribute("statusList", statusList);
 
             Long count = reservationService.countQueryByUserId(user.getId());
             m.addAttribute("reservationList", reservations);

@@ -107,8 +107,9 @@ public class ReservationService {
     }
 
     /** 유저 예약 리스트 조회 (페이징) **/
-    public List<ReservationDto> findByUserId(Long userId, int offset, int limit) {
-        List<Reservation> list = reservationRepository.findByUserId(userId, offset, limit);
+    public List<ReservationDto> findByUserId(Long userId, String statusName, int offset, int limit) {
+        Status status = Status.valueOf(statusName);
+        List<Reservation> list = reservationRepository.findByUserId(userId, status, offset, limit);
         List<ReservationDto> result = list.stream().map(ReservationDto::new).toList();
         return result;
     }

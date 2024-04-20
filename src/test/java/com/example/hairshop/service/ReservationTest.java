@@ -14,7 +14,9 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 @SpringBootTest
 @Transactional
@@ -68,5 +70,17 @@ public class ReservationTest {
         Reservation reservation = reservationRepository.findOne(52L);
         Review review = reservation.getReview();
         System.out.println("review = " + review);
+    }
+
+    @Test
+    public void 상태() {
+//        List<Status> list = Arrays.asList(Status.values());
+//        List<String> list1 = list.stream().map(Enum::name).toList();
+//        for (String s : list1) {
+//            System.out.println("s = " + s);
+//        }
+
+        Status status = Status.valueOf("예약완료");
+        System.out.println("status = " + status);
     }
 }
