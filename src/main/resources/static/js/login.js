@@ -54,7 +54,7 @@ function sendPostRequset(isDesigner) {
         data: JSON.stringify(checkForm),
         success: function(data) {
             if (data === 'class com.example.hairshop.domain.Designer') {
-                window.location.href = '/admin';
+                window.location.href = '/admin/shop/list';
             } else {
                 window.location.href = sessionStorage.getItem("path");
             }

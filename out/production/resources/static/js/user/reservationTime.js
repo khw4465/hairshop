@@ -15,7 +15,7 @@ function getTwoWeeksDates() {
 // 화면에 날짜를 표시하는 함수
 function renderDates() {
     const dateContainer = document.getElementById('selectDate');
-    const dates = getTwoWeeksDates();
+    const dates = getTwoWeeksDates(); // 날짜
     dates.forEach(({ date, dayOfMonth, dayOfWeek }) => {
         const dateInput = document.createElement('input');
         dateInput.setAttribute("id", `radio_day_${dayOfMonth}`)
@@ -28,7 +28,7 @@ function renderDates() {
         const dateLabel = document.createElement('label');
         dateLabel.classList.add('dateLabel');
         dateLabel.setAttribute('for', `radio_day_${dayOfMonth}`);
-        dateLabel.setAttribute('onclick', 'renderTimeSlots()');
+        dateLabel.setAttribute('onclick', 'renderTimeSlots(this)');
         const yoil = document.createElement("p");
         yoil.textContent = dayOfWeek;
         const dates = document.createElement("p");
@@ -39,36 +39,73 @@ function renderDates() {
     });
 }
 
+// 시간 배열 표시함수
+function generateTimeArray(startTime, endTime) {
+    const timeArray = [];
+    for (let hour = startTime; hour <= endTime; hour++) {
+        for (let minute = 0; minute < 60; minute += 30) { // 30분 단위로 반복
+            const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+            timeArray.push(timeString);
+        }
+    }
+    return timeArray;
+}
 
-function renderTimeSlots() {
+function renderTimeSlots(element) {
+    const inputId = element.getAttribute('for');
+    const associatedInput = document.getElementById(inputId);
+    const value = associatedInput.value; // 선택한 날짜 (Ex. 2024-04-20)
+
+    //기존 시간선택창 지우기
     const timeSlotList = document.getElementById('timeSlotList');
     while (timeSlotList.firstChild) {
         timeSlotList.removeChild(timeSlotList.firstChild);
     }
-    const startTime = parseInt(shopTime.openTime.split(':')[0], 10); // 시작 시간 (10시)
-    const endTime = parseInt(shopTime.closeTime.split(':')[0], 10) - 1; // 종료 시간 (20시)
-    const interval = 30; // 시간 간격 (30분)
 
+    const startTime = parseInt(shop.openTime.split(':')[0], 10); // 시작 시간
+    const endTime = parseInt(shop.closeTime.split(':')[0], 10) - 1; // 종료 시간
+
+    // 시간배열 생성
+    const timeArray = generateTimeArray(startTime, endTime);
     let count = 0;
-    for (let hour = startTime; hour <= endTime; hour++) {
-        for (let minute = 0; minute < 60; minute += interval) {
-            const timeSlotIndex = count++;
-            const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-            const radioInput = document.createElement('input');
-            radioInput.setAttribute('id', `time_${timeSlotIndex}`)
-            radioInput.setAttribute('class', 'timeSlotInput');
-            radioInput.type = 'radio';
-            radioInput.name = 'selectedTimeSlot';
-            radioInput.value = time;
-            timeSlotList.appendChild(radioInput);
 
-            const label = document.createElement('label');
-            label.setAttribute('for', `time_${timeSlotIndex}`);
-            label.setAttribute('class', 'timeLabel');
-            label.innerHTML += time;
-            timeSlotList.appendChild(label);
+    // 시간배열 루프 돌면서 input, label 생성
+    timeArray.forEach(time => {
+        const timeSlotIndex = count++;
+        const radioInput = document.createElement('input');
+        radioInput.setAttribute('id', `time_${timeSlotIndex}`)
+        radioInput.setAttribute('class', 'timeSlotInput');
+        radioInput.type = 'radio';
+        radioInput.name = 'selectedTimeSlot';
+        radioInput.value = value + ' ' + time;
+        timeSlotList.appendChild(radioInput);
+
+        const label = document.createElement('label');
+        label.setAttribute('for', `time_${timeSlotIndex}`);
+        label.setAttribute('class', 'timeLabel');
+        label.innerHTML += time;
+        timeSlotList.appendChild(label);
+    })
+
+    // 스케쥴에서 날짜 가져오기
+    schedules.forEach(schedule => {
+        // 클릭한 날짜와 동일하면 true(예약된 날짜)index 가져오기
+        if (value === schedule.date) {
+            let trueIndex = schedule.time.map((value, index) => value ? index : -1)
+                .filter(index => index !== -1);
+
+            if (trueIndex.length >= 1) {
+                trueIndex.forEach(index => {
+                    let reservedTime = document.getElementById(`time_${index}`);
+                    reservedTime.disabled = true;
+                    let reservedLabel = document.querySelector(`label[for="time_${index}"]`);
+                    reservedLabel.style.border = '1px solid #ccc';
+                    reservedLabel.style.color = '#ccc';
+                })
+            }
         }
-    }
+    })
+
 }
 
 // 화면에 날짜를 표시

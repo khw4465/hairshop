@@ -45,13 +45,9 @@ public class ReservationService {
         long designerId = Long.parseLong(form.getDesignerId());
         Designer designer = designerRepository.findOne(designerId);
 
-        //샵에서 운영시간 가져오기
-        Shop shop = designer.getShop();
-        LocalTime openTime = shop.getOpenTime();
-        LocalTime closeTime = shop.getCloseTime();
-
         //운영시간 30분단위로 나누기
-        String[] timeSlots = Schedule.getTimeSlots(openTime, closeTime);
+        Shop shop = designer.getShop();
+        String[] timeSlots = Schedule.getTimeSlots(shop);
         //받아온 시간이 몇번째 인덱스인지 확인
         int index = Arrays.asList(timeSlots).indexOf(form.getTime());
 
@@ -60,7 +56,7 @@ public class ReservationService {
         LocalTime time = LocalTime.parse(form.getTime());
         Optional<Schedule> findSchedule = scheduleRepository.findSchedule(designerId, date);
         if (findSchedule.isEmpty()) {
-            Schedule schedule = new Schedule(date);
+            Schedule schedule = new Schedule(date, timeSlots.length);
             schedule.getReserve(index, timeSlots.length);
             schedule.setDesigner(designer);
             scheduleRepository.create(schedule);
@@ -149,13 +145,10 @@ public class ReservationService {
         LocalTime time = dateTime.toLocalTime();
         Schedule schedule = scheduleRepository.findSchedule(designerId, date).get();
 
-        //샵에서 운영시간 가져오기
-        Shop shop = reservation.getShop();
-        LocalTime openTime = shop.getOpenTime();
-        LocalTime closeTime = shop.getCloseTime();
-
         //운영시간 30분단위로 나누기
-        String[] timeSlots = Schedule.getTimeSlots(openTime, closeTime);
+        Shop shop = reservation.getShop();
+        String[] timeSlots = Schedule.getTimeSlots(shop);
+
         //받아온 시간이 몇번째 인덱스인지 확인
         int index = Arrays.asList(timeSlots).indexOf(time.toString());
 
@@ -185,4 +178,18 @@ public class ReservationService {
             }
         }
     }
+
+    /** 매 자정마다 지나간 날짜의 스케쥴객체 삭제(보류) **/
+//    @Scheduled(cron = "0 0 0 * * *")
+//    @Transactional
+//    public void deleteSchedule() {
+//        LocalDate now = LocalDate.now();
+//        List<Schedule> all = scheduleRepository.findAll();
+//        for (Schedule schedule : all) {
+//            if(schedule.getDate().isBefore(now)) {
+//                schedule.getDesigner().getSchedules().remove(schedule);
+//                scheduleRepository.remove(schedule);
+//            };
+//        }
+//    }
 }

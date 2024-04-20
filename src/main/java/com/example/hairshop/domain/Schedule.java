@@ -45,9 +45,9 @@ public class Schedule {
     private Designer designer;
 
     //== 특정 날짜의 모든 시간대 false로 초기화 ==//
-    public Schedule(LocalDate date) {
+    public Schedule(LocalDate date, int slotLength) {
         this.date = date;
-        this.time = new boolean[20];
+        this.time = new boolean[slotLength];
         Arrays.fill(time, false);
     }
 
@@ -69,7 +69,9 @@ public class Schedule {
     }
 
     /** 샵의 시간을 30분 단위로 나눔 **/
-    public static String[] getTimeSlots(LocalTime openTime, LocalTime closeTime) {
+    public static String[] getTimeSlots(Shop shop) {
+        LocalTime openTime = shop.getOpenTime();
+        LocalTime closeTime = shop.getCloseTime();
         int slotCount = (int) ((closeTime.toSecondOfDay() - openTime.toSecondOfDay()) / (30 * 60));
         String[] timeSlots = new String[slotCount];
 

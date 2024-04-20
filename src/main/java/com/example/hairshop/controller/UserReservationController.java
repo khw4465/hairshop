@@ -82,8 +82,8 @@ public class UserReservationController {
             m.addAttribute("schedules", list);
 
             Shop shop = designer.getShop();
-            ShopDto dto = new ShopDto(shop.getId(), shop.getOpenTime(), shop.getCloseTime());
-            m.addAttribute("shopTime", dto);
+            ShopDto dto = new ShopDto(shop);
+            m.addAttribute("shop", dto);
 
             m.addAttribute("designerId", designerId);
             m.addAttribute("menuId", menuId);

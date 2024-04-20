@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class AdminShopController {
+public class  AdminShopController {
 
     private final ShopService shopService;
     private final CategoryService categoryService;

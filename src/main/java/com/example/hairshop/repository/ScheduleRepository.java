@@ -22,6 +22,11 @@ public class ScheduleRepository {
         em.persist(schedule);
     }
 
+    /** 스케쥴 삭제 **/
+    public void remove(Schedule schedule) {
+        em.remove(schedule);
+    }
+
     /** 디자이너 스케쥴 객체 전체 조회 **/
     public List<Schedule> findAllScheduleByDesigner(Long designerId) {
         return em.createQuery("select s from Schedule s where s.designer.id = :designerId", Schedule.class)
@@ -40,5 +45,11 @@ public class ScheduleRepository {
         } catch (NoResultException e) {
             return Optional.empty();
         }
+    }
+
+    /** 모든 스케쥴 **/
+    public List<Schedule> findAll() {
+        return em.createQuery("select s from Schedule s", Schedule.class)
+                .getResultList();
     }
 }

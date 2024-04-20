@@ -33,12 +33,6 @@ public class ShopDto {
         this.shopImgs = shopImgs;
     }
 
-    public ShopDto(Long id, LocalTime openTime, LocalTime closeTime) {
-        this.id = id;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
-    }
-
     public ShopDto(Shop shop) {
         this.id = shop.getId();
         this.name = shop.getName();

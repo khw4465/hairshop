@@ -32,17 +32,13 @@ public class ScheduleTest {
     @Test
     @Rollback(false)
     public void 스케쥴생성() {
-        Designer designer = designerRepository.findOne(2L);
+        Designer designer = designerRepository.findOne(4L);
         DesignerDto dto = new DesignerDto(designer.getId(), designer.getName(), designer.getImg(), designer.getContent(), designer.getCareer());
         System.out.println("dto = " + dto);
 
-        //샵에서 운영시간 가져오기
-        Shop shop = designer.getShop();
-        LocalTime openTime = shop.getOpenTime();
-        LocalTime closeTime = shop.getCloseTime();
-
         //운영시간 30분단위로 나누기
-        String[] timeSlots = Schedule.getTimeSlots(openTime, closeTime);
+        Shop shop = designer.getShop();
+        String[] timeSlots = Schedule.getTimeSlots(shop);
         //받아온 시간이 몇번째 인덱스인지 확인
         int index = Arrays.asList(timeSlots).indexOf("10:00");
 
@@ -51,7 +47,7 @@ public class ScheduleTest {
         LocalTime time = LocalTime.parse("10:30");
         Optional<Schedule> findSchedule = scheduleRepository.findSchedule(designer.getId(), date);
         if (findSchedule.isEmpty()) {
-            Schedule schedule = new Schedule(date);
+            Schedule schedule = new Schedule(date, timeSlots.length);
             schedule.getReserve(index, timeSlots.length);
             schedule.setDesigner(designer);
             scheduleRepository.create(schedule);
@@ -85,16 +81,9 @@ public class ScheduleTest {
 
         Schedule schedule = scheduleRepository.findSchedule(designer.getId(), date).get();
 
-        //샵에서 운영시간 가져오기
-        Shop shop = designer.getShop();
-        LocalTime openTime = shop.getOpenTime();
-        LocalTime closeTime = shop.getCloseTime();
-
-        System.out.println("openTime = " + openTime);
-        System.out.println("closeTime = " + closeTime);
-
         //운영시간 30분단위로 나누기
-        String[] timeSlots = Schedule.getTimeSlots(openTime, closeTime);
+        Shop shop = designer.getShop();
+        String[] timeSlots = Schedule.getTimeSlots(shop);
         System.out.println("timeSlots = " + Arrays.toString(timeSlots));
         //받아온 시간이 몇번째 인덱스인지 확인
         int index = Arrays.asList(timeSlots).indexOf(string);
@@ -103,5 +92,17 @@ public class ScheduleTest {
         //스케쥴 객체에서 해당 시간 false로 변경
         boolean[] time = schedule.getTime();
         time[index] = false;
+    }
+
+    @Test
+    public void a() {
+        Designer designer = designerRepository.findOne(7L);
+        DesignerDto dto = new DesignerDto(designer.getId(), designer.getName(), designer.getImg(), designer.getContent(), designer.getCareer());
+        System.out.println("dto = " + dto);
+
+        //운영시간 30분단위로 나누기
+        Shop shop = designer.getShop();
+        String[] timeSlots = Schedule.getTimeSlots(shop);
+        System.out.println("timeslot" + timeSlots.length);
     }
 }
