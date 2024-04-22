@@ -17,12 +17,9 @@ shopList.forEach(shop => {
         document.getElementById(shop.id).getElementsByClassName('avgRate')[0].textContent = '0';
     }
     let reviewList = shop.reviews;
-    console.log('reviewList = ', reviewList);
     reviewList.forEach(review => {
         let rate = review.rate;
-        console.log('rate = ' + rate);
         let starInputs = document.getElementById(shop.id).querySelectorAll('input[name="avgStar"]');
-        console.log(starInputs);
         starInputs.forEach(function(starInput, index) {
             if (index === 5 - rate) {
                 starInput.checked = true;

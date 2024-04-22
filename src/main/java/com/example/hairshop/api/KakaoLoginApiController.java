@@ -220,7 +220,6 @@ public class KakaoLoginApiController {
             while((line = br.readLine()) != null) {
                 result+=line;
             }
-            System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
         }

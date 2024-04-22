@@ -134,7 +134,6 @@ public class UserReservationController {
     public ResponseEntity<?> createReservation(@RequestBody ReservationForm form) {
         try {
             ReservationDto reservationDto = reservationService.create(form);
-            System.out.println("reservationDto = " + reservationDto);
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
@@ -159,10 +158,11 @@ public class UserReservationController {
             User user = userService.findUserByKakaoId(userId);
 
             List<ReservationDto> reservations = reservationService.findByUserId(user.getId(), status, offset, limit);
-            System.out.println("reservations = " + reservations);
 
             List<String> statusList = Arrays.asList(Status.values()).stream().map(Enum::name).toList();
             m.addAttribute("statusList", statusList);
+            m.addAttribute("statusName", status);
+            System.out.println("status = " + status);
 
             Long count = reservationService.countQueryByUserId(user.getId());
             m.addAttribute("reservationList", reservations);
@@ -182,7 +182,6 @@ public class UserReservationController {
                                     Model m) {
         if (session.getAttribute("userId") != null) {
             ReservationDto reservation = reservationService.findById(reservationId);
-            System.out.println("reservation = " + reservation);
             m.addAttribute("reservation", reservation);
 
             return "/user/reservationDetail";

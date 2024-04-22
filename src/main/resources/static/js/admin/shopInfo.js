@@ -159,8 +159,6 @@ function modifyShop(){
         menus: menusData
     };
 
-    console.log("shopDto = ", shopDto);
-
     $.ajax({
         url: "/admin/modify/shop",
         type: "PUT",

@@ -101,8 +101,6 @@ public class AdminDesignerController {
             Designer designer = designerService.findById(condition.getName());
             DesignerDto dto = new DesignerDto(designer.getId(), designer.getName(), designer.getImg(), designer.getContent(), designer.getCareer());
 
-            System.out.println("dto = " + dto);
-
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);

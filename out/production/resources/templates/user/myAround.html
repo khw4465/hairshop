@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hair shop</title>
+    <link href="/css/bodyHeader.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
+    <link href="/css/user/myAround.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+</head>
+<body>
+<div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
+<div th:replace="~{fragment/sidebar :: sidebar}"></div>
+<div id="container">
+    <div id="map">
+
+    </div>
+</div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b28434f3c1aae65489238829cb421d8b"></script>
+<script src="/js/header.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/user/myAround.js"></script>
+</body>
+</html>

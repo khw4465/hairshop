@@ -114,7 +114,6 @@ renderDates();
 
 function submitReservation() {
     let selectedDateValue = null;
-    console.log(selectedDateValue);
     const dateInputs = document.querySelectorAll('.dateInput');
 
     dateInputs.forEach(dateInput => {

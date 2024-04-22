@@ -105,4 +105,24 @@ public class ScheduleTest {
         String[] timeSlots = Schedule.getTimeSlots(shop);
         System.out.println("timeslot" + timeSlots.length);
     }
+
+    @Test
+    public void 스케쥴_삭제() {
+        LocalDate now = LocalDate.now();
+        List<Schedule> all = scheduleRepository.findAll();
+        for (Schedule schedule : all) {
+            System.out.println("schedule = " + schedule);
+        }
+        for (Schedule schedule : all) {
+            if(schedule.getDate().isBefore(now)) {
+                schedule.getDesigner().getSchedules().remove(schedule);
+                scheduleRepository.remove(schedule);
+            };
+        }
+        List<Schedule> all1 = scheduleRepository.findAll();
+        for (Schedule schedule : all1) {
+            System.out.println("schedule = " + schedule);
+        }
+
+    }
 }

@@ -42,7 +42,6 @@ public class  AdminShopController {
     @PostMapping("/admin/create/shop")
     public ResponseEntity<?> createShop(@RequestBody ShopDto shopDto) {
         try{
-            System.out.println("shopDto = " + shopDto);
             shopService.createShop(shopDto);
 
             return ResponseEntity.status(HttpStatus.OK).build();

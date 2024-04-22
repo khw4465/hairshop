@@ -1,5 +1,14 @@
+let selectedStatus = statusName
+
+let statusSelect = document.getElementById('statusSelect');
+for (let i = 0; i < statusSelect.options.length; i++) {
+    if (statusSelect.options[i].value === selectedStatus) {
+        statusSelect.selectedIndex = i;
+        break;
+    }
+}
+
 function updateStatus(select) {
-    console.log(select.value);
     let status = document.getElementById('status');
     status.value = select.value;
 }

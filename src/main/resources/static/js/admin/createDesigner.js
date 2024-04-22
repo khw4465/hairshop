@@ -33,7 +33,6 @@ document.getElementById('addDesigner').addEventListener('click', function() {
     });
 
     let designerDto = { career: newCareer, content: newContent, img: img, name: name, styles: stylesData };
-    console.log('designerDto = ', designerDto)
 
     // AJAX 요청 보내기
     fetch('/admin/create/designer', {

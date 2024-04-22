@@ -31,9 +31,6 @@ public class ShopApiController {
 
     @GetMapping("/api/user/shop/list")
     public List<ShopDto> shopCategoryList(@RequestParam("categoryName") String categoryName) {
-
-        System.out.println("categoryName = " + categoryName);
-
         List<Shop> shop = shopService.findByCategory(categoryName);
         List<ShopDto> list = shop.stream()
                 .map(s -> new ShopDto(s.getId(), s.getName(), s.getCategory().getName(), s.getAddress(), s.getShopImgs().stream()

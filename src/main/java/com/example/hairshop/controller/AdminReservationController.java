@@ -72,7 +72,6 @@ public class AdminReservationController {
     @PostMapping("/admin/reservation/cancel")
     public String reservationCancel(@RequestParam("reservationId") String reservationId,
                                     @RequestParam("shopId") String shopId) {
-        System.out.println("reservationId = " + reservationId);
         reservationService.changeCancel(reservationId);
 
         return "redirect:/admin/reservation/list?shopId="+shopId;

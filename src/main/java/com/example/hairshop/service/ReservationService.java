@@ -174,7 +174,6 @@ public class ReservationService {
         for (Reservation reservation : all) {
             if (reservation.getStatus() == Status.예약완료 && reservation.getDateTime().isBefore(now)) {
                 reservation.setStatus(Status.시술완료);
-                System.out.println("reservation = " + reservation);
             }
         }
     }

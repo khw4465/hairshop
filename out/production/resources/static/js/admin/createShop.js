@@ -97,8 +97,6 @@ function createShop(){
         menus: menusData
     };
 
-    console.log("shopDto = ", shopDto);
-
     $.ajax({
         url: "/admin/create/shop",
         type: "POST",
@@ -313,7 +311,6 @@ function addDesigner(button) {
 }
 
 function addDesignerToList(designer) {
-    console.log('designer = ', designer);
     const tbody = document.querySelector("#designerTable tbody");
 
     // 새로운 행 생성
