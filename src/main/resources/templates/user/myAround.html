@@ -7,8 +7,8 @@
     <link href="/css/bodyHeader.css" rel="stylesheet">
     <link href="/css/sidebar.css" rel="stylesheet">
     <link href="/css/user/myAround.css" rel="stylesheet">
+    <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${apiKey}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </head>
 <body>
 <div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
@@ -18,7 +18,9 @@
 
     </div>
 </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b28434f3c1aae65489238829cb421d8b"></script>
+<script th:inline="javascript">
+    let shopList = /*[[${shops}]]*/ '';
+</script>
 <script src="/js/header.js"></script>
 <script src="/js/sidebar.js"></script>
 <script src="/js/user/myAround.js"></script>
