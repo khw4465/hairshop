@@ -115,4 +115,22 @@ public class ShopRepository {
                 .setParameter("name", name)
                 .getSingleResult();
     }
+
+    /** 별점 높은 순 **/
+    public List<Shop> findByRate(int offset, int limit) {
+        return em.createQuery("select distinct s from Shop s join s.reviews r " +
+                        "group by s.id " +
+                        "having avg(r.rate) >= 4.0 " +
+                        "order by avg(r.rate) DESC", Shop.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public Long countQueryByRate() {
+        return em.createQuery("select distinct count(s) from Shop s join s.reviews r " +
+                "group by s.id " +
+                "having avg(r.rate) >= 4.0", Long.class)
+                .getSingleResult();
+    }
 }

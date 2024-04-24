@@ -1,4 +1,3 @@
 src/main/resources/application.yml
 src/main/resources/application-private.properties
-out/production/resources/application.yml
-out/production/resources/application-private.properties
+out/

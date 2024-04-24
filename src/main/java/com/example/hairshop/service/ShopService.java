@@ -255,4 +255,15 @@ public class ShopService {
     public long countQueryByCategory(String name) {
         return shopRepository.countQueryByCategory(name);
     }
+
+
+    /** 별점 높은 순 **/
+    public List<ShopDto> findByRate(int offset, int limit) {
+        List<Shop> list = shopRepository.findByRate(offset, limit);
+        return list.stream().map(ShopDto::new).toList();
+    }
+
+    public Long countQueryByRate() {
+        return shopRepository.countQueryByRate();
+    }
 }

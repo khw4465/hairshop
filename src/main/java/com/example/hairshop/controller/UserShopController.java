@@ -29,8 +29,8 @@ public class UserShopController {
     /** 상단 헤더 카테고리(페이징) **/
     @GetMapping("/shop/list")
     public String shopCategoryList(@RequestParam("categoryName") String categoryName,
-                                    @RequestParam(value = "offset", defaultValue = "0") int offset,
-                                    @RequestParam(value = "limit", defaultValue = "9") int limit,
+                                   @RequestParam(value = "offset", defaultValue = "0") int offset,
+                                   @RequestParam(value = "limit", defaultValue = "9") int limit,
                                     Model m) {
         List<ShopDto> result = shopService.findPageByCategory(categoryName, offset, limit);
         long count = shopService.countQueryByCategory(categoryName);
@@ -75,5 +75,21 @@ public class UserShopController {
         m.addAttribute("floor", floor);
         m.addAttribute("size", reviews.size());
         return "/user/shopInfo";
+    }
+
+    /** 별점 높은 순 **/
+    @GetMapping("/shopList/rate")
+    public String shopListByRate(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                 @RequestParam(value = "limit", defaultValue = "9") int limit,
+                                 Model m) {
+        List<ShopDto> byRate = shopService.findByRate(offset, limit);
+        Long count = shopService.countQueryByRate();
+
+        m.addAttribute("shopList", byRate);
+        m.addAttribute("count", count);
+        m.addAttribute("offset", offset);
+        m.addAttribute("limit", limit);
+
+        return "/user/shopListByRate";
     }
 }
