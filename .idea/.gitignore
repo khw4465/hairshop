@@ -9,3 +9,4 @@
 # /.gitignore
 /src/main/resources/application.yml
 /src/main/resources/application-private.properties
+/out/

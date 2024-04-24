@@ -52,10 +52,6 @@ function generateTimeArray(startTime, endTime) {
 }
 
 function renderTimeSlots(element) {
-    const inputId = element.getAttribute('for');
-    const associatedInput = document.getElementById(inputId);
-    const value = associatedInput.value; // 선택한 날짜 (Ex. 2024-04-20)
-
     //기존 시간선택창 지우기
     const timeSlotList = document.getElementById('timeSlotList');
     while (timeSlotList.firstChild) {
@@ -77,7 +73,7 @@ function renderTimeSlots(element) {
         radioInput.setAttribute('class', 'timeSlotInput');
         radioInput.type = 'radio';
         radioInput.name = 'selectedTimeSlot';
-        radioInput.value = value + ' ' + time;
+        radioInput.value = time;
         timeSlotList.appendChild(radioInput);
 
         const label = document.createElement('label');

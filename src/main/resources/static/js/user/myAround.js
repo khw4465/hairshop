@@ -86,6 +86,7 @@ kakao.maps.event.addListener(map, 'idle', function() {
         }
     });
 });
+let infowindows = [];
 
 function createMarker(element) {
     let positions = []
@@ -102,7 +103,6 @@ function createMarker(element) {
             }
         )
     })
-    let infowindows = [];
 
     for (let i = 0; i < positions.length; i ++) {
 

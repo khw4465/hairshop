@@ -34,6 +34,9 @@ public class ReservationDto {
 
         Menu m = reservation.getMenu();
         this.menu = new MenuDto(m);
-        this.reviewId = reservation.getId();
+
+        if (reservation.getReview() != null) {
+            this.reviewId = reservation.getReview().getId();
+        }
     }
 }
