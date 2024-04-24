@@ -159,10 +159,9 @@ public class UserReservationController {
 
             List<ReservationDto> reservations = reservationService.findByUserId(user.getId(), status, offset, limit);
 
-            List<String> statusList = Arrays.asList(Status.values()).stream().map(Enum::name).toList();
+            List<String> statusList = Arrays.stream(Status.values()).map(Enum::name).toList();
             m.addAttribute("statusList", statusList);
             m.addAttribute("statusName", status);
-            System.out.println("status = " + status);
 
             Long count = reservationService.countQueryByUserId(user.getId());
             m.addAttribute("reservationList", reservations);
