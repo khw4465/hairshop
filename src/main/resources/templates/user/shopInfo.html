@@ -107,22 +107,22 @@
             <div id="reviewDiv">
                 <h3 th:text="${'리뷰 (' + size + ')'}"></h3>
                 <div id="reviewList">
-                    <div th:each="review : ${reviewList}" class="review">
+                    <div th:each="review, iterStat : ${reviewList}" class="review">
                         <div>
                             <span th:text="${review.reservation.menu.name}" class="menuName"></span>
                             <span th:text="${'디자이너 ' + review.designer}" class="designerName"></span>
                         </div>
                         <div class="starRate">
                             <span th:text="${review.rate}" class="rate"></span>
-                            <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                            <input type="radio" th:name="'reviewStar_' + ${iterStat.index}" value="5" id="rate1"><label
                                 for="rate1">★</label>
-                            <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                            <input type="radio" th:name="'reviewStar_' + ${iterStat.index}" value="4" id="rate2"><label
                                 for="rate2">★</label>
-                            <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                            <input type="radio" th:name="'reviewStar_' + ${iterStat.index}" value="3" id="rate3"><label
                                 for="rate3">★</label>
-                            <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                            <input type="radio" th:name="'reviewStar_' + ${iterStat.index}" value="2" id="rate4"><label
                                 for="rate4">★</label>
-                            <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                            <input type="radio" th:name="'reviewStar_' + ${iterStat.index}" value="1" id="rate5"><label
                                 for="rate5">★</label>
                         </div>
                         <div th:text="${review.content}" class="content"></div>

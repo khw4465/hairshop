@@ -37,6 +37,9 @@ public class AdminReviewController {
 
         List<ReviewDto> reviewList = reviewService.findByShopId(id);
         m.addAttribute("reviewList", reviewList);
+        for (ReviewDto reviewDto : reviewList) {
+            System.out.println("reviewDto = " + reviewDto);
+        }
 
         return "/admin/reviewList";
     }

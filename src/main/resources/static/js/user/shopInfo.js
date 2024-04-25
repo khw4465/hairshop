@@ -47,15 +47,13 @@ avgStarInputs.forEach(function (avgInput, index) {
 })
 
 // 별점 체크
-reviewList.forEach(review => {
-    let rate = review.rate;
-    let starInputs = document.querySelectorAll('input[name="reviewStar"]');
-    starInputs.forEach(function(starInput, index) {
-        if (index === 5 - rate) {
+document.querySelectorAll('.review').forEach(function(reviewDiv, index) {
+    let rate = reviewDiv.querySelector('.rate').innerText;
+    let starInputs = reviewDiv.querySelectorAll('input[name="reviewStar_' + index + '"]');
+    starInputs.forEach(function(starInput, starIndex) {
+        if (starIndex <= 5 - rate) {
             starInput.checked = true;
-        } else {
-            starInput.checked = false;
         }
         starInput.disabled = true;
-    })
-})
+    });
+});

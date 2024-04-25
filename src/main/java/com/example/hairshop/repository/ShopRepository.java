@@ -116,11 +116,11 @@ public class ShopRepository {
                 .getSingleResult();
     }
 
-    /** 별점 높은 순(4.0이상) **/
+    /** 별점 높은 순(3.0이상) **/
     public List<Shop> findByRate(int offset, int limit) {
         return em.createQuery("select distinct s from Shop s join s.reviews r " +
                         "group by s.id " +
-                        "having avg(r.rate) >= 4.0 " +
+                        "having avg(r.rate) >= 3.0 " +
                         "order by avg(r.rate) DESC", Shop.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
@@ -130,7 +130,7 @@ public class ShopRepository {
     public Long countQueryByRate() {
         return em.createQuery("select distinct count(s) from Shop s join s.reviews r " +
                 "group by s.id " +
-                "having avg(r.rate) >= 4.0", Long.class)
+                "having avg(r.rate) >= 3.0", Long.class)
                 .getSingleResult();
     }
 }

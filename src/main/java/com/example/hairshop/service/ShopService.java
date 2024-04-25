@@ -257,7 +257,7 @@ public class ShopService {
     }
 
 
-    /** 별점 높은 순(4.0이상) **/
+    /** 별점 높은 순(3.0이상) **/
     public List<ShopDto> findByRate(int offset, int limit) {
         List<Shop> list = shopRepository.findByRate(offset, limit);
         return list.stream().map(ShopDto::new).toList();
