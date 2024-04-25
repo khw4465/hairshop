@@ -19,7 +19,7 @@ public class UserReviewController {
     /** 리뷰 작성 화면 **/
     @GetMapping("/review")
     public String review() {
-        return "/user/review";
+        return "userReview";
     }
 
     /** 리뷰 생성 **/

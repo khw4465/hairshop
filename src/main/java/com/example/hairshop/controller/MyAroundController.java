@@ -26,7 +26,7 @@ public class MyAroundController {
     @GetMapping("/myAround")
     public String myAround(Model m) {
         m.addAttribute("apiKey", apiKey);
-        return "/user/myAround";
+        return "myAround";
     }
 
     @PostMapping("/myAround/newArea")

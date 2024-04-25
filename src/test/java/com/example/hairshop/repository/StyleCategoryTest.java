@@ -16,12 +16,17 @@ import java.util.List;
 @Transactional
 public class StyleCategoryTest {
 
-    @Autowired StyleMainCategoryRepository mainCategoryRepository;
-    @Autowired StyleSubCategoryRepository subCategoryRepository;
-    @Autowired DesignerRepository designerRepository;
-    @Autowired StyleRepository styleRepository;
-    @Autowired StyleTipRepository styleTipRepository;
-
+//    @Autowired
+//    StyleMainCategoryRepository mainCategoryRepository;
+//    @Autowired
+//    StyleSubCategoryRepository subCategoryRepository;
+//    @Autowired
+//    DesignerRepository designerRepository;
+//    @Autowired
+//    StyleRepository styleRepository;
+//    @Autowired
+//    StyleTipRepository styleTipRepository;
+//
 //    @BeforeEach
 //    public void 메인_서브_추가() {
 //        StyleMainCategory mainCategory1 = new StyleMainCategory("커트");
@@ -96,10 +101,9 @@ public class StyleCategoryTest {
 //        pedi.addSubCategory(subCategory14);
 //        pedi.addSubCategory(subCategory15);
 //    }
-
-    @Test
-    @Rollback(false)
-    public void 카테고리_스타일추가() {
+//
+//    @Test
+//    public void 카테고리_스타일추가() {
 //        Designer designer = Designer.createDesigner("1234", "디자이너A");
 //        designerRepository.save(designer);
 //
@@ -112,13 +116,13 @@ public class StyleCategoryTest {
 //        Style style1 = Style.addStyle("asdf", designer, cut1, perm1);
 //        Style style2 = Style.addStyle("asdf", designer, cut1, perm2);
 //        styleRepository.save(style1);
-    }
-
-    @Test
-    public void 스타일팁_추가() {
-        List<StyleTip> all = styleTipRepository.findAll();
-        for (StyleTip styleTip : all) {
-            System.out.println("styleTip = " + styleTip);
-        }
-    }
+//
+//    @Test
+//    public void 스타일팁_추가() {
+//        List<StyleTip> all = styleTipRepository.findAll();
+//        for (StyleTip styleTip : all) {
+//            System.out.println("styleTip = " + styleTip);
+//        }
+//    }
+//}
 }

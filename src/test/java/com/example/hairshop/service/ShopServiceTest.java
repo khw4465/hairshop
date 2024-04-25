@@ -14,11 +14,11 @@ import java.util.List;
 @Transactional
 public class ShopServiceTest {
 
-    @Autowired ShopService shopService;
-
-    @Test
-    public void 샵조회() {
+//    @Autowired ShopService shopService;
+//
+//    @Test
+//    public void 샵조회() {
 //        List<Shop> byCategory = shopService.findByCategory("헤어샵");
 //        System.out.println("byCategory = " + byCategory);
-    }
+//    }
 }

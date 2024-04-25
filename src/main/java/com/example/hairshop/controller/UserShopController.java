@@ -1,9 +1,6 @@
 package com.example.hairshop.controller;
 
-import com.example.hairshop.domain.MenuCategory;
-import com.example.hairshop.domain.Shop;
 import com.example.hairshop.dto.*;
-import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.ReviewService;
 import com.example.hairshop.service.ShopService;
 import com.example.hairshop.service.StyleService;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -41,7 +37,7 @@ public class UserShopController {
         m.addAttribute("limit", limit);
         m.addAttribute("searchText", categoryName);
 
-        return "/user/shopList";
+        return "userShopList";
     }
 
     /** 샵 상세정보 **/
@@ -74,7 +70,7 @@ public class UserShopController {
         m.addAttribute("avgRate", avgRate);
         m.addAttribute("floor", floor);
         m.addAttribute("size", reviews.size());
-        return "/user/shopInfo";
+        return "userShopInfo";
     }
 
     /** 별점 높은 순 **/
@@ -90,6 +86,6 @@ public class UserShopController {
         m.addAttribute("offset", offset);
         m.addAttribute("limit", limit);
 
-        return "/user/shopListByRate";
+        return "userShopListByRate";
     }
 }

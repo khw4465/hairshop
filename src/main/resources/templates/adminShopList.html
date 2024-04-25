@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hairshop</title>
+    <link href="/css/adminHeader.css" rel="stylesheet">
+    <link href="/css/adminSidebar.css" rel="stylesheet">
+    <link href="/css/adminShopList.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="~{fragment/adminHeader :: adminHeader}"></div>
+<div th:replace="~{fragment/adminSidebar :: adminSidebar}"></div>
+<div id="container">
+    <h1>매장 목록</h1>
+    <div>
+        <form id="searchForm" th:action="${'/admin/search/shop'}" method="GET">
+            <input type="hidden" id="searchText" name="search">
+        </form>
+        <div class="search">
+            <input class="searchText" type="text" id="searchInput" name="searchInput" placeholder="매장 이름을 입력하세요.">
+            <img class="searchImg" th:src="${'https://hairshop-bucket.s3.ap-northeast-2.amazonaws.com/search.png'}" id="searchButton" onclick="submitForm()">
+        </div>
+        <table id="shopTable">
+            <tbody>
+            <tr th:each="shop : ${shopList}" class="shop" th:id="${shop.id}" onclick="shopInfo(this)">
+                <td>
+                    <img th:src="${shop.shopImgs[0]}" class="shopImg">
+                </td>
+                <td>
+                    <div class="shopName" th:text="${shop.name}"></div>
+                    <div class="shopCategory" th:text="${shop.shopCategory}"></div>
+                </td>
+                <td>
+                    <span class="shopAddress" th:text="${shop.address}"></span>
+                </td>
+                <td>
+                    <button onclick="removeShopRow(this, event)" class="deleteBtn">삭제</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <div class="pagination">
+                        <!-- 이전 페이지로 이동하는 링크 -->
+                        <a th:if="${offset > 0}" th:href="@{${url}(search=${searchText}, offset=${offset - 10}, limit=${limit})}">&lt;</a>
+
+                        <!-- 페이지 번호를 동적으로 생성 -->
+                        <a th:each="pageNo : ${#numbers.sequence(0, count div limit)}"
+                           th:href="@{${url}(search=${searchText}, offset=${pageNo*limit}, limit=${limit})}"
+                           th:text="${pageNo + 1}"
+                           th:class="${offset div limit == pageNo ? 'active' : ''}">1</a>
+
+                        <!-- 다음 페이지로 이동하는 링크 -->
+                        <a th:if="${offset + limit < count}" th:href="@{${url}(search=${searchText}, offset=${offset + 10}, limit=${limit})}">&gt;</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script th:inline="javascript">
+    let shopList = /*[[${shopList}]]*/ '';
+</script>
+<script src="/js/adminShopList.js"></script>
+</body>
+</html>

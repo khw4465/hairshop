@@ -3,7 +3,6 @@ package com.example.hairshop.controller;
 import com.example.hairshop.domain.*;
 import com.example.hairshop.dto.*;
 import com.example.hairshop.service.*;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,7 +38,7 @@ public class UserReservationController {
             m.addAttribute("designers", designerDtos);
             m.addAttribute("shopId", shopId);
 
-            return "/user/reservationDesigner";
+            return "userReservationDesigner";
         }
         return "redirect:/login/loginForm";
     }
@@ -65,7 +64,7 @@ public class UserReservationController {
             List<String> menuCategoryList = new ArrayList<>(set);
             m.addAttribute("menuCategory", menuCategoryList);
 
-            return "/user/reservationMenu";
+            return "userReservationMenu";
         }
         return "redirect:/login/loginForm";
     }
@@ -88,7 +87,7 @@ public class UserReservationController {
             m.addAttribute("designerId", designerId);
             m.addAttribute("menuId", menuId);
 
-            return "/user/reservationTime";
+            return "userReservationTime";
         }
         return "redirect:/login/loginForm";
     }
@@ -124,7 +123,7 @@ public class UserReservationController {
             m.addAttribute("date", LocalDate.parse(selectedDateValue));
             m.addAttribute("time", LocalTime.parse(selectedTimeValue));
 
-            return "/user/reservation";
+            return "userReservation";
         }
         return "redirect:/login/loginForm";
     }
@@ -144,7 +143,7 @@ public class UserReservationController {
     /** 예약 성공 화면 **/
     @GetMapping("/reservation/success")
     public String success() {
-        return "/user/reservationSuccess";
+        return "userReservationSuccess";
     }
 
     /** 예약 리스트 **/
@@ -169,7 +168,7 @@ public class UserReservationController {
             m.addAttribute("offset", offset);
             m.addAttribute("limit", limit);
 
-            return "/user/reservationList";
+            return "userReservationList";
         }
         return "redirect:/login/loginForm";
     }
@@ -183,7 +182,7 @@ public class UserReservationController {
             ReservationDto reservation = reservationService.findById(reservationId);
             m.addAttribute("reservation", reservation);
 
-            return "/user/reservationDetail";
+            return "userReservationDetail";
         }
         return "redirect:/login/loginForm";
     }

@@ -24,7 +24,7 @@
         <div>
             <a href="https://kauth.kakao.com/oauth/authorize" id="kakaoLoginButton"
                th:href="@{https://kauth.kakao.com/oauth/authorize(response_type='code', client_id=${kakaoApiKey}, redirect_uri=${redirectUri})}">
-                <img src="/img/kakao_login_medium_wide.png">
+                <img th:src="${'https://hairshop-bucket.s3.ap-northeast-2.amazonaws.com/kakaologin.png'}">
             </a>
         </div>
     </div>

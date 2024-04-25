@@ -1,11 +1,9 @@
 package com.example.hairshop.controller;
 
 import com.example.hairshop.domain.Designer;
-import com.example.hairshop.domain.Review;
 import com.example.hairshop.domain.Shop;
 import com.example.hairshop.dto.DesignerDto;
 import com.example.hairshop.dto.ReviewDto;
-import com.example.hairshop.service.DesignerService;
 import com.example.hairshop.service.ReviewService;
 import com.example.hairshop.service.ShopService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +39,7 @@ public class AdminReviewController {
             System.out.println("reviewDto = " + reviewDto);
         }
 
-        return "/admin/reviewList";
+        return "adminReviewList";
     }
 
     /**
@@ -68,6 +66,6 @@ public class AdminReviewController {
             m.addAttribute("reviewList", reviews);
         }
 
-        return "/admin/reviewList";
+        return "adminReviewList";
     }
 }

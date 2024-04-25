@@ -49,7 +49,7 @@ public class UserStyleBookController {
         m.addAttribute("searchText", null);
         m.addAttribute("url", "/styleBook");
 
-        return "/user/styleBook";
+        return "userStyleBook";
     }
 
     /** 카테고리별 스타일북 **/
@@ -78,7 +78,7 @@ public class UserStyleBookController {
         m.addAttribute("searchText", categoryName);
         m.addAttribute("url", "/styleBook/category");
 
-        return "/user/styleBook";
+        return "userStyleBook";
     }
 
     /** 스타일 상세 **/
@@ -94,7 +94,7 @@ public class UserStyleBookController {
         String shopName = designer.getShop().getName();
         m.addAttribute("shop", shopName);
 
-        return "/user/styleInfo";
+        return "userStyleInfo";
     }
 
     /** 스타일 TIP **/
@@ -103,6 +103,6 @@ public class UserStyleBookController {
         List<StyleTip> all = styleTipService.findAll();
         m.addAttribute("styleTipList", all);
 
-        return "/user/styleTip";
+        return "userStyleTip";
     }
 }

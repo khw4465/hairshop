@@ -35,7 +35,7 @@ public class  AdminShopController {
                 .map(c -> new MenuCategoryDto(c.getId(), c.getName())).toList();
         m.addAttribute("menuCategories", menuList);
 
-        return "/admin/createShop";
+        return "adminCreateShop";
     }
 
     /** 샵 생성 **/
@@ -64,7 +64,7 @@ public class  AdminShopController {
         m.addAttribute("searchText", null);
         m.addAttribute("url", "/admin/shop/list");
 
-        return "/admin/shopList";
+        return "adminShopList";
     }
 
     /** 샵 검색(페이징) **/
@@ -81,7 +81,7 @@ public class  AdminShopController {
             m.addAttribute("limit", limit);
             m.addAttribute("searchText", search);
             m.addAttribute("url", "/admin/search/shop");
-        return "/admin/shopList";
+        return "adminShopList";
     }
 
     /** 샵 삭제 **/
@@ -116,7 +116,7 @@ public class  AdminShopController {
                 .map(c -> new MenuCategoryDto(c.getId(), c.getName())).toList();
         m.addAttribute("menuCategories", menuCategoryList);
 
-        return "/admin/shopInfo";
+        return "adminShopInfo";
     }
 
     /** 샵 정보 수정 **/

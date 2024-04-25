@@ -26,6 +26,9 @@ public class HomeController {
     public String home(Model m) {
         List<ShopDto> shopAll = shopService.findRandomPageAll(0, 8);
         m.addAttribute("shops", shopAll);
+        for (ShopDto dto : shopAll) {
+            System.out.println("dto = " + dto.getShopImgs());
+        }
 
         List<Style> styleAll = styleService.findAll();
         List<StyleDto> styleList = styleAll.stream().map(StyleDto::new).toList();

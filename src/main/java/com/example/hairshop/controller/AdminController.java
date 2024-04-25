@@ -20,7 +20,7 @@ public class AdminController {
     /** 어드민 홈 **/
     @GetMapping("/admin")
     public String admin() {
-        return "admin/home";
+        return "adminHome";
     }
 
 }

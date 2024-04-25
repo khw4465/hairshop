@@ -1,12 +1,10 @@
 package com.example.hairshop.controller;
 
 import com.example.hairshop.domain.Designer;
-import com.example.hairshop.domain.Reservation;
 import com.example.hairshop.domain.Shop;
 import com.example.hairshop.domain.Status;
 import com.example.hairshop.dto.DesignerDto;
 import com.example.hairshop.dto.ReservationDto;
-import com.example.hairshop.dto.ShopDto;
 import com.example.hairshop.service.ReservationService;
 import com.example.hairshop.service.ShopService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,7 +38,7 @@ public class AdminReservationController {
         List<ReservationDto> reservations = reservationService.findByShopId(id, Status.예약완료);
         m.addAttribute("reservationList", reservations);
 
-        return "/admin/reservationList";
+        return "adminReservationList";
     }
 
     /** 매장, 디자이너별 예약리스트 **/
@@ -65,7 +62,7 @@ public class AdminReservationController {
             List<ReservationDto> reservations = reservationService.findByShopAndDesigner(id1, id2, Status.예약완료);
             m.addAttribute("reservationList", reservations);
         }
-        return "/admin/reservationList";
+        return "adminReservationList";
     }
 
     /** 예약 취소 **/

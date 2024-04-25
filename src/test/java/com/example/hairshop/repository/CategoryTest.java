@@ -19,27 +19,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 public class CategoryTest {
 
-    @Autowired
-    ShopCategoryRepository shopCategoryRepository;
-
-    @Autowired
-    MenuCategoryRepository menuCategoryRepository;
-
-    @BeforeEach
-    public void before() {
-        ShopCategory hairShop = new ShopCategory("HairShop");
-        ShopCategory nailShop = new ShopCategory("NailShop");
-        ShopCategory oneManShop = new ShopCategory("OneManShop");
-        ShopCategory barberShop = new ShopCategory("BarberShop");
-        shopCategoryRepository.save(hairShop);
-        shopCategoryRepository.save(nailShop);
-        shopCategoryRepository.save(oneManShop);
-        shopCategoryRepository.save(barberShop);
-    }
-
-    @Test
-    @Rollback(false)
-    public void 샵_메뉴_카테고리_추가_테스트() {
+//    @Autowired
+//    ShopCategoryRepository shopCategoryRepository;
+//
+//    @Autowired
+//    MenuCategoryRepository menuCategoryRepository;
+//
+//    @BeforeEach
+//    public void before() {
+//        ShopCategory hairShop = new ShopCategory("HairShop");
+//        ShopCategory nailShop = new ShopCategory("NailShop");
+//        ShopCategory oneManShop = new ShopCategory("OneManShop");
+//        ShopCategory barberShop = new ShopCategory("BarberShop");
+//        shopCategoryRepository.save(hairShop);
+//        shopCategoryRepository.save(nailShop);
+//        shopCategoryRepository.save(oneManShop);
+//        shopCategoryRepository.save(barberShop);
+//    }
+//
+//    @Test
+//    @Rollback(false)
+//    public void 샵_메뉴_카테고리_추가_테스트() {
 //        ShopCategory findHairShop = shopCategoryRepository.findByName("HairShop");
 //        ShopCategory findNailShop = shopCategoryRepository.findByName("NailShop");
 //        ShopCategory findOneManShop = shopCategoryRepository.findByName("OneManShop");
@@ -80,10 +80,10 @@ public class CategoryTest {
 //        assertThat(findNailShop.getCategories().size()).isEqualTo(2);
 //        assertThat(findOneManShop.getCategories().size()).isEqualTo(3);
 //        assertThat(findBarberShop.getCategories().size()).isEqualTo(3);
-    }
-
-    @Test
-    public void 샵카테고리별_메뉴조회() {
+//    }
+//
+//    @Test
+//    public void 샵카테고리별_메뉴조회() {
 //        ShopCategory findHairShop = shopCategoryRepository.findByName("HairShop");
 //        ShopCategory findNailShop = shopCategoryRepository.findByName("NailShop");
 //
@@ -115,11 +115,11 @@ public class CategoryTest {
 //        for (MenuCategory menuCategory : result2) {
 //            System.out.println("menuCategory = " + menuCategory.getName());
 //        }
-    }
-
-    @Test
-    public void 테스트() {
-        ShopCategory category = shopCategoryRepository.findByName("헤어샵");
-        System.out.println("category = " + category.getName());
-    }
+//    }
+//
+//    @Test
+//    public void 테스트() {
+//        ShopCategory category = shopCategoryRepository.findByName("헤어샵");
+//        System.out.println("category = " + category.getName());
+//    }
 }

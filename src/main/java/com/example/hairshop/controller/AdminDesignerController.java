@@ -30,7 +30,7 @@ public class AdminDesignerController {
         List<StyleCategoryDto> categoryDtoList = subCategories.stream().map(c -> new StyleCategoryDto(c.getId(), c.getName())).toList();
         m.addAttribute("subCategories", categoryDtoList);
 
-        return "/admin/createDesigner";
+        return "adminCreateDesigner";
     }
 
     /** 디자이너 등록 **/
@@ -60,7 +60,7 @@ public class AdminDesignerController {
         m.addAttribute("searchText", null);
         m.addAttribute("url", "/admin/designer/list");
 
-        return "/admin/designerList";
+        return "adminDesignerList";
     }
 
     /** 디자이너 검색(페이징) **/
@@ -78,7 +78,7 @@ public class AdminDesignerController {
         m.addAttribute("searchText", search);
         m.addAttribute("url", "/admin/search/designer");
 
-        return "/admin/designerList";
+        return "adminDesignerList";
     }
 
     /** 샵 상세에서 디자이너 검색 **/
@@ -135,7 +135,7 @@ public class AdminDesignerController {
         List<StyleCategoryDto> categoryDtoList = subCategories.stream().map(c -> new StyleCategoryDto(c.getId(), c.getName())).toList();
         m.addAttribute("subCategories", categoryDtoList);
 
-        return "/admin/designerInfo";
+        return "adminDesignerInfo";
     }
 
     /** 디자이너 정보 수정 **/

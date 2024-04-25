@@ -22,7 +22,7 @@ public class UserDesignerController {
         DesignerDto designer = new DesignerDto(d);
         m.addAttribute("designer", designer);
 
-        return "/user/designerInfo";
+        return "userDesignerInfo";
     }
 
 }

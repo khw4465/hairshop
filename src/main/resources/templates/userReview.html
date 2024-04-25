@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>hair shop</title>
+    <link href="/css/bodyHeader.css" rel="stylesheet">
+    <link href="/css/sidebar.css" rel="stylesheet">
+    <link href="/css/userReview.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="~{fragment/bodyHeader :: bodyHeader}"></div>
+<div th:replace="~{fragment/sidebar :: sidebar}"></div>
+<div id="container">
+    <h3>리뷰 작성</h3>
+    <div id="review">
+        <form class="mb-3" name="myform" id="myform" method="post">
+            <fieldset>
+                <span class="text-bold">별점을 선택해주세요</span>
+                <input type="radio" name="reviewStar" value="5" id="rate1"><label
+                    for="rate1">★</label>
+                <input type="radio" name="reviewStar" value="4" id="rate2"><label
+                    for="rate2">★</label>
+                <input type="radio" name="reviewStar" value="3" id="rate3"><label
+                    for="rate3">★</label>
+                <input type="radio" name="reviewStar" value="2" id="rate4"><label
+                    for="rate4">★</label>
+                <input type="radio" name="reviewStar" value="1" id="rate5"><label
+                    for="rate5">★</label>
+            </fieldset>
+            <div>
+		        <textarea class="col-auto form-control" type="text" id="reviewContents"
+                  placeholder="리뷰를 작성해 주세요."></textarea>
+            </div>
+            <div id="createBtn">
+                <input type="button" value="리뷰 작성" id="createReview">
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/js/header.js"></script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/userReview.js"></script>
+</body>
+</html>

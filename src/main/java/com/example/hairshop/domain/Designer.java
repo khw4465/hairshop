@@ -66,7 +66,7 @@ public class Designer extends BaseEntity {
     public static Designer createDesigner(String name) {
         Designer designer = new Designer();
         designer.setName(name);
-        designer.setImg("/img/basicProfile.png");
+        designer.setImg("https://hairshop-bucket.s3.ap-northeast-2.amazonaws.com/basicProfile.png");
 //        designer.getReservationTime();
         return designer;
     }
