@@ -116,7 +116,7 @@ public class ShopRepository {
                 .getSingleResult();
     }
 
-    /** 별점 높은 순 **/
+    /** 별점 높은 순(4.0이상) **/
     public List<Shop> findByRate(int offset, int limit) {
         return em.createQuery("select distinct s from Shop s join s.reviews r " +
                         "group by s.id " +

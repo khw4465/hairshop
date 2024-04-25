@@ -156,6 +156,7 @@ h3, .menu, .designer {
     background-color: #f1f1f1;
     padding: 30px 50px;
     border-radius: 10px;
+    margin: 10px auto;
 }
 
 .starRate, .avgStarRate{

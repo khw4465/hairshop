@@ -1,0 +1,13 @@
+#styleTipList {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.styleTip {
+    width: 800px;
+    margin: 100px auto;
+}
+
+.styleTipImg {
+    width: 800px;
+}

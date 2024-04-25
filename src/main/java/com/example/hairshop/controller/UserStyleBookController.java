@@ -6,6 +6,7 @@ import com.example.hairshop.dto.StyleDto;
 import com.example.hairshop.service.CategoryService;
 import com.example.hairshop.service.DesignerService;
 import com.example.hairshop.service.StyleService;
+import com.example.hairshop.service.StyleTipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ public class UserStyleBookController {
     private final CategoryService categoryService;
     private final StyleService styleService;
     private final DesignerService designerService;
+    private final StyleTipService styleTipService;
 
     /** 스타일북 **/
     @GetMapping("/styleBook")
@@ -93,5 +95,14 @@ public class UserStyleBookController {
         m.addAttribute("shop", shopName);
 
         return "/user/styleInfo";
+    }
+
+    /** 스타일 TIP **/
+    @GetMapping("/styleTip")
+    public String styleTip(Model m) {
+        List<StyleTip> all = styleTipService.findAll();
+        m.addAttribute("styleTipList", all);
+
+        return "/user/styleTip";
     }
 }
