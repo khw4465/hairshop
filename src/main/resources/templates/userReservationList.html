@@ -57,16 +57,16 @@
                 <td colspan="5">
                     <div class="pagination">
                         <!-- 이전 페이지로 이동하는 링크 -->
-                        <a th:if="${offset > 0}" th:href="@{/reservation/list(offset=${offset - 10}, limit=${limit})}">&lt;</a>
+                        <a th:if="${offset > 0}" th:href="@{/reservation/list(status=${statusName}, offset=${offset - 10}, limit=${limit})}">&lt;</a>
 
                         <!-- 페이지 번호를 동적으로 생성 -->
                         <a th:each="pageNo : ${#numbers.sequence(0, count div limit)}"
-                           th:href="@{/reservation/list(offset=${pageNo*limit}, limit=${limit})}"
+                           th:href="@{/reservation/list(status=${statusName}, offset=${pageNo*limit}, limit=${limit})}"
                            th:text="${pageNo + 1}"
                            th:class="${offset div limit == pageNo ? 'active' : ''}">1</a>
 
                         <!-- 다음 페이지로 이동하는 링크 -->
-                        <a th:if="${offset + limit < count}" th:href="@{/reservation/list(offset=${offset + 10}, limit=${limit})}">&gt;</a>
+                        <a th:if="${offset + limit < count}" th:href="@{/reservation/list(status=${statusName}, offset=${offset + 10}, limit=${limit})}">&gt;</a>
                     </div>
                 </td>
             </tr>

@@ -32,19 +32,21 @@ h3, h4 {
 }
 
 #styleList {
-    margin: 100px 200px;
+    margin: 100px auto;
 }
 
 .styleGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 1fr;
     gap: 10px; /* 간격 조절 */
 }
 
 .styleImg {
     width: 70%;
-    height: 70%;
+    height: 350px;
     margin: 0 20px;
+    object-fit: cover;
 }
 
 .pagination {

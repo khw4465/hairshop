@@ -27,6 +27,10 @@ public class ReservationRepository {
         return em.createQuery("select r from Reservation r", Reservation.class)
                 .getResultList();
     }
+    /** 예약 삭제 **/
+    public void remove(Reservation reservation) {
+        em.remove(reservation);
+    }
 
     /** 예약 조회(특정 회원) **/
     public List<Reservation> findByUserId(Long userId, Status status, int offset, int limit) {
@@ -41,9 +45,11 @@ public class ReservationRepository {
     }
 
     /** 카운트 쿼리 **/
-    public Long countQueryByUserId(Long userId) {
-        return em.createQuery("select count(r) from Reservation r where r.user.id = :userId", Long.class)
+    public Long countQueryByUserId(Long userId, Status status) {
+        return em.createQuery("select count(r) from Reservation r " +
+                        "where r.user.id = :userId and r.status = :status", Long.class)
                 .setParameter("userId", userId)
+                .setParameter("status", status)
                 .getSingleResult();
     }
 

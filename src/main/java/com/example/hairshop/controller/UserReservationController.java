@@ -162,7 +162,7 @@ public class UserReservationController {
             m.addAttribute("statusList", statusList);
             m.addAttribute("statusName", status);
 
-            Long count = reservationService.countQueryByUserId(user.getId());
+            Long count = reservationService.countQueryByUserId(user.getId(), status);
             m.addAttribute("reservationList", reservations);
             m.addAttribute("count", count);
             m.addAttribute("offset", offset);

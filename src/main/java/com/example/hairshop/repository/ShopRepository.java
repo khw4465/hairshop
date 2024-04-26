@@ -119,6 +119,7 @@ public class ShopRepository {
     /** 별점 높은 순(3.0이상) **/
     public List<Shop> findByRate(int offset, int limit) {
         return em.createQuery("select distinct s from Shop s join s.reviews r " +
+                        "where s.id = r.shop.id " +
                         "group by s.id " +
                         "having avg(r.rate) >= 3.0 " +
                         "order by avg(r.rate) DESC", Shop.class)
@@ -128,9 +129,13 @@ public class ShopRepository {
     }
 
     public Long countQueryByRate() {
-        return em.createQuery("select distinct count(s) from Shop s join s.reviews r " +
-                "group by s.id " +
-                "having avg(r.rate) >= 3.0", Long.class)
-                .getSingleResult();
+        return em.createQuery("select count(distinct s) from Shop s join s.reviews r " +
+                        "where s.id = r.shop.id " +
+                        "group by s.id " +
+                        "having avg(r.rate) >= 3.0", Long.class)
+                .getResultList()
+                .stream()
+                .mapToLong(Long::longValue)
+                .sum();
     }
 }

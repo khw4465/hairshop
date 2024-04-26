@@ -105,7 +105,7 @@ function createShop(){
         success: function(response) {
             console.log("매장 등록 완료");
             alert("등록이 완료되었습니다.");
-            window.location.href = "/admin"
+            window.location.href = "/admin/shop/list"
         },
         error: function(xhr) {
             console.log("매장 등록 실패");

@@ -52,11 +52,11 @@ public class Shop extends BaseEntity {
     private List<ShopImg> shopImgs = new ArrayList<>();
 
     //== 샵 <--> 예약 ==//
-    @OneToMany(mappedBy = "shop")
+    @OneToMany(mappedBy = "shop", cascade = ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
-    //== 샵 <--> 예약 ==//
-    @OneToMany(mappedBy = "shop")
+    //== 샵 <--> 리뷰 ==//
+    @OneToMany(mappedBy = "shop", cascade = ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
 

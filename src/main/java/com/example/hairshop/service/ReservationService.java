@@ -110,8 +110,9 @@ public class ReservationService {
         return result;
     }
     /** 카운트쿼리 **/
-    public Long countQueryByUserId(Long userId) {
-        return reservationRepository.countQueryByUserId(userId);
+    public Long countQueryByUserId(Long userId, String statusName) {
+        Status status = Status.valueOf(statusName);
+        return reservationRepository.countQueryByUserId(userId, status);
     }
 
     /** 매장 아이디로 조회 (예약중) **/

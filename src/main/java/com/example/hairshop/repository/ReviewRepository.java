@@ -23,6 +23,11 @@ public class ReviewRepository {
         return em.find(Review.class, id);
     }
 
+    /** 리뷰 삭제 **/
+    public void remove(Review review) {
+        em.remove(review);
+    }
+
     /** 매장별 리뷰 **/
     public List<Review> findByShopId(long id) {
         return em.createQuery("select r from Review r join fetch r.shop s where s.id = :shopId " +

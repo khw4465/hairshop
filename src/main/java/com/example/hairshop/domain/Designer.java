@@ -52,11 +52,11 @@ public class Designer extends BaseEntity {
     private List<Schedule> schedules = new ArrayList<>();
 
     //== 디자이너 <--> 리뷰 ==//
-    @OneToMany(mappedBy = "designer")
+    @OneToMany(mappedBy = "designer", cascade = ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
     //== 디자이너 <--> 예약 ==//
-    @OneToMany(mappedBy = "designer")
+    @OneToMany(mappedBy = "designer", cascade = ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
     //== 연관관계 메서드 ==//

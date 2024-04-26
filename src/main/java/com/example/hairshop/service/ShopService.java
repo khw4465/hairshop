@@ -21,6 +21,8 @@ public class ShopService {
     private final MenuCategoryRepository menuCategoryRepository;
     private final MenuRepository menuRepository;
     private final ShopImgRepository shopImgRepository;
+    private final ReservationRepository reservationRepository;
+    private final ReviewRepository reviewRepository;
 
     /** 샵 생성 **/
     @Transactional
@@ -163,6 +165,18 @@ public class ShopService {
         // 메뉴<-->카테고리 연관관계 제거
         for (Menu menu : shop.getMenus()) {
             menu.getCategory().getMenus().remove(menu);
+        }
+
+        // 예약 연관관계 제거
+        List<Reservation> reservations = shop.getReservations();
+        for (Reservation reservation : reservations) {
+            reservationRepository.remove(reservation);
+        }
+
+        // 리뷰 연관관계 제거
+        List<Review> reviews = shop.getReviews();
+        for (Review review : reviews) {
+            reviewRepository.remove(review);
         }
 
         shopRepository.delete(shop);
