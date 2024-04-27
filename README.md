@@ -40,7 +40,7 @@
 * Bootstrap
 
 ## ERD
-
+![ERD](https://github.com/khw4465/hairshop/blob/main/hairshop-erd.png)
 
 ## Reference
 * 카카오헤어샵
