@@ -5,8 +5,6 @@
 
 ## 목차
 * [개요](#개요)
-* [개발 환경](#개발-환경)
-* [사용 기술](#사용-기술)
 * [ERD](#ERD)
 * [Reference](#Reference)
 
@@ -16,28 +14,6 @@
 * 개발 언어 : Java17, Springboot, JPA, Python, MySQL, Thymeleaf, CSS, JavaScript(ES6), JQuery
 * 개발 환경 : IntelliJ, MySQL Workbench, VSCode, ERD Cloud, Git, GitHub, AWS EC2, RDS, S3
 * 외부 API : 아임포트 결제 API, 카카오 로그인 API, 카카오지도 API, open API
-
-## 개발 환경
-* intelliJ
-* MySQL Workbench
-* Visual Studio Code
-* Git
-* GitHub
-* DataGrip
-* Draw.io
-
-## 사용 기술
-* Java11
-* Spring FrameWork
-* MyBatis
-* MySQL
-* JSP
-* CSS
-* JavaScript(ES6)
-* AJAX
-* JQUERY
-* JSON
-* Bootstrap
 
 ## ERD
 ![ERD](https://github.com/khw4465/hairshop/blob/main/hairshop-erd.png)
